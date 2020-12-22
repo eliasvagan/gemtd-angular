@@ -25,6 +25,16 @@ body {
   color: $mainTextColor;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
 .engine-wrapper {
   position: absolute;
   top: 0;
