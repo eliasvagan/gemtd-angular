@@ -5,9 +5,10 @@ import {ElementRef, Injectable, NgZone, OnDestroy} from '@angular/core';
 export class EngineService implements OnDestroy {
   private canvas: HTMLCanvasElement;
   private renderer: THREE.WebGLRenderer;
-  private camera: THREE.PerspectiveCamera;
+  private camera: THREE.OrthographicCamera;
   private scene: THREE.Scene;
   private light: THREE.AmbientLight;
+  private grid: THREE.GridHelper;
 
   private cube: THREE.Mesh;
 
@@ -36,10 +37,21 @@ export class EngineService implements OnDestroy {
     // create the scene
     this.scene = new THREE.Scene();
 
-    this.camera = new THREE.PerspectiveCamera(
-      75, window.innerWidth / window.innerHeight, 0.1, 1000
+    const cameraZoom = 0.15;
+
+    // this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    this.camera = new THREE.OrthographicCamera(
+      (window.innerWidth * cameraZoom) / -2,
+      (window.innerWidth * cameraZoom) / 2,
+      (window.innerHeight * cameraZoom) / 2,
+      (window.innerHeight * cameraZoom) / -2,
+      1,
+      1000
     );
-    this.camera.position.z = 5;
+
+    this.camera.position.set(20, -20, 15);
+    this.camera.lookAt(this.scene.position);
+    console.log(this.camera);
     this.scene.add(this.camera);
 
     // soft white light
@@ -47,10 +59,19 @@ export class EngineService implements OnDestroy {
     this.light.position.z = 10;
     this.scene.add(this.light);
 
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({color: 0x00ff00});
-    this.cube = new THREE.Mesh(geometry, material);
-    this.scene.add(this.cube);
+    this.generateBoard();
+
+  }
+
+  public generateBoard(): void {
+    const size = 10;
+    const divisions = 10;
+
+    const gridHelper = new THREE.GridHelper( size, divisions );
+    gridHelper.scale.set(size, size, size);
+    gridHelper.rotateX(Math.PI / 2);
+    this.grid = gridHelper;
+    this.scene.add( gridHelper );
 
   }
 
@@ -77,8 +98,8 @@ export class EngineService implements OnDestroy {
       this.render();
     });
 
-    this.cube.rotation.x += 0.01;
-    this.cube.rotation.y += 0.01;
+    // this.cube.rotation.x += 0.01;
+    // this.cube.rotation.y += 0.01;
     this.renderer.render(this.scene, this.camera);
   }
 
@@ -86,8 +107,8 @@ export class EngineService implements OnDestroy {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
+    // this.camera.aspect = width / height;
+    // this.camera.updateProjectionMatrix();
 
     this.renderer.setSize(width, height);
   }
