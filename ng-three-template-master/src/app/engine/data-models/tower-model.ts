@@ -1,9 +1,9 @@
-import { TowerType } from '../enums/tower-type';
-import { GemType } from '../enums/gem-type';
-
 export interface ITower {
-  type: GemType | TowerType;
+  name: string;
   damage: number;
   range: number;
+  speed: number;
+  splitShots: number;
+  model3d: string;
   buildCombination: ITower[];
 }
