@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {ElementRef, Injectable, NgZone, OnDestroy} from '@angular/core';
+import { ElementRef, Injectable, NgZone, OnDestroy } from '@angular/core';
 
 @Injectable({providedIn: 'root'})
 export class EngineService implements OnDestroy {
