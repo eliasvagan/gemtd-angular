@@ -1,49 +1,291 @@
-export enum GemType {
-  P1 = 'Chipped Amethyst',
-  P2 = 'Flawed Amethyst',
-  P3 = 'Normal Amethyst',
-  P4 = 'Polished Amethyst',
-  P5 = 'Perfect Amethyst',
+import { ITower } from '../data-models/tower-model';
 
-  Q1 = 'Chipped Aquamarine',
-  Q2 = 'Flawed Aquamarine',
-  Q3 = 'Normal Aquamarine',
-  Q4 = 'Polished Aquamarine',
-  Q5 = 'Perfect Aquamarine',
+export const GemType: { [ key: string ]: ITower } = {
+  P1: {
+    name: 'Chipped Amethyst',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  P2: {
+    name: 'Flawed Amethyst',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  P3: {
+    name: 'Normal Amethyst',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  P4: {
+    name: 'Polished Amethyst',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  P5: {
+    name: 'Perfect Amethyst',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
 
-  D1 = 'Chipped Diamond',
-  D2 = 'Flawed Diamond',
-  D3 = 'Normal Diamond',
-  D4 = 'Polished Diamond',
-  D5 = 'Perfect Diamond',
+  Q1: {
+    name: 'Chipped Aquamarine',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  Q2: {
+    name: 'Flawed Aquamarine',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  Q3: {
+    name: 'Normal Aquamarine',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  Q4: {
+    name: 'Polished Aquamarine',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  Q5: {
+    name: 'Perfect Aquamarine',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
 
-  G1 = 'Chipped Emerald',
-  G2 = 'Flawed Emerald',
-  G3 = 'Normal Emerald',
-  G4 = 'Polished Emerald',
-  G5 = 'Perfect Emerald',
+  D1: {
+    name: 'Chipped Diamond',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  D2: {
+    name: 'Flawed Diamond',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  D3: {
+    name: 'Normal Diamond',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  D4: {
+    name: 'Polished Diamond',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  D5: {
+    name: 'Perfect Diamond',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
 
-  E1 = 'Chipped Opal',
-  E2 = 'Flawed Opal',
-  E3 = 'Normal Opal',
-  E4 = 'Polished Opal',
-  E5 = 'Perfect Opal',
+  G1: {
+    name: 'Chipped Emerald',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  G2: {
+    name: 'Flawed Emerald',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  G3: {
+    name: 'Normal Emerald',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  G4: {
+    name: 'Polished Emerald',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  G5: {
+    name: 'Perfect Emerald',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
 
-  R1 = 'Chipped Ruby',
-  R2 = 'Flawed Ruby',
-  R3 = 'Normal Ruby',
-  R4 = 'Polished Ruby',
-  R5 = 'Perfect Ruby',
+  E1: {
+    name: 'Chipped Opal',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  E2: {
+    name: 'Flawed Opal',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  E3: {
+    name: 'Normal Opal',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  E4: {
+    name: 'Polished Opal',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  E5: {
+    name: 'Perfect Opal',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
 
-  B1 = 'Chipped Sapphire',
-  B2 = 'Flawed Sapphire',
-  B3 = 'Normal Sapphire',
-  B4 = 'Polished Sapphire',
-  B5 = 'Perfect Sapphire',
+  R1: {
+    name: 'Chipped Ruby',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  R2: {
+    name: 'Flawed Ruby',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  R3: {
+    name: 'Normal Ruby',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  R4: {
+    name: 'Polished Ruby',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  R5: {
+    name: 'Perfect Ruby',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
 
-  Y1 = 'Chipped Topaz',
-  Y2 = 'Flawed Topaz',
-  Y3 = 'Normal Topaz',
-  Y4 = 'Polished Topaz',
-  Y5 = 'Perfect Topaz'
-}
+  B1: {
+    name: 'Chipped Sapphire',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  B2: {
+    name: 'Flawed Sapphire',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  B3: {
+    name: 'Normal Sapphire',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  B4: {
+    name: 'Polished Sapphire',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  B5: {
+    name: 'Perfect Sapphire',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+
+  Y1: {
+    name: 'Chipped Topaz',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  Y2: {
+    name: 'Flawed Topaz',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  Y3: {
+    name: 'Normal Topaz',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  Y4: {
+    name: 'Polished Topaz',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  Y5: {
+    name: 'Perfect Topaz',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+};

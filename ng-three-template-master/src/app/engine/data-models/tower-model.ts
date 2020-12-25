@@ -4,6 +4,6 @@ export interface ITower {
   range: number;
   speed: number;
   splitShots: number;
-  model3d: string;
-  buildCombination: ITower[];
+  model3d?: string;
+  buildCombination?: ITower[];
 }
