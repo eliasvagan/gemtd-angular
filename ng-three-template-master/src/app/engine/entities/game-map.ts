@@ -1,11 +1,13 @@
 import { ITile } from '../data-models/tile-model';
 import { IEnemyCheckpoint } from '../data-models/enemy-checkpoint';
+import { Tower } from './tower';
+import { IMap } from '../data-models/map-model';
 
-export class GameMap {
-  private tiles: ITile[];
-  private checkpoints: IEnemyCheckpoint[];
-  private readonly width: number = 10;
-  private readonly height: number = 10;
+export class GameMap implements IMap {
+  tiles: ITile[];
+  checkpoints: IEnemyCheckpoint[];
+  width = 11;
+  height = 11;
 
   constructor() {
     this.initializeMap();
@@ -20,6 +22,22 @@ export class GameMap {
         );
       }
     }
+    this.checkpoints = [
+      { position: { x: 2, y: 5 } },
+      { position: { x: 8, y: 5 } },
+      { position: { x: 8, y: 2 } },
+      { position: { x: 5, y: 2 } },
+      { position: { x: 5, y: 9 } },
+      { position: { x: 10, y: 9 } },
+    ];
+  }
+
+  update(dt) {
+    this.tiles.forEach(tile => {
+      if (tile instanceof Tower) {
+        console.log(tile);
+      }
+    });
   }
 
   addTile(tile: ITile): boolean {

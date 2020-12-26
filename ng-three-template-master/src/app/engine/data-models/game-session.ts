@@ -1,6 +1,7 @@
 import { GameMap } from '../entities/game-map';
 import { GamePhase } from '../enums/game-phase';
-import { IEnemy } from './enemy-model';
+import { Enemy } from '../entities/enemy';
+
 
 export interface IGameSession {
   round: number;
@@ -9,5 +10,5 @@ export interface IGameSession {
   spawnRate: number;
   phase: GamePhase;
   map: GameMap;
-  enemies: IEnemy[];
+  enemies: Enemy[];
 }

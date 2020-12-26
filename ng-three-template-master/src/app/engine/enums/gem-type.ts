@@ -1,6 +1,6 @@
-import { ITower } from '../data-models/tower-model';
+import { ITowerType } from '../data-models/tower-type-model';
 
-let GemType: { [ key: string ]: ITower };
+let GemType: { [ key: string ]: ITowerType };
 GemType = {
   P1: {
     name: 'Chipped Amethyst',

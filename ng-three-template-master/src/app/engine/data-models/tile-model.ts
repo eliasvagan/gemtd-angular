@@ -1,7 +1,7 @@
-import { ITower } from './tower-model';
-import { IHasPosition } from '../entities/has-position';
+import { ITowerType } from './tower-type-model';
+import { IHasPosition } from './has-position';
 
 export interface ITile extends IHasPosition{
-  tower?: ITower | 'stone';
+  tower?: ITowerType | 'stone';
 }
 

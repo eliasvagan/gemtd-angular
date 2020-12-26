@@ -1,8 +1,8 @@
-import { ITower } from '../data-models/tower-model';
+import { ITowerType } from '../data-models/tower-type-model';
 import { GemType } from './gem-type';
 
-let TowerType: { [ key: string ]: ITower };
-TowerType  = {
+let TowerTypes: { [ key: string ]: ITowerType };
+TowerTypes  = {
   Silver: {
     name: 'Silver',
     damage: 10,
@@ -349,4 +349,4 @@ TowerType  = {
   },
 };
 
-export { TowerType };
+export { TowerTypes };

@@ -1,4 +1,4 @@
-import { IHasPosition } from '../entities/has-position';
+import { IHasPosition } from './has-position';
 
 export interface IEnemy extends IHasPosition {
   hp: number;

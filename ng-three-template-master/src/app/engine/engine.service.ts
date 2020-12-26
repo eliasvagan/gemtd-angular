@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { ElementRef, Injectable, NgZone, OnDestroy } from '@angular/core';
+import { GameManager } from './entities/game-manager';
 
 @Injectable({providedIn: 'root'})
 export class EngineService implements OnDestroy {
@@ -9,9 +10,9 @@ export class EngineService implements OnDestroy {
   private scene: THREE.Scene;
   private light: THREE.AmbientLight;
   private grid: THREE.GridHelper;
+  private gm: GameManager;
 
-  private cube: THREE.Mesh;
-
+  private prevFrame: Date;
   private frameId: number = null;
 
   public constructor(private ngZone: NgZone) {
@@ -32,10 +33,14 @@ export class EngineService implements OnDestroy {
       alpha: true,    // transparent background
       antialias: true // smooth edges
     });
+
     this.renderer.setSize(window.innerWidth, window.innerHeight);
 
     // create the scene
     this.scene = new THREE.Scene();
+
+    // Game Manager
+    this.gm = new GameManager(this.scene);
 
     const cameraZoom = 0.15;
 
@@ -51,7 +56,6 @@ export class EngineService implements OnDestroy {
 
     this.camera.position.set(20, -20, 15);
     this.camera.lookAt(this.scene.position);
-    console.log(this.camera);
     this.scene.add(this.camera);
 
     // soft white light
@@ -98,9 +102,20 @@ export class EngineService implements OnDestroy {
       this.render();
     });
 
+    // Handle game updates with frame time
+
+    if (this.prevFrame === undefined) {
+      this.prevFrame = new Date();
+    }
+    const now: Date = new Date();
+    const dt: number = now.valueOf() - this.prevFrame.valueOf();
+    this.gm.handleUpdate(dt);
+
+
     // this.cube.rotation.x += 0.01;
     // this.cube.rotation.y += 0.01;
     this.renderer.render(this.scene, this.camera);
+    this.prevFrame = new Date();
   }
 
   public resize(): void {

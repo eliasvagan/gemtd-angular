@@ -23,7 +23,8 @@ export class GameManager {
   }
 
   handleUpdate(dt: number): void {
-
+    this.session.enemies.forEach(enemy => enemy.update(dt));
+    this.session.map.update(dt);
   }
 
   handleNextPhase(): void {
