@@ -5,7 +5,7 @@ export interface ITower {
   speed: number;
   slowWeight?: number;
   slowTime?: number;
-  splitShots?: number;
+  splitShots: number;
   model3d?: string;
   buildCombination?: ITower[];
 }
