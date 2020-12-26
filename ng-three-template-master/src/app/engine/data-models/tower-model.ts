@@ -3,7 +3,9 @@ export interface ITower {
   damage: number;
   range: number;
   speed: number;
-  splitShots: number;
+  slowWeight?: number;
+  slowTime?: number;
+  splitShots?: number;
   model3d?: string;
   buildCombination?: ITower[];
 }

@@ -1,7 +1,8 @@
 import { ITower } from '../data-models/tower-model';
 import { GemType } from './gem-type';
 
-export const TowerType: { [ key: string ]: ITower } = {
+let TowerType: { [ key: string ]: ITower };
+TowerType  = {
   Silver: {
     name: 'Silver',
     damage: 10,
@@ -10,13 +11,21 @@ export const TowerType: { [ key: string ]: ITower } = {
     splitShots: 1,
     buildCombination: [ GemType.D1, GemType.B1, GemType.Y1 ]
   },
+  SilverKnight: {
+    name: 'Silver Knight',
+    damage: 50,
+    range: 6,
+    speed: 2,
+    splitShots: 1,
+    buildCombination: [ GemType.Q2, GemType.R3, TowerType.Silver ]
+  },
   PinkDiamond: {
     name: 'Pink Diamond',
     damage: 10,
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: []
+    buildCombination: [ GemType.D3, GemType.Y3, GemType.D5 ]
   },
   HugePinkDiamond: {
     name: 'Huge Pink Diamond',
@@ -24,7 +33,7 @@ export const TowerType: { [ key: string ]: ITower } = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: []
+    buildCombination: [ TowerType.PinkDiamond, TowerType.Silver, TowerType.SilverKnight ]
   },
   KohinoorDiamond: {
     name: 'Koh-i-noor Diamond',
@@ -32,7 +41,7 @@ export const TowerType: { [ key: string ]: ITower } = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: []
+    buildCombination: [ TowerType.HugePinkDiamond, GemType.D6, GemType.P6 ]
   },
   Malachite: {
     name: 'Malachite',
@@ -40,7 +49,7 @@ export const TowerType: { [ key: string ]: ITower } = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: []
+    buildCombination: [ GemType.Y1, GemType.G1, GemType.Q1 ]
   },
   VividMalachite: {
     name: 'Vivid Malachite',
@@ -48,7 +57,7 @@ export const TowerType: { [ key: string ]: ITower } = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: []
+    buildCombination: [ GemType.Y3, GemType.D2, TowerType.Malachite ]
   },
   Uranium238: {
     name: 'Uranium-238',
@@ -72,7 +81,7 @@ export const TowerType: { [ key: string ]: ITower } = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: []
+    buildCombination: [ TowerType.Uranium235, GemType.Y6, GemType.Q6 ]
   },
   AsteriatedRuby: {
     name: 'Asteriated Ruby',
@@ -80,7 +89,7 @@ export const TowerType: { [ key: string ]: ITower } = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: []
+    buildCombination: [ GemType.R2, GemType.R1, GemType.P1 ]
   },
   Volcano: {
     name: 'Volcano',
@@ -88,7 +97,7 @@ export const TowerType: { [ key: string ]: ITower } = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: []
+    buildCombination: [ TowerType.AsteriatedRuby, GemType.P3, GemType.R4 ]
   },
   Bloodstone: {
     name: 'Bloodstone',
@@ -339,3 +348,5 @@ export const TowerType: { [ key: string ]: ITower } = {
     buildCombination: []
   },
 };
+
+export { TowerType };

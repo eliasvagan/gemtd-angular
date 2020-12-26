@@ -1,6 +1,7 @@
 import { ITower } from '../data-models/tower-model';
 
-export const GemType: { [ key: string ]: ITower } = {
+let GemType: { [ key: string ]: ITower };
+GemType = {
   P1: {
     name: 'Chipped Amethyst',
     damage: 10,
@@ -35,6 +36,14 @@ export const GemType: { [ key: string ]: ITower } = {
     range: 4,
     speed: 1,
     splitShots: 1
+  },
+  P6: {
+    name: 'Huge Amethyst',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1,
+    buildCombination: [ GemType.P5, GemType.P5 ]
   },
 
   Q1: {
@@ -71,6 +80,14 @@ export const GemType: { [ key: string ]: ITower } = {
     range: 4,
     speed: 1,
     splitShots: 1
+  },
+  Q6: {
+    name: 'Huge Aquamarine',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1,
+    buildCombination: [ GemType.Q5, GemType.Q5 ]
   },
 
   D1: {
@@ -144,6 +161,14 @@ export const GemType: { [ key: string ]: ITower } = {
     speed: 1,
     splitShots: 1
   },
+  G6: {
+    name: 'Huge Emerald',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1,
+    buildCombination: [ GemType.G5, GemType.G5 ]
+  },
 
   E1: {
     name: 'Chipped Opal',
@@ -175,6 +200,13 @@ export const GemType: { [ key: string ]: ITower } = {
   },
   E5: {
     name: 'Perfect Opal',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1
+  },
+  E6: {
+    name: 'Huge Opal',
     damage: 10,
     range: 4,
     speed: 1,
@@ -216,6 +248,14 @@ export const GemType: { [ key: string ]: ITower } = {
     speed: 1,
     splitShots: 1
   },
+  R6: {
+    name: 'Huge Ruby',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1,
+    buildCombination: [ GemType.R5, GemType.R5 ]
+  },
 
   B1: {
     name: 'Chipped Sapphire',
@@ -251,6 +291,14 @@ export const GemType: { [ key: string ]: ITower } = {
     range: 4,
     speed: 1,
     splitShots: 1
+  },
+  B6: {
+    name: 'Huge Sapphire',
+    damage: 10,
+    range: 4,
+    speed: 1,
+    splitShots: 1,
+    buildCombination: [ GemType.B5, GemType.B5 ]
   },
 
   Y1: {
@@ -288,4 +336,14 @@ export const GemType: { [ key: string ]: ITower } = {
     speed: 1,
     splitShots: 1
   },
+  Y6: {
+    name: 'Huge Topaz',
+    damage: 100,
+    range: 10,
+    speed: 4,
+    splitShots: 3,
+    buildCombination: [ GemType.Y5, GemType.Y5 ]
+  },
 };
+
+export { GemType };
