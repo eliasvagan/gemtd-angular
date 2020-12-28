@@ -42,7 +42,7 @@ export class EngineService implements OnDestroy {
     // Game Manager
     this.gm = new GameManager(this.scene);
 
-    const cameraZoom = 0.15;
+    /* const cameraZoom = 0.25;
 
     // this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.camera = new THREE.OrthographicCamera(
@@ -54,7 +54,11 @@ export class EngineService implements OnDestroy {
       1000
     );
 
-    this.camera.position.set(20, -20, 15);
+    */
+
+    this.camera = new THREE.OrthographicCamera(-10, 10, 10, -20, 1, 1000);
+
+    this.camera.position.set(100, 100, 100);
     this.camera.lookAt(this.scene.position);
     this.scene.add(this.camera);
 
@@ -63,19 +67,16 @@ export class EngineService implements OnDestroy {
     this.light.position.z = 10;
     this.scene.add(this.light);
 
-    this.generateBoard();
-
-  }
-
-  public generateBoard(): void {
+    /* GRID
     const size = 10;
-    const divisions = 10;
+    const divisions = 11;
 
     const gridHelper = new THREE.GridHelper( size, divisions );
     gridHelper.scale.set(size, size, size);
-    gridHelper.rotateX(Math.PI / 2);
+
     this.grid = gridHelper;
     this.scene.add( gridHelper );
+    */
 
   }
 
@@ -99,23 +100,23 @@ export class EngineService implements OnDestroy {
 
   public render(): void {
     this.frameId = requestAnimationFrame(() => {
+
+      // Handle game updates with frame time
+
+      if (this.prevFrame === undefined) {
+        this.prevFrame = new Date();
+      }
+      const now: Date = new Date();
+      const dt: number = now.valueOf() - this.prevFrame.valueOf();
+      this.gm.handleUpdate(dt);
+
+      this.renderer.render(this.scene, this.camera);
+      this.prevFrame = new Date();
+
       this.render();
     });
 
-    // Handle game updates with frame time
 
-    if (this.prevFrame === undefined) {
-      this.prevFrame = new Date();
-    }
-    const now: Date = new Date();
-    const dt: number = now.valueOf() - this.prevFrame.valueOf();
-    this.gm.handleUpdate(dt);
-
-
-    // this.cube.rotation.x += 0.01;
-    // this.cube.rotation.y += 0.01;
-    this.renderer.render(this.scene, this.camera);
-    this.prevFrame = new Date();
   }
 
   public resize(): void {

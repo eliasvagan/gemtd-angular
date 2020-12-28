@@ -2,8 +2,9 @@ import { IEnemy } from '../data-models/enemy-model';
 import { IMap } from '../data-models/map-model';
 import { IEnemyCheckpoint } from '../data-models/enemy-checkpoint';
 import { EuclideanDistance } from '../helpers/trig-helpers';
+import { GameObject } from './game-object';
 
-export class Enemy implements IEnemy {
+export class Enemy extends GameObject implements IEnemy {
 
   flying: boolean;
   hp: number;
@@ -16,6 +17,7 @@ export class Enemy implements IEnemy {
   private targetTileEntity: IEnemyCheckpoint;
 
   constructor(data: IEnemy, gameMap: IMap) {
+    super();
     Object.assign(this, data);
     this.gameMap = gameMap;
     this.targetTileIndex = 0;

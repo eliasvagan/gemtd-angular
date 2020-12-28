@@ -6,7 +6,7 @@ import { GamePhase } from '../enums/game-phase';
 export class GameManager {
 
   private session: IGameSession;
-  private scene: THREE.Scene;
+  private readonly scene: THREE.Scene;
 
   constructor(scene: THREE.Scene) {
     this.scene = scene;
@@ -17,9 +17,10 @@ export class GameManager {
       score: 0,
       spawnRate: 5,
       phase: GamePhase.Building,
-      map: new GameMap(),
+      map: new GameMap(this.scene),
       enemies: []
     };
+
   }
 
   handleUpdate(dt: number): void {

@@ -1,5 +1,5 @@
 import { ITowerType } from '../data-models/tower-type-model';
-import { GemType } from './gem-type';
+import { GemTypes } from './gem-types';
 
 let TowerTypes: { [ key: string ]: ITowerType };
 TowerTypes  = {
@@ -9,7 +9,7 @@ TowerTypes  = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: [ GemType.D1, GemType.B1, GemType.Y1 ]
+    buildCombination: [ GemTypes.D1, GemTypes.B1, GemTypes.Y1 ]
   },
   SilverKnight: {
     name: 'Silver Knight',
@@ -17,7 +17,7 @@ TowerTypes  = {
     range: 6,
     speed: 2,
     splitShots: 1,
-    buildCombination: [ GemType.Q2, GemType.R3, TowerType.Silver ]
+    buildCombination: [ GemTypes.Q2, GemTypes.R3, TowerTypes.Silver ]
   },
   PinkDiamond: {
     name: 'Pink Diamond',
@@ -25,7 +25,7 @@ TowerTypes  = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: [ GemType.D3, GemType.Y3, GemType.D5 ]
+    buildCombination: [ GemTypes.D3, GemTypes.Y3, GemTypes.D5 ]
   },
   HugePinkDiamond: {
     name: 'Huge Pink Diamond',
@@ -33,7 +33,7 @@ TowerTypes  = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: [ TowerType.PinkDiamond, TowerType.Silver, TowerType.SilverKnight ]
+    buildCombination: [ TowerTypes.PinkDiamond, TowerTypes.Silver, TowerTypes.SilverKnight ]
   },
   KohinoorDiamond: {
     name: 'Koh-i-noor Diamond',
@@ -41,7 +41,7 @@ TowerTypes  = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: [ TowerType.HugePinkDiamond, GemType.D6, GemType.P6 ]
+    buildCombination: [ TowerTypes.HugePinkDiamond, GemTypes.D6, GemTypes.P6 ]
   },
   Malachite: {
     name: 'Malachite',
@@ -49,7 +49,7 @@ TowerTypes  = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: [ GemType.Y1, GemType.G1, GemType.Q1 ]
+    buildCombination: [ GemTypes.Y1, GemTypes.G1, GemTypes.Q1 ]
   },
   VividMalachite: {
     name: 'Vivid Malachite',
@@ -57,7 +57,7 @@ TowerTypes  = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: [ GemType.Y3, GemType.D2, TowerType.Malachite ]
+    buildCombination: [ GemTypes.Y3, GemTypes.D2, TowerTypes.Malachite ]
   },
   Uranium238: {
     name: 'Uranium-238',
@@ -81,7 +81,7 @@ TowerTypes  = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: [ TowerType.Uranium235, GemType.Y6, GemType.Q6 ]
+    buildCombination: [ TowerTypes.Uranium235, GemTypes.Y6, GemTypes.Q6 ]
   },
   AsteriatedRuby: {
     name: 'Asteriated Ruby',
@@ -89,7 +89,7 @@ TowerTypes  = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: [ GemType.R2, GemType.R1, GemType.P1 ]
+    buildCombination: [ GemTypes.R2, GemTypes.R1, GemTypes.P1 ]
   },
   Volcano: {
     name: 'Volcano',
@@ -97,7 +97,7 @@ TowerTypes  = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: [ TowerType.AsteriatedRuby, GemType.P3, GemType.R4 ]
+    buildCombination: [ TowerTypes.AsteriatedRuby, GemTypes.P3, GemTypes.R4 ]
   },
   Bloodstone: {
     name: 'Bloodstone',
