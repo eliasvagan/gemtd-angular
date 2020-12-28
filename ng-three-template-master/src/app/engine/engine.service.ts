@@ -58,9 +58,10 @@ export class EngineService implements OnDestroy {
 
     this.camera = new THREE.OrthographicCamera(-10, 10, 10, -20, 1, 1000);
 
-    this.camera.position.set(100, 100, 100);
-    this.camera.lookAt(this.scene.position);
+    this.camera.position.set(100, 150, 100);
+    this.camera.lookAt(5, 0, 5);
     this.scene.add(this.camera);
+    this.updateCamera();
 
     // soft white light
     this.light = new THREE.AmbientLight(0x404040);
@@ -115,17 +116,29 @@ export class EngineService implements OnDestroy {
 
       this.render();
     });
+  }
 
+  private updateCamera() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const portrait = width / height < 1;
 
+    const nw = !portrait ? width / height : 1;
+    const nh = portrait ? height / width : 1;
+
+    const camSize = 8;
+
+    this.camera.top = -nh * camSize;
+    this.camera.bottom = nh * camSize;
+    this.camera.left = -nw * camSize;
+    this.camera.right = nw * camSize;
+    this.camera.updateProjectionMatrix();
   }
 
   public resize(): void {
     const width = window.innerWidth;
     const height = window.innerHeight;
-
-    // this.camera.aspect = width / height;
-    // this.camera.updateProjectionMatrix();
-
+    this.updateCamera();
     this.renderer.setSize(width, height);
   }
 }

@@ -4,6 +4,11 @@ import { Tile } from './tile';
 
 export class Checkpoint extends Tile {
   constructor(x: number, y: number) {
-    super({ x, y }, Geometries.CubeTall, Materials.WireFrameBlue);
+    super(
+      { x, y },
+      Geometries.CubeTall,
+      Materials.WireFrameBlue,
+      { offset: { x: 0, y: -1, z: 0 }},
+    );
   }
 }
