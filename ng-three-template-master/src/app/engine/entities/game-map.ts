@@ -32,10 +32,11 @@ export class GameMap implements IMap {
     // Place checkpoints
     this.checkpoints = [];
     [
-      { x: 2 , y: 5 },
-      { x: 8 , y: 5 },
-      { x: 8 , y: 2 },
-      { x: 5 , y: 2 },
+      { x: 1 , y: 0 },
+      { x: 1 , y: 5 },
+      { x: 9 , y: 5 },
+      { x: 9 , y: 1 },
+      { x: 5 , y: 1 },
       { x: 5 , y: 9 },
       { x: 10, y: 9 }
     ].forEach(pos => {
@@ -43,14 +44,10 @@ export class GameMap implements IMap {
       this.addTile(cp);
       this.checkpoints.push(cp);
     });
-
-    console.log('Rendered map to scene', this.scene);
   }
 
   update(dt): void {
-    this.tiles.forEach(tile => {
-      tile.update(dt);
-    });
+    this.tiles.forEach(tile => tile.update(dt));
   }
 
   addTile(tile: Tile): boolean {

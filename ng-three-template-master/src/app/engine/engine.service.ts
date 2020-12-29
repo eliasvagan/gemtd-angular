@@ -1,6 +1,7 @@
 import * as THREE from 'three';
-import { ElementRef, Injectable, NgZone, OnDestroy } from '@angular/core';
-import { GameManager } from './entities/game-manager';
+import {ElementRef, Injectable, NgZone, OnDestroy} from '@angular/core';
+import {GameManager} from './entities/game-manager';
+import {MouseEventType} from './enums/mouse-events';
 
 @Injectable({providedIn: 'root'})
 export class EngineService implements OnDestroy {
@@ -9,7 +10,6 @@ export class EngineService implements OnDestroy {
   private camera: THREE.OrthographicCamera;
   private scene: THREE.Scene;
   private light: THREE.AmbientLight;
-  private grid: THREE.GridHelper;
   private gm: GameManager;
 
   private prevFrame: Date;
@@ -96,6 +96,9 @@ export class EngineService implements OnDestroy {
       window.addEventListener('resize', () => {
         this.resize();
       });
+
+      this.canvas.addEventListener('click', evt => this.handleMouseEvent(evt, MouseEventType.Click));
+      this.canvas.addEventListener('mousemove', evt => this.handleMouseEvent(evt, MouseEventType.Move));
     });
   }
 
@@ -116,6 +119,27 @@ export class EngineService implements OnDestroy {
 
       this.render();
     });
+  }
+
+  private handleMouseEvent(evt: MouseEvent, type: MouseEventType): void {
+    const hit = this.raycastFromMouseEvent(evt);
+    if (hit !== null) {
+      hit.object.handleMouseEvent(evt, type);
+    }
+  }
+
+
+  private raycastFromMouseEvent(evt: MouseEvent): any {
+    const raycaster = new THREE.Raycaster(); // create once
+    const mouse = new THREE.Vector2(); // create once
+
+    mouse.x = ( evt.clientX / this.canvas.clientWidth ) * 2 - 1;
+    mouse.y = - ( evt.clientY / this.canvas.clientHeight ) * 2 + 1;
+
+    raycaster.setFromCamera( mouse, this.camera );
+
+    const intersects = raycaster.intersectObjects( this.scene.children );
+    return intersects.length > 0 ? intersects.slice(-1)[0] : null;
   }
 
   private updateCamera() {
