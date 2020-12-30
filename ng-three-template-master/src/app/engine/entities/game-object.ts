@@ -36,6 +36,7 @@ export class GameObject implements IRenderable {
     );
     this.updateRenderModel();
     this.updateRenderPosition();
+    this.renderSettings.scene.add(this.model);
   }
 
   handleMouseEvent(evt: MouseEvent, type: MouseEventType): void {
@@ -53,6 +54,7 @@ export class GameObject implements IRenderable {
       }
       case MouseEventType.Click: {
         console.log(GameObject.HOVERED);
+        this.removeFromScene();
         break;
       }
       case MouseEventType.LeftButtonDown: {
@@ -89,13 +91,18 @@ export class GameObject implements IRenderable {
 
     // Update model to account for changed state
     const { meshMapLoaded } = this.renderSettings;
+    const oldModel = this.model;
+
     if (meshMapLoaded) {
       if (GameObject.HOVERED === this) {
-        this.model = meshMapLoaded.hovered;
-        // this.model = new THREE.Mesh(Geometries.CubeFlat, Materials.WireFrameRed);
+        this.model.geometry = meshMapLoaded.hovered.geometry;
+        this.model.material = meshMapLoaded.hovered.material;
       } else {
-        this.model = meshMapLoaded.normal;
+        this.model.geometry = meshMapLoaded.normal.geometry;
+        this.model.material = meshMapLoaded.normal.material;
       }
+    } else {
+      this.model = new THREE.Mesh(Geometries.Cube, Materials.WireFrameRed);
     }
     Object.assign(this.model, {
       handleMouseEvent: (evt, type) => this.handleMouseEvent(evt, type)
@@ -116,6 +123,9 @@ export class GameObject implements IRenderable {
       }
     }
 
+    // this.position.x += 0.01 * (Math.random() - 0.5) * dt;
+    // this.position.y += 0.01 * (Math.random() - 0.5) * dt;
+
     // Update rendered model to game object position
     this.updateRenderPosition();
   }
@@ -128,12 +138,8 @@ export class GameObject implements IRenderable {
     );
   }
 
-  addToScene(scene: THREE.Scene): void {
-    scene.add(this.model);
-  }
 
-  removeFromScene(scene: THREE.Scene): void {
-    scene.remove(this.model);
+  removeFromScene(): void {
+    this.renderSettings.scene.remove(this.model);
   }
-
 }

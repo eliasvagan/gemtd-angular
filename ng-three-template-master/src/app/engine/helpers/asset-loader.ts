@@ -1,11 +1,17 @@
 import { ILoadedAssets, IUnloadedAssets } from '../data-models/assets-model';
 import { OBJLoader, MTLLoader } from 'three-full';
+import { Meshes } from '../enums/meshes';
 
 const MODELS_PATH = '/assets/models/';
 
 export class AssetLoader {
-  async loadAssets(meshMaps: IUnloadedAssets): Promise<ILoadedAssets> {
+  private debugging: boolean;
 
+  constructor(debugging: boolean = false) {
+    this.debugging = debugging;
+  }
+
+  async loadAssets(meshMaps: IUnloadedAssets): Promise<ILoadedAssets> {
     async function loadAsset(name) {
       const loadMTLPromise = new Promise(
         (resolve, reject) => {
@@ -59,8 +65,8 @@ export class AssetLoader {
     const loaded: ILoadedAssets = {};
     for (const [name, meshMap] of meshMapTuples) {
       loaded[name] = {
-        normal: await loadAsset(meshMap.normal),
-        hovered: await loadAsset(meshMap.hovered),
+        normal: this.debugging ? Meshes.CubeWhite : await loadAsset(meshMap.normal),
+        hovered: this.debugging ? Meshes.CubeRed : await loadAsset(meshMap.hovered),
       };
       loadedCount++;
       console.log(`Loaded ${loadedCount} of ${totalCount}`);

@@ -1,15 +1,17 @@
-import { Materials } from '../enums/materials';
-import { Geometries } from '../enums/geometries';
 import { Tile } from './tile';
 import { MeshMapIdentifiers } from '../enums/game-object-mesh-maps';
+import { Scene } from 'three-full';
 
 export class Checkpoint extends Tile {
-  constructor(x: number, y: number) {
+  constructor(
+    position: { x: number, y: number },
+    scene: Scene
+  ) {
     super(
-      { x, y },
-      Geometries.CubeTall,
-      Materials.WireFrameBlue,
+      position,
+      scene,
       {
+        scene,
         offset: { x: 0, y: -1, z: 0 },
         meshMapIdentifier: MeshMapIdentifiers.CHECKPOINT
       },

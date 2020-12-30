@@ -15,7 +15,11 @@ export class EngineComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    const assetLoader = new AssetLoader();
+
+    const debugging = true;
+
+    const assetLoader = new AssetLoader(debugging);
+
     assetLoader.loadAssets(GameObjectMeshMaps).then((assets: ILoadedAssets) => {
       this.$assets = assets;
     });

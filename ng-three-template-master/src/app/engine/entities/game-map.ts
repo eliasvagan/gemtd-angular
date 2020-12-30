@@ -20,9 +20,7 @@ export class GameMap implements IMap {
     this.tiles = [];
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
-        const nt = new Tile({ x, y });
-        this.tiles.push(new Tile({ x, y }));
-        nt.addToScene(this.scene);
+        this.tiles.push(new Tile({ x, y }, this.scene));
       }
     }
 
@@ -37,7 +35,7 @@ export class GameMap implements IMap {
       { x: 5 , y: 9 },
       { x: 10, y: 9 }
     ].forEach(pos => {
-      const cp = new Checkpoint(pos.x, pos.y);
+      const cp = new Checkpoint(pos, this.scene);
       this.addTile(cp);
       this.checkpoints.push(cp);
     });
@@ -60,9 +58,8 @@ export class GameMap implements IMap {
     const index = x + y * this.width;
 
     const oldTile = this.tiles[index];
-    oldTile.removeFromScene(this.scene);
+    oldTile.removeFromScene();
     this.tiles[index] = tile;
-    tile.addToScene(this.scene);
 
     return true;
   }
