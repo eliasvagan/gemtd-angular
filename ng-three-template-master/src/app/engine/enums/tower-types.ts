@@ -75,7 +75,7 @@ TowerTypes  = {
     splitShots: 1,
     buildCombination: []
   },
-  DeplementedKyparium: {
+  DepletedKyparium: {
     name: 'Deplemented Kyparium',
     damage: 10,
     range: 4,

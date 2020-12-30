@@ -1,3 +1,9 @@
-<div class="engine-wrapper">
-  <canvas #rendererCanvas id="renderCanvas"></canvas>
+<div *ngIf="!$loading; else loadingBar">
+  <div class="engine-wrapper">
+    <canvas #rendererCanvas id="renderCanvas"></canvas>
+  </div>
 </div>
+
+<ng-template #loadingBar>
+  <p>Loading ...</p>
+</ng-template>

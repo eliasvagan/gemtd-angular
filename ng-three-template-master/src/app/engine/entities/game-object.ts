@@ -8,7 +8,7 @@ import { MouseEventType } from '../enums/mouse-events';
 
 export class GameObject implements IRenderable {
 
-  public static HOVERED: GameObject;
+  public static HOVERED?: GameObject;
 
   identifier: string;
   model: THREE.Mesh;
@@ -27,7 +27,7 @@ export class GameObject implements IRenderable {
     this.model = new THREE.Mesh(geometry, material);
 
     this.state = GameObjectState.Changed;
-    
+
     this.renderSettings = Object.assign(
       { offset: { x: 0, y: 0, z: 0 }},
       renderSettings
@@ -39,15 +39,18 @@ export class GameObject implements IRenderable {
   handleMouseEvent(evt: MouseEvent, type: MouseEventType): void {
     switch (type) {
       case MouseEventType.Move: {
-        if (GameObject.HOVERED && GameObject.HOVERED !== this) {
-          GameObject.HOVERED.state = GameObjectState.Changed;
+        const prevHovered = GameObject.HOVERED;
+        if (prevHovered !== this) {
+          if (prevHovered instanceof GameObject) {
+            prevHovered.state = GameObjectState.Changed;
+          }
+          GameObject.HOVERED = this;
+          this.state = GameObjectState.Changed;
         }
-        GameObject.HOVERED = this;
-        this.state = GameObjectState.Changed;
         break;
       }
       case MouseEventType.Click: {
-        console.log(GameObject.HOVERED);
+        console.log(GameObject.HOVERED.position);
         break;
       }
       case MouseEventType.LeftButtonDown: {
@@ -71,21 +74,20 @@ export class GameObject implements IRenderable {
 
   updateRenderModel() {
     if (GameObject.HOVERED === this) {
-      this.model = new THREE.Mesh(Geometries.CubeFlat, Materials.WireFrameGreen);
-    } else {
       this.model = new THREE.Mesh(Geometries.CubeFlat, Materials.WireFrameRed);
+    } else {
+      this.model = new THREE.Mesh(Geometries.CubeFlat, Materials.WireFrameGray);
     }
     Object.assign(this.model, {
       handleMouseEvent: (evt, type) => this.handleMouseEvent(evt, type)
     });
-    this.state = GameObjectState.Unchanged;
   }
 
   update(dt) {
     switch (this.state) {
       case GameObjectState.Changed: {
         this.updateRenderModel();
-
+        this.state = GameObjectState.Unchanged;
         break;
       }
       case GameObjectState.Unchanged: {

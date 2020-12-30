@@ -1,7 +1,8 @@
 import * as THREE from 'three';
-import {ElementRef, Injectable, NgZone, OnDestroy} from '@angular/core';
-import {GameManager} from './entities/game-manager';
-import {MouseEventType} from './enums/mouse-events';
+import { ElementRef, Injectable, NgZone, OnDestroy } from '@angular/core';
+import { GameManager } from './entities/game-manager';
+import { MouseEventType } from './enums/mouse-events';
+import { ILoadedAssets } from './data-models/assets-model';
 
 @Injectable({providedIn: 'root'})
 export class EngineService implements OnDestroy {
@@ -11,6 +12,7 @@ export class EngineService implements OnDestroy {
   private scene: THREE.Scene;
   private light: THREE.AmbientLight;
   private gm: GameManager;
+  private assets: ILoadedAssets;
 
   private prevFrame: Date;
   private frameId: number = null;
@@ -24,7 +26,11 @@ export class EngineService implements OnDestroy {
     }
   }
 
-  public createScene(canvas: ElementRef<HTMLCanvasElement>): void {
+  public createScene(canvas: ElementRef<HTMLCanvasElement>, loadedAssets: ILoadedAssets): void {
+    // Save loaded assets
+    this.assets = loadedAssets;
+    console.log('Created scene with ', Object.keys(this.assets.length).length, ' loaded assets.');
+
     // The first step is to get the reference of the canvas element from our HTML document
     this.canvas = canvas.nativeElement;
 
@@ -41,20 +47,6 @@ export class EngineService implements OnDestroy {
 
     // Game Manager
     this.gm = new GameManager(this.scene);
-
-    /* const cameraZoom = 0.25;
-
-    // this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.camera = new THREE.OrthographicCamera(
-      (window.innerWidth * cameraZoom) / -2,
-      (window.innerWidth * cameraZoom) / 2,
-      (window.innerHeight * cameraZoom) / 2,
-      (window.innerHeight * cameraZoom) / -2,
-      1,
-      1000
-    );
-
-    */
 
     this.camera = new THREE.OrthographicCamera(-10, 10, 10, -20, 1, 1000);
 
