@@ -27,9 +27,9 @@ export class EngineService implements OnDestroy {
   }
 
   public createScene(canvas: ElementRef<HTMLCanvasElement>, loadedAssets: ILoadedAssets): void {
-    // Save loaded assets
+    // Save loaded 3D assets
     this.assets = loadedAssets;
-    console.log('Created scene with ', Object.keys(this.assets.length).length, ' loaded assets.');
+    console.log('Created scene with ', Object.keys(this.assets).length, ' loaded assets.');
 
     // The first step is to get the reference of the canvas element from our HTML document
     this.canvas = canvas.nativeElement;
@@ -46,7 +46,7 @@ export class EngineService implements OnDestroy {
     this.scene = new THREE.Scene();
 
     // Game Manager
-    this.gm = new GameManager(this.scene);
+    this.gm = new GameManager(this.scene, this.assets);
 
     this.camera = new THREE.OrthographicCamera(-10, 10, 10, -20, 1, 1000);
 

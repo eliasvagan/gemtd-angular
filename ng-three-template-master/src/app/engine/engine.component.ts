@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { EngineService } from './engine.service';
 import { GameObjectMeshMaps } from './enums/game-object-mesh-maps';
 import { AssetLoader } from './helpers/asset-loader';
+import { ILoadedAssets } from './data-models/assets-model';
 
 @Component({
   selector: 'app-engine',
@@ -9,22 +9,17 @@ import { AssetLoader } from './helpers/asset-loader';
 })
 export class EngineComponent implements OnInit {
 
-  @ViewChild('rendererCanvas', {static: true})
-  public rendererCanvas: ElementRef<HTMLCanvasElement>;
+  $assets: ILoadedAssets;
 
-  $loading = false;
-
-  public constructor(private engServ: EngineService) {
+  public constructor() {
   }
 
   public ngOnInit(): void {
-    this.$loading = true;
     const assetLoader = new AssetLoader();
-    assetLoader.loadAssets(GameObjectMeshMaps).then((res) => {
-      this.$loading = false;
-      this.engServ.createScene(this.rendererCanvas, res);
-      this.engServ.animate();
+    assetLoader.loadAssets(GameObjectMeshMaps).then((assets: ILoadedAssets) => {
+      this.$assets = assets;
     });
   }
+
 
 }

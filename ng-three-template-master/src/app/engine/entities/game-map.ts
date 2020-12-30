@@ -1,10 +1,7 @@
+import * as THREE from 'three';
 import { ITile } from '../data-models/tile-model';
-import { IEnemyCheckpoint } from '../data-models/enemy-checkpoint';
-import { Tower } from './tower';
 import { IMap } from '../data-models/map-model';
 import { Checkpoint } from './checkpoint';
-import { IRenderable } from '../data-models/renderable';
-import * as THREE from 'three';
 import { Tile } from './tile';
 
 export class GameMap implements IMap {

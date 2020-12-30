@@ -13,6 +13,7 @@ import {RouterModule} from '@angular/router';
 import { PlayComponent } from './menus/play/play.component';
 import {GameRoutingModule} from './game-routing/game-routing.module';
 import { ShopComponent } from './menus/shop/shop.component';
+import { GameInstanceComponent } from './engine/game-instance/game-instance.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ShopComponent } from './menus/shop/shop.component';
     MainMenuComponent,
     SplashComponent,
     PlayComponent,
-    ShopComponent
+    ShopComponent,
+    GameInstanceComponent
   ],
   imports: [
     BrowserModule,

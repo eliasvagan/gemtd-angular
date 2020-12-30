@@ -1,16 +1,18 @@
-import { IGameSession } from '../data-models/game-session';
-import { GameMap } from './game-map';
 import * as THREE from 'three';
+import { IGameSession } from '../data-models/game-session';
+import { ILoadedAssets } from '../data-models/assets-model';
+import { GameMap } from './game-map';
 import { GamePhase } from '../enums/game-phase';
+import { GameObject } from './game-object';
 
 export class GameManager {
 
   private session: IGameSession;
   private readonly scene: THREE.Scene;
 
-  constructor(scene: THREE.Scene) {
+  constructor(scene: THREE.Scene, assets: ILoadedAssets) {
+    GameObject.LOADED_ASSETS = assets;
     this.scene = scene;
-
     this.session = {
       round: 0,
       hp: 100,
@@ -20,7 +22,6 @@ export class GameManager {
       map: new GameMap(this.scene),
       enemies: []
     };
-
   }
 
   handleUpdate(dt: number): void {

@@ -1,9 +1,10 @@
 import { IGameObjectMeshMap, IGameObjectMeshMapLoaded } from './game-object-mesh-map';
+import { MeshMapIdentifiers } from '../enums/game-object-mesh-maps';
 
-export interface ILoadedAssets {
-  [key: string]: IGameObjectMeshMapLoaded;
-}
+export type ILoadedAssets = {
+  [key in MeshMapIdentifiers ]?: IGameObjectMeshMapLoaded;
+};
 
-export interface IUnloadedAssets {
-  [key: string]: IGameObjectMeshMap;
-}
+export type IUnloadedAssets = {
+  [key in MeshMapIdentifiers ]: IGameObjectMeshMap;
+};

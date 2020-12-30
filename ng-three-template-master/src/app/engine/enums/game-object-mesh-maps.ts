@@ -10,3 +10,8 @@ export const GameObjectMeshMaps: IUnloadedAssets = {
     hovered: 'checkpoint'
   }
 };
+
+export enum MeshMapIdentifiers {
+  TILE_FREE = 'TILE_FREE',
+  CHECKPOINT = 'CHECKPOINT',
+}

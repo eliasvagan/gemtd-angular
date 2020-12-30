@@ -1,10 +1,11 @@
-import { IGameObjectMeshMap } from './game-object-mesh-map';
+import { IGameObjectMeshMap, IGameObjectMeshMapLoaded } from './game-object-mesh-map';
 
 export interface IRenderSettings {
-  offset?: {
+  offset: {
     x: number,
     y: number,
     z: number
   };
-  meshMap: IGameObjectMeshMap;
+  meshMapIdentifier: string;
+  meshMapLoaded?: IGameObjectMeshMapLoaded;
 }

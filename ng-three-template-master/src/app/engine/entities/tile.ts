@@ -3,8 +3,7 @@ import { GameObject } from './game-object';
 import * as THREE from 'three';
 import { Geometries } from '../enums/geometries';
 import { Materials } from '../enums/materials';
-import { IRenderSettings } from '../data-models/render-settings';
-import { GameObjectMeshMaps } from '../enums/game-object-mesh-maps';
+import { MeshMapIdentifiers } from '../enums/game-object-mesh-maps';
 
 export class Tile extends GameObject implements ITile {
   position: { x: number; y: number };
@@ -13,9 +12,9 @@ export class Tile extends GameObject implements ITile {
     position: { x: number, y: number },
     geometry: THREE.Geometry = Geometries.CubeFlat,
     material: THREE.Material = Materials.WireFrameGray,
-    renderSettings: IRenderSettings = {
+    renderSettings = {
       offset: { x: 0, y: 0, z: 0 },
-      meshMap: GameObjectMeshMaps.TILE_FREE
+      meshMapIdentifier: MeshMapIdentifiers.TILE_FREE
     }
   ) {
     super(position, geometry, material, renderSettings);

@@ -1,21 +1,5 @@
 import { ILoadedAssets, IUnloadedAssets } from '../data-models/assets-model';
-import * as THREE from 'three';
-import { Materials } from '../enums/materials';
-import { Geometries } from '../enums/geometries';
 import { OBJLoader, MTLLoader } from 'three-full';
-
-const TEST_ASSETS: ILoadedAssets = {
-  ASSET1_NAME: {
-    normal: new THREE.Mesh(
-      Geometries.Cube,
-      Materials.WireFrameBlue
-    ),
-    hovered: new THREE.Mesh(
-      Geometries.Cube,
-      Materials.WireFrameBlue
-    )
-  }
-};
 
 const MODELS_PATH = '/assets/models/';
 
@@ -54,7 +38,7 @@ export class AssetLoader {
           }
           function loadMTLProgress(xhr){
             // console.log((xhr.loaded / xhr.total * 100) + '% loaded .mtl');
-            console.log(xhr.loaded / xhr.total * 100 + '%');
+            // console.log(xhr.loaded / xhr.total * 100 + '%');
           }
           function loadMTLFailed(error) {
             console.log(error);
@@ -72,8 +56,7 @@ export class AssetLoader {
     const totalCount = meshMapTuples.length;
     let loadedCount = 0;
 
-    const loaded = {};
-
+    const loaded: ILoadedAssets = {};
     for (const [name, meshMap] of meshMapTuples) {
       loaded[name] = {
         normal: await loadAsset(meshMap.normal),
@@ -83,6 +66,5 @@ export class AssetLoader {
       console.log(`Loaded ${loadedCount} of ${totalCount}`);
     }
     return loaded;
-    // return setTimeout(() => TEST_ASSETS, 400);
   }
 }

@@ -1,14 +1,16 @@
 import * as THREE from 'three';
 import { IRenderable } from '../data-models/renderable';
+import { IRenderSettings } from '../data-models/render-settings';
 import { Materials } from '../enums/materials';
 import { Geometries } from '../enums/geometries';
-import { IRenderSettings } from '../data-models/render-settings';
 import { GameObjectState } from '../enums/game-object-state';
 import { MouseEventType } from '../enums/mouse-events';
+import { ILoadedAssets } from '../data-models/assets-model';
 
 export class GameObject implements IRenderable {
 
   public static HOVERED?: GameObject;
+  public static LOADED_ASSETS?: ILoadedAssets;
 
   identifier: string;
   model: THREE.Mesh;
@@ -38,7 +40,7 @@ export class GameObject implements IRenderable {
 
   handleMouseEvent(evt: MouseEvent, type: MouseEventType): void {
     switch (type) {
-      case MouseEventType.Move: {
+      case MouseEventType.Move: {  // TODO: Fix hovering
         const prevHovered = GameObject.HOVERED;
         if (prevHovered !== this) {
           if (prevHovered instanceof GameObject) {
@@ -50,7 +52,7 @@ export class GameObject implements IRenderable {
         break;
       }
       case MouseEventType.Click: {
-        console.log(GameObject.HOVERED.position);
+        console.log(GameObject.HOVERED);
         break;
       }
       case MouseEventType.LeftButtonDown: {
@@ -73,10 +75,27 @@ export class GameObject implements IRenderable {
   }
 
   updateRenderModel() {
-    if (GameObject.HOVERED === this) {
-      this.model = new THREE.Mesh(Geometries.CubeFlat, Materials.WireFrameRed);
-    } else {
-      this.model = new THREE.Mesh(Geometries.CubeFlat, Materials.WireFrameGray);
+    const { meshMapIdentifier } = this.renderSettings;
+    const { LOADED_ASSETS } = GameObject;
+
+    // Load assets if needed
+    if (!this.renderSettings.meshMapLoaded) {
+      if (LOADED_ASSETS) {
+        this.renderSettings.meshMapLoaded = LOADED_ASSETS[meshMapIdentifier];
+      } else {
+        throw new Error(`Tried to load a non-existent mesh "${meshMapIdentifier}" from GameManager!`);
+      }
+    }
+
+    // Update model to account for changed state
+    const { meshMapLoaded } = this.renderSettings;
+    if (meshMapLoaded) {
+      if (GameObject.HOVERED === this) {
+        this.model = meshMapLoaded.hovered;
+        // this.model = new THREE.Mesh(Geometries.CubeFlat, Materials.WireFrameRed);
+      } else {
+        this.model = meshMapLoaded.normal;
+      }
     }
     Object.assign(this.model, {
       handleMouseEvent: (evt, type) => this.handleMouseEvent(evt, type)
