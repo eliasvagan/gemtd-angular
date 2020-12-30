@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GameObjectMeshMaps } from './enums/game-object-mesh-maps';
 import { AssetLoader } from './helpers/asset-loader';
 import { ILoadedAssets } from './data-models/assets-model';

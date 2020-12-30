@@ -1,5 +1,5 @@
 import { IHasPosition } from './has-position';
-import * as THREE from 'three';
+import * as THREE from 'three-full';
 import { IRenderSettings } from './render-settings';
 
 export interface IRenderable extends IHasPosition {

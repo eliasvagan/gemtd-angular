@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from 'three-full';
 import { ITile } from '../data-models/tile-model';
 import { IMap } from '../data-models/map-model';
 import { Checkpoint } from './checkpoint';

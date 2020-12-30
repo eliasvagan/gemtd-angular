@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from 'three-full';
 import { IRenderable } from '../data-models/renderable';
 import { IRenderSettings } from '../data-models/render-settings';
 import { Materials } from '../enums/materials';

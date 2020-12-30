@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from 'three-full';
 import { IGameSession } from '../data-models/game-session';
 import { ILoadedAssets } from '../data-models/assets-model';
 import { GameMap } from './game-map';

@@ -1,4 +1,4 @@
-import { IGameObjectMeshMap, IGameObjectMeshMapLoaded } from './game-object-mesh-map';
+import { IGameObjectMeshMapLoaded } from './game-object-mesh-map';
 
 export interface IRenderSettings {
   offset: {

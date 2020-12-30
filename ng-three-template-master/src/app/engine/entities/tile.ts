@@ -1,6 +1,6 @@
 import { ITile } from '../data-models/tile-model';
 import { GameObject } from './game-object';
-import * as THREE from 'three';
+import * as THREE from 'three-full';
 import { Geometries } from '../enums/geometries';
 import { Materials } from '../enums/materials';
 import { MeshMapIdentifiers } from '../enums/game-object-mesh-maps';
