@@ -16,7 +16,7 @@ export class EngineComponent implements OnInit {
 
   public ngOnInit(): void {
 
-    const debugging = true;
+    const debugging = false;
 
     const assetLoader = new AssetLoader(debugging);
 

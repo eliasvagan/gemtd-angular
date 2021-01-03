@@ -13,7 +13,7 @@ export class GameObject implements IRenderable {
   public static LOADED_ASSETS?: ILoadedAssets;
 
   identifier: string;
-  model: THREE.Mesh;
+  model: THREE.Object3D;
   position: { x: number; y: number };
   renderSettings: IRenderSettings;
   state: GameObjectState;
@@ -53,7 +53,7 @@ export class GameObject implements IRenderable {
         break;
       }
       case MouseEventType.Click: {
-        console.log(GameObject.HOVERED);
+
         this.removeFromScene();
         break;
       }
@@ -99,10 +99,12 @@ export class GameObject implements IRenderable {
         this.model.material = meshMapLoaded.hovered.material;
       } else {
         this.model.geometry = meshMapLoaded.normal.geometry;
-        this.model.material = meshMapLoaded.normal.material;
+        this.model.material = Materials.MatteRed; // meshMapLoaded.normal.material;
       }
     } else {
+
       this.model = new THREE.Mesh(Geometries.Cube, Materials.WireFrameRed);
+      this.model.receiveShadow = true;
     }
     Object.assign(this.model, {
       handleMouseEvent: (evt, type) => this.handleMouseEvent(evt, type)
@@ -131,11 +133,26 @@ export class GameObject implements IRenderable {
   }
 
   updateRenderPosition() {
-    this.model.position.set(
-      this.position.x + this.renderSettings.offset.x,
-      this.renderSettings.offset.y,
-      this.position.y + this.renderSettings.offset.z
-    );
+
+    { // Translate position of rendered model to game object
+      this.model.position.set(
+        this.position.x,
+        0,
+        this.position.y
+      );
+    }
+
+    { // Offset
+      const { x, y, z } = this.renderSettings.offset;
+      this.model.translateX(x);
+      this.model.translateY(y);
+      this.model.translateZ(z);
+    }
+
+    { // Scale
+      const sca = 0.5;
+      this.model.scale.set(sca, sca, sca);
+    }
   }
 
 

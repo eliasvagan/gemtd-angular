@@ -6,8 +6,8 @@ export const GameObjectMeshMaps: IUnloadedAssets = {
     hovered: 'platform-free-hover'
   },
   CHECKPOINT: {
-    normal: 'checkpoint',
-    hovered: 'checkpoint'
+    normal: 'sapphire',
+    hovered: 'sapphire'
   }
 };
 

@@ -24,5 +24,18 @@ export const Materials = {
   WireFrameBlue: new THREE.MeshBasicMaterial({
     color: '#0000ff',
     wireframe: true
+  }),
+
+  MatteRed: new THREE.MeshStandardMaterial({
+    visible: true,
+    color: '#94212e',
+    emissive: '#63c69f',
+    wireframe: false,
+    vertexColors: false,
+    roughness: 0.3,
+    metalness: 1,
+    fog: true,
   })
+
+
 };

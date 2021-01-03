@@ -49,9 +49,6 @@ export class EngineService implements OnDestroy {
     this.gm = new GameManager(this.scene, this.assets);
 
     this.camera = new THREE.OrthographicCamera(-10, 10, 10, -20, 1, 1000);
-
-    this.camera.position.set(100, 150, 100);
-    this.camera.lookAt(5, 0, 5);
     this.scene.add(this.camera);
     this.updateCamera();
 
@@ -59,6 +56,10 @@ export class EngineService implements OnDestroy {
     this.light = new THREE.AmbientLight(0x404040);
     this.light.position.z = 10;
     this.scene.add(this.light);
+
+    const light2 = new THREE.PointLight( 0xffffff, 0.4, 70 );
+    light2.position.set( -12, 20, -16 );
+    this.scene.add( light2 );
 
     /* GRID
     const size = 10;
@@ -144,8 +145,11 @@ export class EngineService implements OnDestroy {
 
     const camSize = 8;
 
-    this.camera.top = -nh * camSize;
-    this.camera.bottom = nh * camSize;
+    this.camera.position.set(100, 150, 100);
+    this.camera.lookAt(5, 0, 5);
+
+    this.camera.top = nh * camSize;
+    this.camera.bottom = -nh * camSize;
     this.camera.left = -nw * camSize;
     this.camera.right = nw * camSize;
     this.camera.updateProjectionMatrix();
