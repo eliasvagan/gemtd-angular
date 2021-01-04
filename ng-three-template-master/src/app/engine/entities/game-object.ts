@@ -1,42 +1,31 @@
 import * as THREE from 'three-full';
-import { IRenderable } from '../data-models/renderable';
-import { IRenderSettings } from '../data-models/render-settings';
+import { IRenderable, IRenderState } from '../data-models/renderable';
 import { Materials } from '../enums/materials';
 import { Geometries } from '../enums/geometries';
 import { GameObjectState } from '../enums/game-object-state';
 import { MouseEventType } from '../enums/mouse-events';
-import { ILoadedAssets } from '../data-models/assets-model';
+import { IAssetsLoaded } from '../enums/assets';
 
 export class GameObject implements IRenderable {
 
 	public static HOVERED?: GameObject;
-	public static LOADED_ASSETS?: ILoadedAssets;
+	public static LOADED_ASSETS?: IAssetsLoaded;
 
 	identifier: string;
-	model: THREE.Object3D;
-	position: { x: number; y: number };
-	renderSettings: IRenderSettings;
 	state: GameObjectState;
+	position: { x: number; y: number };
+	assetNames: { normal: string; hovered: string; };
+	renderState: IRenderState;
 
 	constructor(
-		position: { x: number; y: number} = {x: 0, y: 0},
-		geometry: THREE.Geometry = Geometries.Cube,
-		material: THREE.Material = Materials.WireFrameWhite,
-		renderSettings: IRenderSettings = null,
+		father: IRenderable
 	) {
+		Object.assign(this, father);
 		this.identifier = 'GameObject';
-		this.position = position;
-		this.model = new THREE.Mesh(geometry, material);
-
 		this.state = GameObjectState.Changed;
 
-		this.renderSettings = Object.assign(
-			{ offset: { x: 0, y: 0, z: 0 }},
-			renderSettings
-		);
 		this.updateRenderModel();
 		this.updateRenderPosition();
-		this.renderSettings.scene.add(this.model);
 	}
 
 	handleMouseEvent(evt: MouseEvent, type: MouseEventType): void {
@@ -77,36 +66,28 @@ export class GameObject implements IRenderable {
 	}
 
 	updateRenderModel() {
-		const { meshMapIdentifier } = this.renderSettings;
+
+		// Initialize model
+		if (!this.renderState.model) {
+			this.renderState.model = new THREE.Mesh(Geometries.Cube, Materials.WireFrameWhite);
+			this.renderState.scene.add(this.renderState.model);
+		}
+
+		// Update model to appropriate asset
 		const { LOADED_ASSETS } = GameObject;
+		const assetName = GameObject.HOVERED === this ? this.assetNames.hovered : this.assetNames.normal;
 
-		// Load assets if needed
-		if (!this.renderSettings.meshMapLoaded) {
-			if (LOADED_ASSETS) {
-				this.renderSettings.meshMapLoaded = LOADED_ASSETS[meshMapIdentifier];
-			} else {
-				throw new Error(`Tried to load a non-existent mesh "${meshMapIdentifier}" from GameManager!`);
-			}
+		try {
+			console.log(LOADED_ASSETS);
+			const assetModel = LOADED_ASSETS[assetName].model;
+			this.renderState.model.geometry = assetModel.geometry;
+			this.renderState.model.material = assetModel.material;
+		} catch (err) {
+			console.error(`Failed to update render model to ${assetName}`, err);
 		}
 
-		// Update model to account for changed state
-		const { meshMapLoaded } = this.renderSettings;
-		const oldModel = this.model;
-
-		if (meshMapLoaded) {
-			if (GameObject.HOVERED === this) {
-				this.model.geometry = meshMapLoaded.hovered.geometry;
-				this.model.material = meshMapLoaded.hovered.material;
-			} else {
-				this.model.geometry = meshMapLoaded.normal.geometry;
-				this.model.material = meshMapLoaded.normal.material; // Materials.MatteRed;
-			}
-		} else {
-
-			this.model = new THREE.Mesh(Geometries.Cube, Materials.WireFrameRed);
-			this.model.receiveShadow = true;
-		}
-		Object.assign(this.model.userData, {
+		// Update mouse event handler
+		Object.assign(this.renderState.model.userData, {
 			handleMouseEvent: (evt, type) => this.handleMouseEvent(evt, type)
 		});
 	}
@@ -135,7 +116,7 @@ export class GameObject implements IRenderable {
 	updateRenderPosition() {
 
 		{ // Translate position of rendered model to game object
-			this.model.position.set(
+			this.renderState.model.position.set(
 				this.position.x,
 				0,
 				this.position.y
@@ -143,20 +124,20 @@ export class GameObject implements IRenderable {
 		}
 
 		{ // Offset
-			const { x, y, z } = this.renderSettings.offset;
-			this.model.translateX(x);
-			this.model.translateY(y);
-			this.model.translateZ(z);
+			const { x, y, z } = this.renderState.offset;
+			this.renderState.model.translateX(x);
+			this.renderState.model.translateY(y);
+			this.renderState.model.translateZ(z);
 		}
 
 		{ // Scale
 			const sca = 0.5;
-			this.model.scale.set(sca, sca, sca);
+			this.renderState.model.scale.set(sca, sca, sca);
 		}
 	}
 
 
 	removeFromScene(): void {
-		this.renderSettings.scene.remove(this.model);
+		this.renderState.scene.remove(this.renderState.model);
 	}
 }

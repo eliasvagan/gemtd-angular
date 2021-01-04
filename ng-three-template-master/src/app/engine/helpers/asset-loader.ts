@@ -1,19 +1,17 @@
-import { ILoadedAssets, IUnloadedAssets } from '../data-models/assets-model';
 import { OBJLoader, MTLLoader, Object3D, Group } from 'three-full';
-import { Meshes } from '../enums/meshes';
-import { IAssets } from '../enums/assets';
+import { IAssets, IAssetsLoaded } from '../enums/assets';
 
 const MODELS_PATH = '/assets/models/';
 
 export class AssetLoader {
-  private debugging: boolean;
+	private debugging: boolean;
 
-  constructor(debugging: boolean = false) {
-    this.debugging = debugging;
-  }
+	constructor(debugging: boolean = false) {
+		this.debugging = debugging;
+	}
 
 
-	async loadAssets(assets: IAssets): Promise<Object3D[]> {
+	async loadAssets(assets: IAssets): Promise<IAssetsLoaded> {
 
 		async function loadAsset(asset): Promise<Object3D> {
 			const loadMTLPromise: Promise<Group> = new Promise(
@@ -62,15 +60,28 @@ export class AssetLoader {
 			return children[0];
 		}
 
-		const assetPromises = Object.entries(assets)
-				.map(([assetName, asset]) => loadAsset(asset));
+		const tuples = Object.entries(assets);
+		const totalCount = tuples.length;
+		let loadedCount = 0;
 
-		const totalAssets = assetPromises.length;
+		const loaded: IAssetsLoaded = {};
+		for (const [name, info] of tuples) {
+			try {
+				loaded[name] = Object.assign({
+					model: await loadAsset(info),
+				}, info);
+			} catch (err) {
+				console.error(`Failed to load asset from ${name}`, err);
+			}
+			// console.log(loaded[name].normal.material);
 
-		return Promise.all(assetPromises);
+			loadedCount++;
+			console.log(`Loaded ${loadedCount} of ${totalCount}`);
+		}
+		return loaded;
 	}
-
-  async loadAssetsOld(meshMaps: IUnloadedAssets): Promise<ILoadedAssets> {
+	/*
+	async loadAssetsOld(meshMaps: IUnloadedAssets): Promise<ILoadedAssets> {
     async function loadAsset(name): Promise<Object3D> {
       const loadMTLPromise: Promise<Group> = new Promise(
         (resolve, reject) => {
@@ -134,32 +145,11 @@ export class AssetLoader {
       }
       // console.log(loaded[name].normal.material);
 
-      /* const meshMapLoaded = Object.entries(meshMap)
-        .reduce(async (acc, [ state, fileName ]) => {
-          console.log(state, fileName);
-          const loadedAsset = await loadAsset(fileName);
-          return {[state]: loadedAsset, ...acc};
-        }, {});
-      console.log(meshMapLoaded);
-
-      loaded[name] = meshMapLoaded;
-      console.log(loaded);
-      */
-
-      /* const repl = Object.entries(meshMap)
-        .reduce((acc, [key, val]) => async () => {
-          console.log('key: ', key, val);
-          return {...acc, [key]: await loadAsset(val)};
-        }, {});
-      console.log(meshMap);
-      console.log(loaded[name]);
-      console.log(repl);
-
-      */
-
       loadedCount++;
       console.log(`Loaded ${loadedCount} of ${totalCount}`);
     }
     return loaded;
   }
+  */
+
 }

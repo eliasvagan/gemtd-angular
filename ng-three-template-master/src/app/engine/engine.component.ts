@@ -1,29 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { GameObjectMeshMaps } from './enums/game-object-mesh-maps';
 import { AssetLoader } from './helpers/asset-loader';
-import { ILoadedAssets } from './data-models/assets-model';
+import { Assets, IAssetsLoaded } from './enums/assets';
 
 @Component({
-  selector: 'app-engine',
-  templateUrl: './engine.component.html'
+	selector: 'app-engine',
+	templateUrl: './engine.component.html'
 })
 export class EngineComponent implements OnInit {
 
-  $assets: ILoadedAssets;
+	$assets: IAssetsLoaded;
 
-  public constructor() {
-  }
+	public constructor() {
+	}
 
-  public ngOnInit(): void {
+	public ngOnInit(): void {
 
-    const debugging = false;
+		const debugging = false;
 
-    const assetLoader = new AssetLoader(debugging);
+		const assetLoader = new AssetLoader(debugging);
 
-    assetLoader.loadAssetsOld(GameObjectMeshMaps).then((assets: ILoadedAssets) => {
-      this.$assets = assets;
-    });
-  }
+		assetLoader.loadAssets(Assets).then((assets: IAssetsLoaded) => {
+			this.$assets = assets;
+		});
+	}
 
 
 }

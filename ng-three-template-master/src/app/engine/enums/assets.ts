@@ -9,7 +9,19 @@ export interface IAssets {
 			offset: { x: number, y: number, z: number },
 			rotation: { x: number, y: number, z: number },
 		},
-		model?: THREE.Object3D
+	};
+}
+
+export interface IAssetsLoaded extends IAssets {
+	[assetName: string]: {
+		mtl: string,
+		obj: string,
+		transform: {
+			scale: { x: number, y: number, z: number },
+			offset: { x: number, y: number, z: number },
+			rotation: { x: number, y: number, z: number },
+		},
+		model: THREE.Model3D
 	};
 }
 
@@ -2969,6 +2981,33 @@ export const Assets: IAssets = {
 	TREE_THIN_FALL: {
 		mtl: 'tree_thin_fall.mtl',
 		obj: 'tree_thin_fall.obj',
+		transform: {
+			scale: { x: 0.5, y: 0.5, z: 0.5 },
+			offset: { x: -0.5, y: 0, z: -0.5 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	TILE_FREE: {
+		mtl: 'platform_free.mtl',
+		obj: 'platform_free.obj',
+		transform: {
+			scale: { x: 0.5, y: 0.5, z: 0.5 },
+			offset: { x: -0.5, y: 0, z: -0.5 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	TILE_FREE_HOVER: {
+		mtl: 'platform_free_hover.mtl',
+		obj: 'platform_free_hover.obj',
+		transform: {
+			scale: { x: 0.5, y: 0.5, z: 0.5 },
+			offset: { x: -0.5, y: 0, z: -0.5 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	CHECKPOINT: {
+		mtl: 'checkpoint.mtl',
+		obj: 'checkpoint.obj',
 		transform: {
 			scale: { x: 0.5, y: 0.5, z: 0.5 },
 			offset: { x: -0.5, y: 0, z: -0.5 },

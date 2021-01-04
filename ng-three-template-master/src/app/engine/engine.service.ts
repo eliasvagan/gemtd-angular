@@ -2,7 +2,7 @@ import * as THREE from 'three-full';
 import { ElementRef, Injectable, NgZone, OnDestroy } from '@angular/core';
 import { GameManager } from './entities/game-manager';
 import { MouseEventType } from './enums/mouse-events';
-import { ILoadedAssets } from './data-models/assets-model';
+import { IAssetsLoaded } from './enums/assets';
 
 @Injectable({providedIn: 'root'})
 export class EngineService implements OnDestroy {
@@ -12,7 +12,7 @@ export class EngineService implements OnDestroy {
 	private scene: THREE.Scene;
 	private light: THREE.AmbientLight;
 	private gm: GameManager;
-	private assets: ILoadedAssets;
+	private assets: IAssetsLoaded;
 
 	private prevFrame: Date;
 	private frameId: number = null;
@@ -26,7 +26,7 @@ export class EngineService implements OnDestroy {
 		}
 	}
 
-	public createScene(canvas: ElementRef<HTMLCanvasElement>, loadedAssets: ILoadedAssets): void {
+	public createScene(canvas: ElementRef<HTMLCanvasElement>, loadedAssets: IAssetsLoaded): void {
 		// Save loaded 3D assets
 		this.assets = loadedAssets;
 		console.log('Created scene with ', Object.keys(this.assets).length, ' loaded assets.');
@@ -115,23 +115,23 @@ export class EngineService implements OnDestroy {
 	}
 
 	private handleMouseEvent(evt: MouseEvent, type: MouseEventType): void {
-		const hit = this.raycastFromMouseEvent(evt);
+		const hit = this.rayCastFromMouseEvent(evt);
 		if (hit !== null) {
 			hit.object.userData.handleMouseEvent(evt, type);
 		}
 	}
 
 
-	private raycastFromMouseEvent(evt: MouseEvent): THREE.Object3D {
-		const raycaster = new THREE.Raycaster(); // create once
+	private rayCastFromMouseEvent(evt: MouseEvent): THREE.Object3D {
+		const rayCaster = new THREE.Raycaster(); // create once
 		const mouse = new THREE.Vector2(); // create once
 
 		mouse.x = ( evt.clientX / this.canvas.clientWidth ) * 2 - 1;
 		mouse.y = - ( evt.clientY / this.canvas.clientHeight ) * 2 + 1;
 
-		raycaster.setFromCamera( mouse, this.camera );
+		rayCaster.setFromCamera( mouse, this.camera );
 
-		const intersects = raycaster.intersectObjects( this.scene.children );
+		const intersects = rayCaster.intersectObjects( this.scene.children );
 		return intersects.length > 0 ? intersects.slice(-1)[0] : null;
 	}
 

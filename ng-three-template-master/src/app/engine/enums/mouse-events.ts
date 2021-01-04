@@ -1,8 +1,8 @@
 export enum MouseEventType {
-  Move,
-  Click,
-  LeftButtonDown,
-  LeftButtonUp,
-  RightButtonDown,
-  RightButtonUp
+	Move,
+	Click,
+	LeftButtonDown,
+	LeftButtonUp,
+	RightButtonDown,
+	RightButtonUp
 }
