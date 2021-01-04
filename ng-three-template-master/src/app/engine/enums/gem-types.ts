@@ -1,7 +1,7 @@
 import { ITowerType } from '../data-models/tower-type-model';
 
-let GemType: { [ key: string ]: ITowerType };
-GemType = {
+let GemTypes: { [ key: string ]: ITowerType };
+GemTypes = {
   P1: {
     name: 'Chipped Amethyst',
     damage: 10,
@@ -43,7 +43,7 @@ GemType = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: [ GemType.P5, GemType.P5 ]
+    buildCombination: [ GemTypes.P5, GemTypes.P5 ]
   },
 
   Q1: {
@@ -87,7 +87,7 @@ GemType = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: [ GemType.Q5, GemType.Q5 ]
+    buildCombination: [ GemTypes.Q5, GemTypes.Q5 ]
   },
 
   D1: {
@@ -167,7 +167,7 @@ GemType = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: [ GemType.G5, GemType.G5 ]
+    buildCombination: [ GemTypes.G5, GemTypes.G5 ]
   },
 
   E1: {
@@ -254,7 +254,7 @@ GemType = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: [ GemType.R5, GemType.R5 ]
+    buildCombination: [ GemTypes.R5, GemTypes.R5 ]
   },
 
   B1: {
@@ -298,7 +298,7 @@ GemType = {
     range: 4,
     speed: 1,
     splitShots: 1,
-    buildCombination: [ GemType.B5, GemType.B5 ]
+    buildCombination: [ GemTypes.B5, GemTypes.B5 ]
   },
 
   Y1: {
@@ -342,8 +342,8 @@ GemType = {
     range: 10,
     speed: 4,
     splitShots: 3,
-    buildCombination: [ GemType.Y5, GemType.Y5 ]
+    buildCombination: [ GemTypes.Y5, GemTypes.Y5 ]
   },
 };
 
-export { GemType };
+export { GemTypes };

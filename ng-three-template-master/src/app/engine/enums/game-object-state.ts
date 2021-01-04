@@ -1,4 +1,4 @@
 export enum GameObjectState {
-  Unchanged= 'UNCHANGED',
-  Changed= 'CHANGED',
+	Unchanged= 'UNCHANGED',
+	Changed= 'CHANGED',
 }

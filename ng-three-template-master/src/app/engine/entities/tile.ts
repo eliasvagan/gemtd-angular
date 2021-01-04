@@ -1,19 +1,28 @@
 import { ITile } from '../data-models/tile-model';
 import { GameObject } from './game-object';
-import * as THREE from 'three';
-import { Geometries } from '../enums/geometries';
-import { Materials } from '../enums/materials';
-import { IRenderSettings } from '../data-models/render-settings';
+import { Scene } from 'three-full/sources/scenes/Scene';
 
 export class Tile extends GameObject implements ITile {
-  position: { x: number; y: number };
+	position: { x: number; y: number };
 
-  constructor(
-    position: { x: number, y: number },
-    geometry: THREE.Geometry = Geometries.CubeFlat,
-    material: THREE.Material = Materials.WireFrameGray,
-    renderSettings: IRenderSettings = { offset: { x: 0, y: 0, z: 0 } }
-  ) {
-    super(position, geometry, material, renderSettings);
-  }
+	constructor(
+		position: { x: number, y: number },
+		scene: Scene,
+		assetNames = {
+			normal: 'TILE_FREE',
+			hovered: 'TILE_FREE_HOVER'
+		}
+	) {
+		super({
+			position,
+			assetNames,
+			renderState: {
+				model: null,
+				scene,
+				scale: { x: 1, y: 1, z: 1 },
+				offset: { x: 0, y: 0, z: 0 },
+				rotation: { x: 0, y: 0, z: 0 },
+			}
+		});
+	}
 }

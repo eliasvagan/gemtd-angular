@@ -1,21 +1,26 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { EngineService } from './engine.service';
+import { Component, OnInit } from '@angular/core';
+import { AssetLoader } from './helpers/asset-loader';
+import { Assets, IAssetsLoaded } from './enums/assets';
 
 @Component({
-  selector: 'app-engine',
-  templateUrl: './engine.component.html'
+	selector: 'app-engine',
+	templateUrl: './engine.component.html'
 })
 export class EngineComponent implements OnInit {
 
-  @ViewChild('rendererCanvas', {static: true})
-  public rendererCanvas: ElementRef<HTMLCanvasElement>;
+	$assets: IAssetsLoaded;
+	$assetLoader: AssetLoader;
 
-  public constructor(private engServ: EngineService) {
-  }
+	public constructor() {
+		this.$assetLoader = new AssetLoader(Assets, false);
+	}
 
-  public ngOnInit(): void {
-    this.engServ.createScene(this.rendererCanvas);
-    this.engServ.animate();
-  }
+	public ngOnInit(): void {
+
+		this.$assetLoader.loadAssets().then((assets: IAssetsLoaded) => {
+			this.$assets = assets;
+		});
+	}
+
 
 }

@@ -1,0 +1,19 @@
+
+<section class="loading-wrapper">
+
+	<h2>Loading assets ...</h2>
+
+	<div class="loading-bar-wrapper">
+		<div class="loading-bar" [style.width.%]="(assetLoader.loadingState.loadedCount/assetLoader.loadingState.totalCount)*100">
+		</div>
+		<p>{{assetLoader.loadingState.loadedCount}}  / {{assetLoader.loadingState.totalCount}}</p>
+	</div>
+	<div class="info">
+		<p>{{assetLoader.loadingState.currentItemName}}</p>
+	</div>
+
+
+
+
+
+</section>

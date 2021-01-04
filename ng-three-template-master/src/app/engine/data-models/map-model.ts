@@ -1,6 +1,6 @@
 import { ITile } from './tile-model';
 import { IEnemyCheckpoint } from './enemy-checkpoint';
-import * as THREE from 'three';
+import * as THREE from 'three-full';
 
 export interface IMap {
   width: number;

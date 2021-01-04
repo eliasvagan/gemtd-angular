@@ -1,18 +1,16 @@
-import { Materials } from '../enums/materials';
-import { Geometries } from '../enums/geometries';
 import { Tile } from './tile';
-import { GameObjectState } from '../enums/game-object-state';
+import { Scene } from 'three-full';
 
 export class Checkpoint extends Tile {
-  constructor(x: number, y: number) {
-    super(
-      { x, y },
-      Geometries.CubeTall,
-      Materials.WireFrameBlue,
-      { offset: { x: 0, y: -1, z: 0 }},
-    );
-  }
-  update(dt) {
-    super.update(dt);
-  }
+	constructor(
+		position: { x: number, y: number },
+		scene: Scene,
+
+	) {
+		super(position, scene, {
+			normal: 'TREE_TALL_FALL',
+			hovered: 'TREE_TALL_FALL'
+		});
+
+	}
 }
