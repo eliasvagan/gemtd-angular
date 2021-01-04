@@ -6,6 +6,6 @@ export interface IGameObjectMeshMap {
 }
 
 export interface IGameObjectMeshMapLoaded {
-  normal: THREE.Mesh;
-  hovered: THREE.Mesh;
+  normal: THREE.Object3D;
+  hovered: THREE.Object3D;
 }

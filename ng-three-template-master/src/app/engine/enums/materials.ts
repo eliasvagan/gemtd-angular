@@ -29,7 +29,7 @@ export const Materials = {
   MatteRed: new THREE.MeshStandardMaterial({
     visible: true,
     color: '#94212e',
-    emissive: '#63c69f',
+    emissive: '#691f1f',
     wireframe: false,
     vertexColors: false,
     roughness: 0.3,

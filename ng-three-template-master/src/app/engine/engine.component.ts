@@ -20,7 +20,7 @@ export class EngineComponent implements OnInit {
 
     const assetLoader = new AssetLoader(debugging);
 
-    assetLoader.loadAssets(GameObjectMeshMaps).then((assets: ILoadedAssets) => {
+    assetLoader.loadAssetsOld(GameObjectMeshMaps).then((assets: ILoadedAssets) => {
       this.$assets = assets;
     });
   }
