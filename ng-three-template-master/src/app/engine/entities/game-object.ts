@@ -78,7 +78,6 @@ export class GameObject implements IRenderable {
 		const assetName = GameObject.HOVERED === this ? this.assetNames.hovered : this.assetNames.normal;
 
 		try {
-			console.log(LOADED_ASSETS);
 			const assetModel = LOADED_ASSETS[assetName].model;
 			this.renderState.model.geometry = assetModel.geometry;
 			this.renderState.model.material = assetModel.material;

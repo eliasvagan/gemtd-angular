@@ -9,17 +9,15 @@ import { Assets, IAssetsLoaded } from './enums/assets';
 export class EngineComponent implements OnInit {
 
 	$assets: IAssetsLoaded;
+	$assetLoader: AssetLoader;
 
 	public constructor() {
+		this.$assetLoader = new AssetLoader(Assets, false);
 	}
 
 	public ngOnInit(): void {
 
-		const debugging = false;
-
-		const assetLoader = new AssetLoader(debugging);
-
-		assetLoader.loadAssets(Assets).then((assets: IAssetsLoaded) => {
+		this.$assetLoader.loadAssets().then((assets: IAssetsLoaded) => {
 			this.$assets = assets;
 		});
 	}

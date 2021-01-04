@@ -23,7 +23,6 @@ export class GameInstanceComponent implements OnInit {
 		this.engServ.createScene(this.rendererCanvas, this.assets);
 		this.engServ.animate();
 	}
-
 }
 
 

@@ -3,16 +3,30 @@ import { IAssets, IAssetsLoaded } from '../enums/assets';
 
 const MODELS_PATH = '/assets/models/';
 
+export interface IAssetLoadingState {
+	loadedCount: number;
+	totalCount: number;
+	currentItemName: string;
+}
+
 export class AssetLoader {
+	private readonly assetsToLoad: IAssets;
 	private debugging: boolean;
 
-	constructor(debugging: boolean = false) {
+	public loadingState: IAssetLoadingState;
+
+	constructor(assets: IAssets, debugging: boolean = false) {
+		this.assetsToLoad = assets;
 		this.debugging = debugging;
+		this.loadingState = {
+			loadedCount: 0,
+			totalCount: Object.keys(assets).length,
+			currentItemName: 'none'
+		};
 	}
 
 
-	async loadAssets(assets: IAssets): Promise<IAssetsLoaded> {
-
+	async loadAssets(): Promise<IAssetsLoaded> {
 		async function loadAsset(asset): Promise<Object3D> {
 			const loadMTLPromise: Promise<Group> = new Promise(
 				(resolve, reject) => {
@@ -28,7 +42,6 @@ export class AssetLoader {
 
 							function loadOBJProgress(xhr) {
 								// console.log((xhr.loaded / xhr.total * 100) + '% loaded .obj');
-
 							}
 
 							function loadOBJFailed(error) {
@@ -57,16 +70,31 @@ export class AssetLoader {
 				},
 			);
 			const { children } = await loadMTLPromise;
-			return children[0];
+			const model = children[0];
+
+			{	// Model Scale
+				const { x, y, z } = asset.transform.scale;
+				model.scale.set(x, y, z);
+			}
+
+			{ // Model position offset
+				const { x, y, z} = asset.transform.offset;
+				model.position.set(x, y, z);
+			}
+
+			{ // Model rotation
+				const { x, y, z } = asset.transform.rotation;
+				model.rotation.set(x, y, z);
+			}
+
+			return model;
 		}
 
-		const tuples = Object.entries(assets);
-		const totalCount = tuples.length;
-		let loadedCount = 0;
-
+		const tuples = Object.entries(this.assetsToLoad);
 		const loaded: IAssetsLoaded = {};
 		for (const [name, info] of tuples) {
 			try {
+				this.loadingState.currentItemName = name;
 				loaded[name] = Object.assign({
 					model: await loadAsset(info),
 				}, info);
@@ -75,8 +103,8 @@ export class AssetLoader {
 			}
 			// console.log(loaded[name].normal.material);
 
-			loadedCount++;
-			console.log(`Loaded ${loadedCount} of ${totalCount}`);
+			this.loadingState.loadedCount++;
+			console.log(`Loaded ${this.loadingState.loadedCount} of ${this.loadingState.totalCount}`);
 		}
 		return loaded;
 	}
