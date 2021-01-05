@@ -104,7 +104,7 @@ export class AssetLoader {
 			// console.log(loaded[name].normal.material);
 
 			this.loadingState.loadedCount++;
-			console.log(`Loaded ${this.loadingState.loadedCount} of ${this.loadingState.totalCount}`);
+			// console.log(`Loaded ${this.loadingState.loadedCount} of ${this.loadingState.totalCount}`);
 		}
 		return loaded;
 	}

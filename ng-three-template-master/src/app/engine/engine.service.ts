@@ -39,6 +39,7 @@ export class EngineService implements OnDestroy {
 			alpha: true,    // transparent background
 			antialias: true // smooth edges
 		});
+		this.renderer.shadowMap.enabled = true;
 
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -52,7 +53,7 @@ export class EngineService implements OnDestroy {
 		this.scene.add(this.camera);
 		this.updateCamera();
 
-		// soft white light
+		/* soft white light
 		this.light = new THREE.AmbientLight(0x404040);
 		this.light.position.z = 10;
 		this.scene.add(this.light);
@@ -60,6 +61,7 @@ export class EngineService implements OnDestroy {
 		const light2 = new THREE.PointLight( 0xffffff, 0.4, 70 );
 		light2.position.set( -12, 20, -16 );
 		this.scene.add( light2 );
+		 */
 
 		/* GRID
     const size = 10;
@@ -143,7 +145,7 @@ export class EngineService implements OnDestroy {
 		const nw = !portrait ? width / height : 1;
 		const nh = portrait ? height / width : 1;
 
-		const camSize = 8;
+		const camSize = 8; // 8
 
 		this.camera.position.set(100, 150, 100);
 		this.camera.lookAt(5, 0, 5);

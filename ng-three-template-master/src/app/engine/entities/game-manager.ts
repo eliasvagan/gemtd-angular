@@ -4,6 +4,7 @@ import { GameMap } from './game-map';
 import { GamePhase } from '../enums/game-phase';
 import { GameObject } from './game-object';
 import { IAssetsLoaded } from '../enums/assets';
+import {StaticMap} from './static-map';
 
 export class GameManager {
 
@@ -13,6 +14,9 @@ export class GameManager {
 	constructor(scene: THREE.Scene, assets: IAssetsLoaded) {
 		GameObject.LOADED_ASSETS = assets;
 		this.scene = scene;
+
+		this.scene.add(new StaticMap());
+
 		this.session = {
 			round: 0,
 			hp: 100,
