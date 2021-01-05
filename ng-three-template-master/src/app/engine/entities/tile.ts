@@ -22,6 +22,10 @@ export class Tile extends GameObject implements ITile {
 				scale: { x: 1, y: 1, z: 1 },
 				offset: { x: 0, y: 0, z: 0 },
 				rotation: { x: 0, y: 0, z: 0 },
+			},
+			renderParams: {
+				receiveShadow: false,
+				castShadow: true,
 			}
 		});
 	}

@@ -1,6 +1,7 @@
 import * as THREE from 'three-full';
 import { GameObject } from './game-object';
-import { of } from 'rxjs';
+import { Materials } from '../enums/materials';
+import { Meshes } from '../enums/meshes';
 
 export class StaticMap extends THREE.Group {
 	constructor() {
@@ -10,13 +11,29 @@ export class StaticMap extends THREE.Group {
 
 	private generateMap() {
 
-		// TODO: Complete map generation
-
 		const assetNames = {
 			trees: [
-				'TREE_PLATEAU', 'TREE_PLATEAU_DARK', 'TREE_SIMPLE_FALL', 'TREE_SMALL', 'TREE_SMALL_DARK',
-				'TREE_SMALL_FALL', 'TREE_TALL', 'TREE_TALL_DARK', 'TREE_TALL_FALL', 'TREE_THIN',
-				'TREE_THIN_DARK', 'TREE_THIN_FALL',
+				'TREE_PINEDEFAULTA', 'TREE_PINEDEFAULTB', 'TREE_PINEGROUNDA',
+				'TREE_PINEGROUNDB', 'TREE_PINEROUNDA', 'TREE_PINEROUNDB',
+				'TREE_PINEROUNDC', 'TREE_PINEROUNDD', 'TREE_PINEROUNDE',
+				'TREE_PINEROUNDF', 'TREE_PINESMALLA', 'TREE_PINESMALLB',
+				'TREE_PINESMALLC', 'TREE_PINESMALLD', 'TREE_PINETALLA',
+				'TREE_PINETALLA_DETAILED', 'TREE_PINETALLB', 'TREE_PINETALLB_DETAILED',
+				'TREE_PINETALLC', 'TREE_PINETALLC_DETAILED', 'TREE_PINETALLD',
+				'TREE_PINETALLD_DETAILED',
+			],
+			rocks: [
+				'STONE_LARGEA', 'STONE_LARGEB', 'STONE_LARGEC', 'STONE_LARGED', 'STONE_LARGEE', 'STONE_LARGEF',
+				'STONE_SMALLA', 'STONE_SMALLB', 'STONE_SMALLC', 'STONE_SMALLD', 'STONE_SMALLE', 'STONE_SMALLF',
+				'STONE_SMALLFLATA', 'STONE_SMALLFLATB', 'STONE_SMALLFLATC', 'STONE_SMALLG', 'STONE_SMALLH',
+				'STONE_SMALLI', 'STONE_SMALLTOPA', 'STONE_SMALLTOPB', 'STONE_TALLA', 'STONE_TALLB',
+				'STONE_TALLC', 'STONE_TALLD', 'STONE_TALLE', 'STONE_TALLF', 'STONE_TALLG', 'STONE_TALLH',
+				'STONE_TALLI', 'STONE_TALLJ', 'ROCK_LARGEA', 'ROCK_LARGEB', 'ROCK_LARGEC', 'ROCK_LARGED',
+				'ROCK_LARGEE', 'ROCK_LARGEF', 'ROCK_SMALLA', 'ROCK_SMALLB', 'ROCK_SMALLC', 'ROCK_SMALLD',
+				'ROCK_SMALLE', 'ROCK_SMALLF', 'ROCK_SMALLFLATA', 'ROCK_SMALLFLATB', 'ROCK_SMALLFLATC',
+				'ROCK_SMALLG', 'ROCK_SMALLH', 'ROCK_SMALLI', 'ROCK_SMALLTOPA', 'ROCK_SMALLTOPB', 'ROCK_TALLA',
+				'ROCK_TALLB', 'ROCK_TALLC', 'ROCK_TALLD', 'ROCK_TALLE', 'ROCK_TALLF', 'ROCK_TALLG', 'ROCK_TALLH',
+				'ROCK_TALLI', 'ROCK_TALLJ'
 			],
 			vegetation: [
 				'GRASS_LEAFS', 'GRASS_LEAFSLARGE'
@@ -30,14 +47,15 @@ export class StaticMap extends THREE.Group {
 		{ // Add base floor
 
 			const floorRadius = 40;
-			const template = GameObject.LOADED_ASSETS[assetNames.floors[0]].model;
+			const floorHeight = -0.5;
+			const baseFloorTemplate = GameObject.LOADED_ASSETS[assetNames.floors[1]].model;
 			const baseFloor = new THREE.Mesh(
-				template.geometry,
-				template.material
+				baseFloorTemplate.geometry,
+				baseFloorTemplate.material
 			);
 
 			baseFloor.receiveShadow = true;
-			baseFloor.position.set(5, -1, 5);
+			baseFloor.position.set(5, -1 + floorHeight, 5);
 			baseFloor.scale.set(floorRadius, 1, floorRadius);
 
 			this.add(baseFloor);
@@ -48,44 +66,75 @@ export class StaticMap extends THREE.Group {
 				{
 					assets: assetNames.trees,
 					spawnParameters: {
-						count: 20,
+						count: 30,
 						distanceMin: 11, // outside tiles
-						distanceMax: 18, // within floor edge
+						distanceMax: Math.min(18, floorRadius), // within floor edge
 						rotationDiff: 0.2,
 						scaleMin: 2.3,
-						scaleMax: 3.5
+						scaleMax: 3.5,
+						posYMin: 0,
+						posYMax: 0
 					}
 				}, {
-					assets: assetNames.vegetation,
+					assets: assetNames.rocks,
 					spawnParameters: {
-						count: 40,
+						count: 20,
 						distanceMin: 9, // outside tiles
 						distanceMax: Math.min(13, floorRadius), // within floor edge
 						rotationDiff: 0.2,
 						scaleMin: 0.8,
-						scaleMax: 2.4
+						scaleMax: 2.4,
+						posYMin: -1.0,
+						posYMax: -0.6
+					}
+				}, {
+					assets: assetNames.vegetation,
+					spawnParameters: {
+						count: 20,
+						distanceMin: 9, // outside tiles
+						distanceMax: Math.min(13, floorRadius), // within floor edge
+						rotationDiff: 0.2,
+						scaleMin: 0.8,
+						scaleMax: 2.4,
+						posYMin: 0,
+						posYMax: 0
 					}
 				}
 			]) {
 				for (let i = 0; i < assetGroup.spawnParameters.count; i++) {
-					const ri = Math.floor(assetGroup.assets.length * Math.random());
-					const template = GameObject.LOADED_ASSETS[assetGroup.assets[ri]].model;
-					const asset = new THREE.Mesh(template.geometry, template.material);
 
-					const { distanceMin, distanceMax, rotationDiff, scaleMin, scaleMax } = assetGroup.spawnParameters;
+					let asset: THREE.Mesh;
+					const assetIndex = Math.floor(assetGroup.assets.length * Math.random());
+					const assetName = assetGroup.assets[assetIndex];
+					try {
+						const template = GameObject.LOADED_ASSETS[assetName].model;
+						asset = new THREE.Mesh(template.geometry, template.material);
+					} catch (err) {
+						asset = new THREE.Mesh(
+							Meshes.CubeRed,
+							Materials.WireFrameRed,
+						);
+						console.error(`Failed to load asset: ${assetName}`, err);
+					}
+
+					const {
+						distanceMin, distanceMax, rotationDiff,
+						scaleMin, scaleMax, posYMin, posYMax
+					} = assetGroup.spawnParameters;
 
 					// Position
 
 					const rand1 =  (Math.random() < 0.5 ? 1 : -1) * ((Math.random() - 0.5) * (distanceMax - distanceMin) + distanceMin);
 					const rand2 =  (Math.random() - 0.5) * distanceMax;
 					const coinFlip = Math.random() < 0.5;
-					const posx = coinFlip ? rand1 : rand2;
-					const posy = coinFlip ? rand2 : rand1;
+					const posX = coinFlip ? rand1 : rand2;
+					const posZ = coinFlip ? rand2 : rand1;
+					const posY = Math.random() * (posYMax - posYMin) + posYMin;
 
 					asset.position.set(
-						posx + 6,
-						0,
-						posy + 6,
+						posX + 6,
+						posY + floorHeight,
+						posZ + 6,
 					);
 
 					// Rotation
@@ -108,44 +157,52 @@ export class StaticMap extends THREE.Group {
 
 
 		 { // Add tunnel for spawn
-			const { model } = GameObject.LOADED_ASSETS.CLIFF_BLOCKCAVE_STONE;
-
-			const s = 5;
-			const tunnel = model.clone();
-			tunnel.receiveShadows = true;
-			tunnel.scale.set(s, s, s);
-			tunnel.position.set(1, 0, -3.5);
-
-			this.add(tunnel);
-		}
-		 /* { TODO: FIx this one!
 			const blocks = [
 				{
 					assetName: 'CLIFF_BLOCKCAVE_STONE',
 					rotation: 0,
-					position: { x: 1, y: 0, z: -3.5 },
-				},
-				{
-					assetName: 'CLIFF_BLOCKCAVE_STONE',
+					position: { x: 1, y: floorHeight, z: -3.5 },
+					scale: 10,
+				}, {
+					assetName: 'CLIFF_BLOCKSLOPE_STONE',
+					rotation: Math.PI / 2,
+					position: { x: 6, y: floorHeight, z: -3.5 },
+					scale: 10,
+				}, {
+					assetName: assetNames.floors[0], // Floor directly underneath game board
 					rotation: 0,
-					position: { x: 2, y: 0, z: -3.5 },
+					position: { x: 5, y: -12, z: 5 },
+					scale: 24,
+				}, {
+					assetName: assetNames.floors[0], // Enemy entrance
+					rotation: 0,
+					position: { x: 1, y: -4, z: -3 },
+					scale: 8,
+				}, {
+					assetName: assetNames.floors[0], // Enemy finish line
+					rotation: 0,
+					position: { x: 13, y: -4, z: 9 },
+					scale: 8,
 				}
 			];
 
 			blocks.forEach(block => {
 				const { model } = GameObject.LOADED_ASSETS[block.assetName];
 				const obj3d = model.clone();
-				obj3d.scale.set(5);
+
 				const { x, y, z } = block.position;
+				obj3d.scale.multiplyScalar(block.scale);
 				obj3d.position.set(x, y, z);
-				obj3d.receiveShadows = true;
+				obj3d.rotation.set(0, block.rotation, 0);
+
+				obj3d.receiveShadow = true;
 				obj3d.castShadow = true;
+
 				this.add(obj3d);
 			});
-		} */
-
-		{ // Sunlight
-			const dirLight = new THREE.DirectionalLight( 0xffffff, 1.2 );
+		}
+		 { // Sunlight
+			const dirLight = new THREE.DirectionalLight( 0xf2f2ee, 0.8 );
 			dirLight.position.set( -20, 80, 40 );
 			dirLight.lookAt(0, 0, 20);
 			// dirLight.position.multiplyScalar( 50 );
@@ -156,19 +213,26 @@ export class StaticMap extends THREE.Group {
 
 			dirLight.shadow.mapSize.width = 4096;
 			dirLight.shadow.mapSize.height = 4096;
-			const d = 300;
+			const d = 16;
 
 			dirLight.shadow.camera.left = -d;
 			dirLight.shadow.camera.right = d;
 			dirLight.shadow.camera.top = d;
 			dirLight.shadow.camera.bottom = -d;
 
-		 	dirLight.shadow.camera.near = 0.5;
-		 	dirLight.shadow.camera.far = 1000;
+		 dirLight.shadow.camera.near = 0.5;
+		 dirLight.shadow.camera.far = 1000;
+		 dirLight.shadow.radius = 1;
+			dirLight.shadow.bias = 0.00004;
 
-	 		dirLight.shadowBias = -0.0001;
-			dirLight.shadowDarkness = 0.15;
 			this.add( dirLight );
+
+			const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+			hemiLight.color.set(new THREE.Color('hsl(60%, 75%, 50%)'));
+			hemiLight.groundColor.set(new THREE.Color('hsl(9.5%, 50%, 50%)'));
+			hemiLight.position.set( 0, 500, 0 );
+
+			this.add(hemiLight);
 		}
 	}
 

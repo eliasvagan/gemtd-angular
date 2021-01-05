@@ -2010,7 +2010,7 @@ export const Assets: IAssets = {
 		mtl: 'sign.mtl',
 		obj: 'sign.obj',
 		transform: {
-			scale: { x: 0.5, y: 0.5, z: 0.5 },
+			scale: { x: 2.5, y: 2.5, z: 2.5 },
 			offset: { x: -0.5, y: 0, z: -0.5 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}

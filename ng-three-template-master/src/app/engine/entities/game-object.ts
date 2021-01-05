@@ -1,5 +1,5 @@
 import * as THREE from 'three-full';
-import { IRenderable, IRenderState } from '../data-models/renderable';
+import { IRenderable, IRenderParams, IRenderState } from '../data-models/renderable';
 import { Materials } from '../enums/materials';
 import { Geometries } from '../enums/geometries';
 import { GameObjectState } from '../enums/game-object-state';
@@ -16,6 +16,7 @@ export class GameObject implements IRenderable {
 	position: { x: number; y: number };
 	assetNames: { normal: string; hovered: string; };
 	renderState: IRenderState;
+	renderParams: IRenderParams;
 
 	constructor(
 		father: IRenderable
@@ -78,9 +79,31 @@ export class GameObject implements IRenderable {
 		const assetName = GameObject.HOVERED === this ? this.assetNames.hovered : this.assetNames.normal;
 
 		try {
-			const assetModel = LOADED_ASSETS[assetName].model;
-			this.renderState.model.geometry = assetModel.geometry;
-			this.renderState.model.material = assetModel.material;
+			const asset = LOADED_ASSETS[assetName];
+			const { model } = asset;
+			this.renderState.model.geometry = model.geometry;
+			this.renderState.model.material = model.material;
+
+			{	// Model Scale
+				const { x, y, z } = asset.transform.scale;
+				this.renderState.model.scale.set(x, y, z);
+			}
+
+			{ // Model position offset
+				const { x, y, z} = asset.transform.offset;
+				this.renderState.model.position.set(x, y, z);
+			}
+
+			{ // Model rotation
+				const { x, y, z } = asset.transform.rotation;
+				this.renderState.model.rotation.set(x, y, z);
+			}
+
+			// Set shadow properties
+			this.renderState.model.receiveShadow = this.renderParams.receiveShadow;
+			this.renderState.model.castShadow = this.renderParams.castShadow;
+
+
 		} catch (err) {
 			console.error(`Failed to update render model to ${assetName}`, err);
 		}
@@ -130,8 +153,8 @@ export class GameObject implements IRenderable {
 		}
 
 		{ // Scale
-			const sca = 0.5;
-			this.renderState.model.scale.set(sca, sca, sca);
+			const sca = 1.0;
+			this.renderState.model.scale.multiplyScalar(sca);
 		}
 	}
 

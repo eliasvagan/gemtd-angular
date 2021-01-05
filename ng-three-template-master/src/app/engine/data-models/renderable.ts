@@ -9,10 +9,16 @@ export interface IRenderState {
 	rotation: { x: number, y: number, z: number };
 }
 
+export interface IRenderParams {
+	castShadow: boolean;
+	receiveShadow: boolean;
+}
+
 export interface IRenderable extends IHasPosition {
 	assetNames: {
 		normal: string,
 		hovered: string,
 	};
 	renderState: IRenderState;
+	renderParams: IRenderParams;
 }
