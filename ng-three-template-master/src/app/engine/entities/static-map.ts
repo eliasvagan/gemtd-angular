@@ -36,7 +36,9 @@ export class StaticMap extends THREE.Group {
 				'ROCK_TALLI', 'ROCK_TALLJ'
 			],
 			vegetation: [
-				'GRASS_LEAFS', 'GRASS_LEAFSLARGE'
+				'GRASS_LARGE', 'GRASS_LEAFS', 'GRASS_LEAFSLARGE', 'STUMP_OLD', 'LOG',
+				'FLOWER_REDA', 'FLOWER_REDB', 'FLOWER_REDC',
+				'FLOWER_PURPLEA', 'FLOWER_PURPLEB', 'FLOWER_PURPLEC',
 			],
 			floors: [
 				'CLIFF_BLOCK_STONE', 'CLIFF_BLOCK_ROCK',
@@ -48,7 +50,7 @@ export class StaticMap extends THREE.Group {
 
 			const floorRadius = 40;
 			const floorHeight = -0.5;
-			const baseFloorTemplate = GameObject.LOADED_ASSETS[assetNames.floors[1]].model;
+			const baseFloorTemplate = GameObject.LOADED_ASSETS[assetNames.floors[0]].model;
 			const baseFloor = new THREE.Mesh(
 				baseFloorTemplate.geometry,
 				baseFloorTemplate.material
@@ -62,16 +64,21 @@ export class StaticMap extends THREE.Group {
 
 			// Add randomly spawned floor items
 
+			const protectedAreas = [
+				{ x0: -2, x1: 8, y0: -8, y1: 0 }, // Hills around spawn
+				{ x0: 10, x1: 18, y0: 7, y1: 12 } // Finish area
+			];
+
 			for (const assetGroup of [
 				{
 					assets: assetNames.trees,
 					spawnParameters: {
-						count: 30,
-						distanceMin: 11, // outside tiles
+						count: 40,
+						distanceMin: 12, // outside tiles
 						distanceMax: Math.min(18, floorRadius), // within floor edge
 						rotationDiff: 0.2,
 						scaleMin: 2.3,
-						scaleMax: 3.5,
+						scaleMax: 4.5,
 						posYMin: 0,
 						posYMax: 0
 					}
@@ -90,9 +97,9 @@ export class StaticMap extends THREE.Group {
 				}, {
 					assets: assetNames.vegetation,
 					spawnParameters: {
-						count: 20,
-						distanceMin: 9, // outside tiles
-						distanceMax: Math.min(13, floorRadius), // within floor edge
+						count: 30,
+						distanceMin: 7, // outside tiles
+						distanceMax: Math.min(12, floorRadius), // within floor edge
 						rotationDiff: 0.2,
 						scaleMin: 0.8,
 						scaleMax: 2.4,
@@ -140,7 +147,7 @@ export class StaticMap extends THREE.Group {
 					// Rotation
 					asset.rotation.set(
 						(Math.random() - 0.5) * rotationDiff,
-						(Math.random() - 0.5) * rotationDiff,
+						(Math.random() - 0.5) * 5,
 						(Math.random() - 0.5) * rotationDiff,
 					);
 
@@ -151,7 +158,17 @@ export class StaticMap extends THREE.Group {
 					// Shadows
 					asset.castShadow = true;
 
-					this.add(asset);
+					const legalPosition = protectedAreas.reduce((legal, area) => {
+						const { x0, x1, y0, y1 } = area;
+						const { x, z } = asset.position;
+						return !legal ? false : (
+							x <= x0 || x > x1 || z <= y0 || z > y1
+						);
+					}, true);
+
+					if (legalPosition) {
+						this.add(asset);
+					}
 				}
 		}
 
@@ -169,6 +186,11 @@ export class StaticMap extends THREE.Group {
 					position: { x: 6, y: floorHeight, z: -3.5 },
 					scale: 10,
 				}, {
+					assetName: 'CLIFF_TOP_STONE',
+					rotation: -Math.PI / 2,
+					position: { x: -4, y: floorHeight, z: -3.5 },
+					scale: 10,
+				}, {
 					assetName: assetNames.floors[0], // Floor directly underneath game board
 					rotation: 0,
 					position: { x: 5, y: -12, z: 5 },
@@ -182,6 +204,11 @@ export class StaticMap extends THREE.Group {
 					assetName: assetNames.floors[0], // Enemy finish line
 					rotation: 0,
 					position: { x: 13, y: -4, z: 9 },
+					scale: 8,
+				}, {
+					assetName: 'TENT_DETAILEDCLOSED', // Enemy finish line
+					rotation: Math.PI / 2,
+					position: { x: 13, y: 0, z: 9 },
 					scale: 8,
 				}
 			];
@@ -213,7 +240,7 @@ export class StaticMap extends THREE.Group {
 
 			dirLight.shadow.mapSize.width = 4096;
 			dirLight.shadow.mapSize.height = 4096;
-			const d = 16;
+			const d = 20;
 
 			dirLight.shadow.camera.left = -d;
 			dirLight.shadow.camera.right = d;
@@ -227,7 +254,7 @@ export class StaticMap extends THREE.Group {
 
 			this.add( dirLight );
 
-			const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+			const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.5 );
 			hemiLight.color.set(new THREE.Color('hsl(60%, 75%, 50%)'));
 			hemiLight.groundColor.set(new THREE.Color('hsl(9.5%, 50%, 50%)'));
 			hemiLight.position.set( 0, 500, 0 );
