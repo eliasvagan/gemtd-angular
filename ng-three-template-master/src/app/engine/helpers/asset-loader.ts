@@ -1,5 +1,9 @@
-import { OBJLoader, MTLLoader, Object3D, Group } from 'three-full';
+import { OBJLoader, MTLLoader, Object3D, Group, Mesh } from 'three-full';
 import { IAssets, IAssetsLoaded } from '../enums/assets';
+import * as GAMECONFIG from '../../gameconfig.json';
+import { Meshes } from '../enums/meshes';
+import { Geometries } from '../enums/geometries';
+import { Materials } from '../enums/materials';
 
 const MODELS_PATH = '/assets/models/';
 
@@ -35,8 +39,6 @@ export class AssetLoader {
 
 						const loadOBJPromise = new Promise((resolve, reject) => {
 							function loadOBJDone(object) {
-								// console.log('Successfully loaded from ', path);
-								// object.children[0].material.side = 2;
 								resolve(object);
 							}
 
@@ -57,11 +59,9 @@ export class AssetLoader {
 						resolve(await loadOBJPromise);
 					}
 					function loadMTLProgress(xhr){
-						// console.log((xhr.loaded / xhr.total * 100) + '% loaded .mtl');
-						// console.log(xhr.loaded / xhr.total * 100 + '%');
+						// (xhr.loaded / xhr.total * 100) + '% loaded .mtl');
 					}
 					function loadMTLFailed(error) {
-						// console.log(error);
 						reject('Failed to load from ' + error.target.responseURL);
 					}
 					const mtlLoader = new MTLLoader();
@@ -69,8 +69,14 @@ export class AssetLoader {
 					return mtlLoader.load(asset.mtl, loadMTLDone, loadMTLProgress, loadMTLFailed);
 				},
 			);
-			const { children } = await loadMTLPromise;
-			const model = children[0];
+
+			let model: Object3D;
+			if (GAMECONFIG.debug.skipAssetLoading) {
+				model = new Mesh(Geometries.Cube, Materials.WireFrameGray);
+			} else {
+				const { children } = await loadMTLPromise;
+				model = children[0];
+			}
 
 			{	// Model Scale
 				const { x, y, z } = asset.transform.scale;
@@ -101,7 +107,6 @@ export class AssetLoader {
 			} catch (err) {
 				console.error(`Failed to load asset from ${name}`, err);
 			}
-			// console.log(loaded[name].normal.material);
 
 			this.loadingState.loadedCount++;
 			// console.log(`Loaded ${this.loadingState.loadedCount} of ${this.loadingState.totalCount}`);

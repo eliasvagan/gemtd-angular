@@ -1,0 +1,11 @@
+{
+	"game": {
+
+	},
+	"rendering": {
+		"cameraSize": 12
+	},
+	"debug": {
+		"skipAssetLoading": false
+	}
+}

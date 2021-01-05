@@ -3,6 +3,7 @@ import { ElementRef, Injectable, NgZone, OnDestroy } from '@angular/core';
 import { GameManager } from './entities/game-manager';
 import { MouseEventType } from './enums/mouse-events';
 import { IAssetsLoaded } from './enums/assets';
+import * as GAMECONFIG from '../gameconfig.json';
 
 @Injectable({providedIn: 'root'})
 export class EngineService implements OnDestroy {
@@ -145,7 +146,7 @@ export class EngineService implements OnDestroy {
 		const nw = !portrait ? width / height : 1;
 		const nh = portrait ? height / width : 1;
 
-		const camSize = 8; // 8
+		const camSize = GAMECONFIG.rendering.cameraSize; // 8 is default
 
 		this.camera.position.set(100, 150, 100);
 		this.camera.lookAt(5, 0, 5);

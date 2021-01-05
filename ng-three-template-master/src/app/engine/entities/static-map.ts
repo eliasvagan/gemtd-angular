@@ -46,234 +46,223 @@ export class StaticMap extends THREE.Group {
 		};
 
 
-		{ // Add base floor
+		// Add base floor
 
-			const floorRadius = 40;
-			const floorHeight = -0.5;
-			const baseFloorTemplate = GameObject.LOADED_ASSETS[assetNames.floors[0]].model;
-			const baseFloor = new THREE.Mesh(
-				baseFloorTemplate.geometry,
-				baseFloorTemplate.material
-			);
+		const floorRadius = 40;
+		const floorHeight = -0.5;
+		const baseFloorTemplate = GameObject.LOADED_ASSETS[assetNames.floors[0]].model;
+		const baseFloor = new THREE.Mesh(
+			baseFloorTemplate.geometry,
+			baseFloorTemplate.material
+		);
 
-			baseFloor.receiveShadow = true;
-			baseFloor.position.set(5, -1 + floorHeight, 5);
-			baseFloor.scale.set(floorRadius, 1, floorRadius);
+		baseFloor.receiveShadow = true;
+		baseFloor.position.set(5, -1 + floorHeight, 5);
+		baseFloor.scale.set(floorRadius, 1, floorRadius);
 
-			this.add(baseFloor);
+		this.add(baseFloor);
 
-			// Add randomly spawned floor items
+		// Add randomly spawned floor items
 
-			const protectedAreas = [
-				{ x0: -2, x1: 8, y0: -8, y1: 0 }, // Hills around spawn
-				{ x0: 10, x1: 18, y0: 7, y1: 12 } // Finish area
-			];
+		const protectedAreas = [
+			{ x0: -2, x1: 8, y0: -8, y1: 0 }, // Hills around spawn
+			{ x0: 10, x1: 18, y0: 7, y1: 12 } // Finish area
+		];
 
-			for (const assetGroup of [
-				{
-					assets: assetNames.trees,
-					spawnParameters: {
-						count: 40,
-						distanceMin: 12, // outside tiles
-						distanceMax: Math.min(18, floorRadius), // within floor edge
-						rotationDiff: 0.2,
-						scaleMin: 2.3,
-						scaleMax: 4.5,
-						posYMin: 0,
-						posYMax: 0
-					}
-				}, {
-					assets: assetNames.rocks,
-					spawnParameters: {
-						count: 20,
-						distanceMin: 9, // outside tiles
-						distanceMax: Math.min(13, floorRadius), // within floor edge
-						rotationDiff: 0.2,
-						scaleMin: 0.8,
-						scaleMax: 2.4,
-						posYMin: -1.0,
-						posYMax: -0.6
-					}
-				}, {
-					assets: assetNames.vegetation,
-					spawnParameters: {
-						count: 30,
-						distanceMin: 7, // outside tiles
-						distanceMax: Math.min(12, floorRadius), // within floor edge
-						rotationDiff: 0.2,
-						scaleMin: 0.8,
-						scaleMax: 2.4,
-						posYMin: 0,
-						posYMax: 0
-					}
+		for (const assetGroup of [
+			{
+				assets: assetNames.trees,
+				spawnParameters: {
+					count: 40,
+					distanceMin: 12, // outside tiles
+					distanceMax: Math.min(18, floorRadius), // within floor edge
+					rotationDiff: 0.2,
+					scaleMin: 2.3,
+					scaleMax: 4.5,
+					posYMin: 0,
+					posYMax: 0
 				}
-			]) {
-				for (let i = 0; i < assetGroup.spawnParameters.count; i++) {
+			}, {
+				assets: assetNames.rocks,
+				spawnParameters: {
+					count: 20,
+					distanceMin: 9, // outside tiles
+					distanceMax: Math.min(13, floorRadius), // within floor edge
+					rotationDiff: 0.2,
+					scaleMin: 0.8,
+					scaleMax: 2.4,
+					posYMin: -1.0,
+					posYMax: -0.6
+				}
+			}, {
+				assets: assetNames.vegetation,
+				spawnParameters: {
+					count: 30,
+					distanceMin: 7, // outside tiles
+					distanceMax: Math.min(12, floorRadius), // within floor edge
+					rotationDiff: 0.1,
+					scaleMin: 0.8,
+					scaleMax: 2.4,
+					posYMin: 0,
+					posYMax: 0
+				}
+			}
+		]) {
+			for (let i = 0; i < assetGroup.spawnParameters.count; i++) {
 
-					let asset: THREE.Mesh;
-					const assetIndex = Math.floor(assetGroup.assets.length * Math.random());
-					const assetName = assetGroup.assets[assetIndex];
-					try {
-						const template = GameObject.LOADED_ASSETS[assetName].model;
-						asset = new THREE.Mesh(template.geometry, template.material);
-					} catch (err) {
-						asset = new THREE.Mesh(
-							Meshes.CubeRed,
-							Materials.WireFrameRed,
-						);
-						console.error(`Failed to load asset: ${assetName}`, err);
-					}
-
-					const {
-						distanceMin, distanceMax, rotationDiff,
-						scaleMin, scaleMax, posYMin, posYMax
-					} = assetGroup.spawnParameters;
-
-					// Position
-
-					const rand1 =  (Math.random() < 0.5 ? 1 : -1) * ((Math.random() - 0.5) * (distanceMax - distanceMin) + distanceMin);
-					const rand2 =  (Math.random() - 0.5) * distanceMax;
-					const coinFlip = Math.random() < 0.5;
-					const posX = coinFlip ? rand1 : rand2;
-					const posZ = coinFlip ? rand2 : rand1;
-					const posY = Math.random() * (posYMax - posYMin) + posYMin;
-
-					asset.position.set(
-						posX + 6,
-						posY + floorHeight,
-						posZ + 6,
+				let asset: THREE.Mesh;
+				const assetIndex = Math.floor(assetGroup.assets.length * Math.random());
+				const assetName = assetGroup.assets[assetIndex];
+				try {
+					const template = GameObject.LOADED_ASSETS[assetName].model;
+					asset = new THREE.Mesh(template.geometry, template.material);
+				} catch (err) {
+					asset = new THREE.Mesh(
+						Meshes.CubeRed,
+						Materials.WireFrameRed,
 					);
+					console.error(`Failed to load asset: ${assetName}`, err);
+				}
 
-					// Rotation
-					asset.rotation.set(
-						(Math.random() - 0.5) * rotationDiff,
-						(Math.random() - 0.5) * 5,
-						(Math.random() - 0.5) * rotationDiff,
+				const {
+					distanceMin, distanceMax, rotationDiff,
+					scaleMin, scaleMax, posYMin, posYMax
+				} = assetGroup.spawnParameters;
+
+				// Position
+
+				const rand1 =  (Math.random() < 0.5 ? 1 : -1) * ((Math.random() - 0.5) * (distanceMax - distanceMin) + distanceMin);
+				const rand2 =  (Math.random() - 0.5) * distanceMax;
+				const coinFlip = Math.random() < 0.5;
+				const posX = coinFlip ? rand1 : rand2;
+				const posZ = coinFlip ? rand2 : rand1;
+				const posY = Math.random() * (posYMax - posYMin) + posYMin;
+
+				asset.position.set(
+					posX + 6,
+					posY + floorHeight,
+					posZ + 6,
+				);
+
+				// Rotation
+				asset.rotation.set(
+					(Math.random() - 0.5) * rotationDiff,
+					(Math.random() - 0.5) * 5,
+					(Math.random() - 0.5) * rotationDiff,
+				);
+
+				// Scale
+				const rs = Math.random() * (scaleMax - scaleMin) + scaleMin;
+				asset.scale.set(rs, rs, rs);
+
+				// Shadows
+				asset.castShadow = true;
+
+				// Handle no-spawn zones
+				const legalPosition = protectedAreas.reduce((legal, area) => {
+					const { x0, x1, y0, y1 } = area;
+					const { x, z } = asset.position;
+					return !legal ? false : (
+						x <= x0 || x > x1 || z <= y0 || z > y1
 					);
+				}, true);
 
-					// Scale
-					const rs = Math.random() * (scaleMax - scaleMin) + scaleMin;
-					asset.scale.set(rs, rs, rs);
-
-					// Shadows
-					asset.castShadow = true;
-
-					const legalPosition = protectedAreas.reduce((legal, area) => {
-						const { x0, x1, y0, y1 } = area;
-						const { x, z } = asset.position;
-						return !legal ? false : (
-							x <= x0 || x > x1 || z <= y0 || z > y1
-						);
-					}, true);
-
-					if (legalPosition) {
-						this.add(asset);
-					}
+				if (legalPosition) {
+					this.add(asset);
 				}
-		}
-
-
-		 { // Add tunnel for spawn
-			const blocks = [
-				{
-					assetName: 'CLIFF_BLOCKCAVE_STONE',
-					rotation: 0,
-					position: { x: 1, y: floorHeight, z: -3.5 },
-					scale: 10,
-				}, {
-					assetName: 'CLIFF_BLOCKSLOPE_STONE',
-					rotation: Math.PI / 2,
-					position: { x: 6, y: floorHeight, z: -3.5 },
-					scale: 10,
-				}, {
-					assetName: 'CLIFF_TOP_STONE',
-					rotation: -Math.PI / 2,
-					position: { x: -4, y: floorHeight, z: -3.5 },
-					scale: 10,
-				}, {
-					assetName: assetNames.floors[0], // Floor directly underneath game board
-					rotation: 0,
-					position: { x: 5, y: -12, z: 5 },
-					scale: 24,
-				}, {
-					assetName: assetNames.floors[0], // Enemy entrance
-					rotation: 0,
-					position: { x: 1, y: -4, z: -3 },
-					scale: 8,
-				}, {
-					assetName: assetNames.floors[0], // Enemy finish line
-					rotation: 0,
-					position: { x: 13, y: -4, z: 9 },
-					scale: 8,
-				}, {
-					assetName: 'TENT_DETAILEDCLOSED', // Enemy finish line
-					rotation: Math.PI / 2,
-					position: { x: 13, y: 0, z: 9 },
-					scale: 8,
-				}
-			];
-
-			blocks.forEach(block => {
-				const { model } = GameObject.LOADED_ASSETS[block.assetName];
-				const obj3d = model.clone();
-
-				const { x, y, z } = block.position;
-				obj3d.scale.multiplyScalar(block.scale);
-				obj3d.position.set(x, y, z);
-				obj3d.rotation.set(0, block.rotation, 0);
-
-				obj3d.receiveShadow = true;
-				obj3d.castShadow = true;
-
-				this.add(obj3d);
-			});
-		}
-		 { // Sunlight
-			const dirLight = new THREE.DirectionalLight( 0xf2f2ee, 0.8 );
-			dirLight.position.set( -20, 80, 40 );
-			dirLight.lookAt(0, 0, 20);
-			// dirLight.position.multiplyScalar( 50 );
-			dirLight.name = 'dirLight';
-			// dirLight.shadowCameraVisible = true;
-
-			dirLight.castShadow = true;
-
-			dirLight.shadow.mapSize.width = 4096;
-			dirLight.shadow.mapSize.height = 4096;
-			const d = 20;
-
-			dirLight.shadow.camera.left = -d;
-			dirLight.shadow.camera.right = d;
-			dirLight.shadow.camera.top = d;
-			dirLight.shadow.camera.bottom = -d;
-
-		 dirLight.shadow.camera.near = 0.5;
-		 dirLight.shadow.camera.far = 1000;
-		 dirLight.shadow.radius = 1;
-			dirLight.shadow.bias = 0.00004;
-
-			this.add( dirLight );
-
-			const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.5 );
-			hemiLight.color.set(new THREE.Color('hsl(60%, 75%, 50%)'));
-			hemiLight.groundColor.set(new THREE.Color('hsl(9.5%, 50%, 50%)'));
-			hemiLight.position.set( 0, 500, 0 );
-
-			this.add(hemiLight);
-		}
+			}
 	}
 
-		/*
-		for (let i = 0; i < 20; i++) {
-			const asset = GameObject.LOADED_ASSETS[assetNames.trees[( Math.random() * assetNames.trees.length )]].model;
-			const tree = new THREE.Mesh(asset.geometry, asset.material);
-			tree.position.set(-1, 0, -3);
-			tree.scale.set(4, 4, 4);
-			tree.rotation.set(0, 0, 0);
-			this.add(tree);
-		}
-		 */
 
+	 { // Add tunnel for spawn
+		const blocks = [
+			{
+				assetName: 'CLIFF_BLOCKCAVE_STONE',
+				rotation: 0,
+				position: { x: 1, y: floorHeight, z: -3.5 },
+				scale: 10,
+			}, {
+				assetName: 'CLIFF_BLOCKSLOPE_STONE',
+				rotation: Math.PI / 2,
+				position: { x: 6, y: floorHeight, z: -3.5 },
+				scale: 10,
+			}, {
+				assetName: 'CLIFF_TOP_STONE',
+				rotation: -Math.PI / 2,
+				position: { x: -4, y: floorHeight, z: -3.5 },
+				scale: 10,
+			}, {
+				assetName: assetNames.floors[0], // Floor directly underneath game board
+				rotation: 0,
+				position: { x: 5, y: -12, z: 5 },
+				scale: 24,
+			}, {
+				assetName: assetNames.floors[0], // Enemy entrance
+				rotation: 0,
+				position: { x: 1, y: -4, z: -3 },
+				scale: 8,
+			}, {
+				assetName: assetNames.floors[0], // Enemy finish line
+				rotation: 0,
+				position: { x: 13, y: -4, z: 9 },
+				scale: 8,
+			}, {
+				assetName: 'TENT_DETAILEDCLOSED', // Enemy finish line
+				rotation: Math.PI / 2,
+				position: { x: 13, y: 0, z: 9 },
+				scale: 8,
+			}
+		];
+
+		blocks.forEach(block => {
+			const { model } = GameObject.LOADED_ASSETS[block.assetName];
+			const obj3d = model.clone();
+
+			const { x, y, z } = block.position;
+			obj3d.scale.multiplyScalar(block.scale);
+			obj3d.position.set(x, y, z);
+			obj3d.rotation.set(0, block.rotation, 0);
+
+			obj3d.receiveShadow = true;
+			obj3d.castShadow = true;
+
+			this.add(obj3d);
+		});
+		}
+
+	 { // Sunlight
+	 		const dirLight = new THREE.DirectionalLight( 0xf2f2ee, 0.8 );
+			 dirLight.position.set( -20, 80, 40 );
+			 dirLight.lookAt(0, 0, 20);
+			// dirLight.position.multiplyScalar( 50 );
+			 dirLight.name = 'dirLight';
+			// dirLight.shadowCameraVisible = true;
+
+			 dirLight.castShadow = true;
+
+			 dirLight.shadow.mapSize.width = 4096;
+			 dirLight.shadow.mapSize.height = 4096;
+			 const d = 22;
+
+			 dirLight.shadow.camera.left = -d;
+			 dirLight.shadow.camera.right = d;
+			 dirLight.shadow.camera.top = d;
+			 dirLight.shadow.camera.bottom = -d;
+
+		  dirLight.shadow.camera.near = 0.5;
+		  dirLight.shadow.camera.far = 1000;
+		  dirLight.shadow.radius = 1;
+			 dirLight.shadow.bias = 0.00004;
+
+			 this.add( dirLight );
+
+			 const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.5 );
+			 hemiLight.color.set(new THREE.Color('hsl(60%, 75%, 50%)'));
+			 hemiLight.groundColor.set(new THREE.Color('hsl(9.5%, 50%, 50%)'));
+			 hemiLight.position.set( 0, 500, 0 );
+
+			 this.add(hemiLight);
+		}
 	}
 
 	add(obj: THREE.Object3D) {

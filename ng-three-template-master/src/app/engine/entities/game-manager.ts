@@ -4,10 +4,11 @@ import { GameMap } from './game-map';
 import { GamePhase } from '../enums/game-phase';
 import { GameObject } from './game-object';
 import { IAssetsLoaded } from '../enums/assets';
-import {StaticMap} from './static-map';
+import { StaticMap } from './static-map';
 
 export class GameManager {
 
+	public static ACTIVE_SESSION: IGameSession;
 	private session: IGameSession;
 	private readonly scene: THREE.Scene;
 
@@ -26,6 +27,7 @@ export class GameManager {
 			map: new GameMap(this.scene),
 			enemies: []
 		};
+		GameManager.ACTIVE_SESSION = this.session;
 	}
 
 	handleUpdate(dt: number): void {

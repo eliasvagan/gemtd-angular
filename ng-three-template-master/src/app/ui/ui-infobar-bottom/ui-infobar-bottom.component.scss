@@ -1,0 +1,24 @@
+section.ui-bottom-wrapper {
+	position: absolute;
+	display: block;
+	max-width: calc(100vw - 20px);
+	margin: auto;
+	padding: 12px;
+	bottom: 10px;
+	left: 10px;
+	background-color: #222222;
+	color: lightgray;
+	border-radius: 5px;
+	box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+	min-width: 15em;
+}
+
+p {
+	margin: 0;
+}
+table {
+	width: 100%;
+}
+td, th {
+	text-align: center;
+}
