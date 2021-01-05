@@ -1,11 +1,11 @@
 section.ui-bottom-wrapper {
+	width: 30em;
 	position: absolute;
-	display: block;
-	max-width: calc(100vw - 20px);
-	margin: auto;
+	display: flex;
+	flex-flow: row nowrap;
+	margin: auto auto 10px 10px;
+	bottom: 0;
 	padding: 12px;
-	bottom: 10px;
-	left: 10px;
 	background-color: #222222;
 	color: lightgray;
 	border-radius: 5px;
@@ -16,9 +16,7 @@ section.ui-bottom-wrapper {
 p {
 	margin: 0;
 }
-table {
-	width: 100%;
-}
 td, th {
+	padding: 0.5em;
 	text-align: center;
 }

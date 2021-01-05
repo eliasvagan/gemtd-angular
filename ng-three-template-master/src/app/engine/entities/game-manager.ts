@@ -21,6 +21,7 @@ export class GameManager {
 		this.session = {
 			round: 0,
 			hp: 100,
+			hpMax: 100,
 			score: 0,
 			spawnRate: 5,
 			phase: GamePhase.Building,

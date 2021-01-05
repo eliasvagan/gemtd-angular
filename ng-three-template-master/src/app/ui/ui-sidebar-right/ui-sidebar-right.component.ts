@@ -1,15 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { IGameSession } from '../../engine/data-models/game-session';
 
 @Component({
-  selector: 'app-ui-sidebar-right',
-  templateUrl: './ui-sidebar-right.component.html'
+	selector: 'app-ui-sidebar-right',
+	templateUrl: './ui-sidebar-right.component.html'
 })
 export class UiSidebarRightComponent implements OnInit {
 
-  public constructor() {
-  }
+	@Input()
+	public gameSession: IGameSession;
 
-  public ngOnInit(): void {
-  }
+	public constructor() {
+	}
+
+	public ngOnInit(): void {
+	}
 
 }

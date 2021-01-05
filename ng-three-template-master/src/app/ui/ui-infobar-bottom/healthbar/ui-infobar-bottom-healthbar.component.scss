@@ -1,0 +1,37 @@
+
+
+div.hp-wrapper {
+	flex: 1;
+
+	& > p {
+		margin: 0;
+
+		& > span {
+			line-height: 3rem;
+		}
+	}
+}
+
+div.hp-rail {
+	width: 300px;
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: space-between;
+	background-color: #333333;
+	box-sizing: border-box;
+	padding: 3px;
+
+	& > div.hp-bar-main {
+		background-color: #40db53;
+		height: 0.4em;
+		box-sizing: border-box;
+	}
+
+	& > div.hp-bar-filler {
+		box-sizing: border-box;
+		background-color: gray;
+		flex: 1;
+	}
+}
+
+

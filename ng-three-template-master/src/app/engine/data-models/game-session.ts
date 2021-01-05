@@ -4,6 +4,7 @@ import { Enemy } from '../entities/enemy';
 
 
 export interface IGameSession {
+	hpMax: number;
 	round: number;
 	hp: number;
 	score: number;

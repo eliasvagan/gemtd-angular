@@ -15,6 +15,7 @@ import { PlayComponent } from './menus/play/play.component';
 import { GameRoutingModule } from './game-routing/game-routing.module';
 import { ShopComponent } from './menus/shop/shop.component';
 import { GameInstanceComponent } from './engine/game-instance/game-instance.component';
+import { UiInfobarBottomHealthbarComponent } from './ui/ui-infobar-bottom/healthbar/ui-infobar-bottom-healthbar.component';
 
 @NgModule({
 	declarations: [
@@ -30,7 +31,8 @@ import { GameInstanceComponent } from './engine/game-instance/game-instance.comp
 		SplashComponent,
 		PlayComponent,
 		ShopComponent,
-		GameInstanceComponent
+		GameInstanceComponent,
+		UiInfobarBottomHealthbarComponent
 	],
 	imports: [
 		BrowserModule,
