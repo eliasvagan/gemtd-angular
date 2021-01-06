@@ -1,16 +1,18 @@
 section.ui-bottom-wrapper {
-	width: 30em;
+	max-width: 25em;
 	position: absolute;
 	display: flex;
 	flex-flow: row nowrap;
 	margin: auto auto 10px 10px;
 	bottom: 0;
-	padding: 12px;
+	padding: 2px;
 	background-color: #222222;
 	color: lightgray;
 	border-radius: 5px;
 	box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
-	min-width: 15em;
+	min-width: 12em;
+	font-family: 'Fredoka One', cursive;
+	font-weight: bold;
 }
 
 p {
@@ -19,4 +21,5 @@ p {
 td, th {
 	padding: 0.5em;
 	text-align: center;
+	font-size: 1.2em;
 }

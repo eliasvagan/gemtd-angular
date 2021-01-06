@@ -108,7 +108,7 @@ export class EngineService implements OnDestroy {
 			}
 			const now: Date = new Date();
 			const dt: number = now.valueOf() - this.prevFrame.valueOf();
-			this.gm.handleUpdate(dt);
+			this.gm.update(dt);
 
 			this.renderer.render(this.scene, this.camera);
 			this.prevFrame = new Date();

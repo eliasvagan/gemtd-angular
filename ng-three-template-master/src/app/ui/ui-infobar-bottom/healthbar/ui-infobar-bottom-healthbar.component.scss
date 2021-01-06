@@ -1,10 +1,17 @@
 
 
 div.hp-wrapper {
-	flex: 1;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content:center;
+	align-content: center;
+	height: 100%;
+	width: 100%;
+	min-width: 12em;
 
 	& > p {
-		margin: 0;
+		margin: 5px 0 0 0;
+		text-align: center;
 
 		& > span {
 			line-height: 3rem;
@@ -13,23 +20,27 @@ div.hp-wrapper {
 }
 
 div.hp-rail {
-	width: 300px;
+	width: 100%;
 	display: flex;
-	flex-flow: column wrap;
+	flex-flow: row nowrap;
 	justify-content: space-between;
-	background-color: #333333;
+	background-color: #cd4444;
 	box-sizing: border-box;
-	padding: 3px;
+	border: solid 3px #333333;
+	border-radius: 10px;
+
 
 	& > div.hp-bar-main {
 		background-color: #40db53;
-		height: 0.4em;
+		height: 8px;
 		box-sizing: border-box;
+		border-radius: 10px;
 	}
 
 	& > div.hp-bar-filler {
 		box-sizing: border-box;
-		background-color: gray;
+		height: 8px;
+		min-width: 0;
 		flex: 1;
 	}
 }
