@@ -3,17 +3,11 @@ import { GamePhase } from '../enums/game-phase';
 import { IUpdateable } from './updatable';
 import { IGameSessionBuff } from './game-session-buff';
 import { IEnemy } from './enemy-model';
+import { GemTypeNames } from '../enums/gem-types-names';
 
 export interface IGameSessionGemChances {
 	types: {
-		amethyst: number,
-		aquamarine: number,
-		diamond: number,
-		emerald: number,
-		opal: number,
-		ruby: number,
-		sapphire: number,
-		topaz: number
+		[key in GemTypeNames]: number;
 	};
 	sizes: [number, number, number, number, number];
 }

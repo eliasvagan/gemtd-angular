@@ -4,7 +4,8 @@ import { GameManager } from '../engine/entities/game-manager';
 
 @Component({
 	selector: 'app-ui',
-	templateUrl: './ui.component.html'
+	templateUrl: './ui.component.html',
+	styleUrls: ['./ui.component.scss']
 })
 export class UiComponent implements OnInit {
 

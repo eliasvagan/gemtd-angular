@@ -5,7 +5,6 @@ import { GameMap } from './game-map';
 import { Enemy } from './enemy';
 import { IGameSessionBuff } from '../data-models/game-session-buff';
 import { GameSessionBuff } from './game-session-buff';
-import * as path from 'path';
 
 export class GameSession implements IGameSession {
 
@@ -27,7 +26,7 @@ export class GameSession implements IGameSession {
 			...GAMESESSION_DEFAULT_VALUES,
 			board: new GameMap(scene),
 			buffs: [
-				new GameSessionBuff('gemChances.types.amethyst', 2.0, 4000) // Test buff
+				new GameSessionBuff('gemChances.types.amethyst', 12.0, 8000) // Test buff
 			],
 		};
 		Object.assign(this, this.initialValues);
@@ -46,33 +45,31 @@ export class GameSession implements IGameSession {
 		const { gemChances, hpMax, spawnRate } = this.initialValues;
 		Object.assign(this, { gemChances, hpMax, spawnRate });
 
-		this.buffs.forEach((buff) => {
-			try {
-				// TODO: Fix this to be recursive
-				/*
-				const substrings: string[] = buff.affectedStatName.split('.');
-				let substringIndex = 0;
-				let target = /this[substrings ? substrings[0] : buff.affectedStatName];
-				while (target.hasOwnProperty(substrings[substringIndex])) {
-					target = target[substrings[substringIndex]];
-					substringIndex++;
-				}
-				*/
-			} catch (err) {
-				console.error(`Could not find property ${buff.affectedStatName} on GameSession instance!`);
-			}
-		});
+		// Apply buffs
+		this.buffs.forEach((buff) => buff.applyBuff(this));
 
-		// Normalize chances
-		const normalizer = Object
+		// Normalize gem size chances
+		const normalizerGemSize = Object
 			.values(this.gemChances.sizes)
+			.reduce((sum, chance) => sum + chance, 0);
+
+		Object
+			.entries(this.gemChances.sizes)
+			.forEach(([gemType, chance]) => {
+				this.gemChances.sizes[gemType] = chance / normalizerGemSize;
+			});
+
+		// Normalize gem chances
+		const normalizerGemType = Object
+			.values(this.gemChances.types)
 			.reduce((sum, chance) => sum + chance, 0);
 
 		Object
 			.entries(this.gemChances.types)
 			.forEach(([gemType, chance]) => {
-				this.gemChances.types[gemType] = chance / normalizer;
-		});
+				this.gemChances.types[gemType] = chance / normalizerGemType;
+			});
+
 
 		const gemTypeCount: number = Object.keys(this.gemChances.types).length;
 	}

@@ -5,7 +5,7 @@
     "types": [
       "node",
       "webgl2"
-    ]
+    ],
   },
   "files": [
     "main.ts",

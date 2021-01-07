@@ -3,7 +3,7 @@
 
 	},
 	"rendering": {
-		"cameraSize": 8
+		"cameraSize": 10
 	},
 	"debug": {
 		"skipAssetLoading": true
