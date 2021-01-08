@@ -3013,5 +3013,14 @@ export const Assets: IAssets = {
 			offset: { x: -0.5, y: 0, z: -0.5 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
+	},
+	ARENA_TEMPLE_A: {
+		mtl: 'checkpoint.mtl',
+		obj: 'checkpoint.obj',
+		transform: {
+			scale: { x: 0, y: 0.5, z: 0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
 	}
 };

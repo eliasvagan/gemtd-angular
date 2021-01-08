@@ -5,5 +5,4 @@ export interface IGameSessionBuff {
 	affectedStatName: string;
 	valueDifference: number;
 	update(dt: number): void;
-	applyBuff(gameSession: IGameSession): boolean;
 }

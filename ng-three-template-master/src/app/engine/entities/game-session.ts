@@ -26,7 +26,8 @@ export class GameSession implements IGameSession {
 			...GAMESESSION_DEFAULT_VALUES,
 			board: new GameMap(scene),
 			buffs: [
-				new GameSessionBuff('gemChances.types.amethyst', 12.0, 8000) // Test buff
+				new GameSessionBuff('gemChances.types.amethyst', .02, 8000),
+				new GameSessionBuff('gemChances.sizes.4', .5, 3000)
 			],
 		};
 		Object.assign(this, this.initialValues);
@@ -42,11 +43,27 @@ export class GameSession implements IGameSession {
 
 	applyBuffs() {
 		// Reset gem chances to default before calculating
-		const { gemChances, hpMax, spawnRate } = this.initialValues;
+		const { gemChances, hpMax, spawnRate } = GAMESESSION_DEFAULT_VALUES; // TODO: Fix this
 		Object.assign(this, { gemChances, hpMax, spawnRate });
 
 		// Apply buffs
-		this.buffs.forEach((buff) => buff.applyBuff(this));
+		this.buffs.forEach(buff => {
+			const { valueDifference, affectedStatName } = buff;
+			try {
+				const path = affectedStatName.split('.');
+				let targetObj: IGameSession | object;
+				if (!path) {
+					targetObj = this;
+				} else {
+					targetObj = path.reduce((target, subPath, index) => {
+						return index === path.length - 1 ? target : target[subPath];
+					}, this);
+				}
+				targetObj[path[path.length - 1]] += valueDifference;
+			} catch (err) {
+				console.error(`Could not find property ${affectedStatName} on GameSession instance!`);
+			}
+		});
 
 		// Normalize gem size chances
 		const normalizerGemSize = Object
@@ -69,8 +86,5 @@ export class GameSession implements IGameSession {
 			.forEach(([gemType, chance]) => {
 				this.gemChances.types[gemType] = chance / normalizerGemType;
 			});
-
-
-		const gemTypeCount: number = Object.keys(this.gemChances.types).length;
 	}
 }

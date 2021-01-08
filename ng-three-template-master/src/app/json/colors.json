@@ -1,0 +1,14 @@
+{
+	"gem": {
+		"type": {
+			"amethyst": "#7D3DE8",
+			"aquamarine": "#49FFB0",
+			"diamond": "#E5F3FF",
+			"emerald": "#42E242",
+			"opal": "#E887D5",
+			"ruby": "#F6224E",
+			"sapphire": "#3E67FF",
+			"topaz": "#FFA92F"
+		}
+	}
+}

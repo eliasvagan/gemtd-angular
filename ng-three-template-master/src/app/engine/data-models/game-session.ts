@@ -31,14 +31,14 @@ export const GAMESESSION_DEFAULT_VALUES: IGameSession | any = {
 	round: 0,
 	gemChances: {
 		types: {
-			amethyst: 1,
-			aquamarine: 1,
-			diamond: 1,
-			emerald: 1,
-			opal: 1,
-			ruby: 1,
-			sapphire: 1,
-			topaz: 1
+			amethyst: 0.125,
+			aquamarine: 0.125,
+			diamond: 0.125,
+			emerald: 0.125,
+			opal: 0.125,
+			ruby: 0.125,
+			sapphire: 0.125,
+			topaz: 0.125
 		},
 		sizes: [1, 0, 0, 0, 0]
 	},
