@@ -2,15 +2,17 @@ import * as THREE from 'three-full';
 import { GameObject } from './game-object';
 import { Materials } from '../enums/materials';
 import { Meshes } from '../enums/meshes';
+import * as GAMECONFIG from '../../gameconfig.json';
 
 export class StaticMap extends THREE.Group {
+
+
 	constructor() {
 		super();
-		this.generateMap();
+		this.generateMap(0);
 	}
 
-	private generateMap() {
-
+	private generateMap(mapIndex: number) {
 		const assetNames = {
 			trees: [
 				'TREE_PINEDEFAULTA', 'TREE_PINEDEFAULTB', 'TREE_PINEGROUNDA',
@@ -44,70 +46,116 @@ export class StaticMap extends THREE.Group {
 				'CLIFF_BLOCK_STONE', 'CLIFF_BLOCK_ROCK',
 			]
 		};
-
-
-		// Add base floor
-
 		const floorRadius = 40;
 		const floorHeight = -0.5;
-		const baseFloorTemplate = GameObject.LOADED_ASSETS[assetNames.floors[0]].model;
-		const baseFloor = new THREE.Mesh(
-			baseFloorTemplate.geometry,
-			baseFloorTemplate.material
-		);
 
-		baseFloor.receiveShadow = true;
-		baseFloor.position.set(5, -1 + floorHeight, 5);
-		baseFloor.scale.set(floorRadius, 1, floorRadius);
-
-		this.add(baseFloor);
-
-		// Add randomly spawned floor items
-
-		const protectedAreas = [
-			{ x0: -2, x1: 8, y0: -8, y1: 0 }, // Hills around spawn
-			{ x0: 10, x1: 18, y0: 7, y1: 12 } // Finish area
+		const maps = [
+			{
+				name: 'Arena 1',
+				floor: assetNames.floors[0],
+				blocks: [
+					{
+						assetName: 'CLIFF_BLOCKCAVE_STONE',
+						rotation: 0,
+						position: { x: 1, y: floorHeight, z: -3.5 },
+						scale: 10,
+					}, {
+						assetName: 'CLIFF_BLOCKSLOPE_STONE',
+						rotation: Math.PI / 2,
+						position: { x: 6, y: floorHeight, z: -3.5 },
+						scale: 10,
+					}, {
+						assetName: 'CLIFF_TOP_STONE',
+						rotation: -Math.PI / 2,
+						position: { x: -4, y: floorHeight, z: -3.5 },
+						scale: 10,
+					}, {
+						assetName: assetNames.floors[0], // Floor directly underneath game board
+						rotation: 0,
+						position: { x: 5, y: -12, z: 5 },
+						scale: 24,
+					}, {
+						assetName: assetNames.floors[0], // Enemy entrance
+						rotation: 0,
+						position: { x: 1, y: -4, z: -3 },
+						scale: 8,
+					}, {
+						assetName: assetNames.floors[0], // Enemy finish line
+						rotation: 0,
+						position: { x: 13, y: -4, z: 9 },
+						scale: 8,
+					}, {
+						assetName: 'TENT_DETAILEDCLOSED', // Enemy finish line
+						rotation: Math.PI / 2,
+						position: { x: 13, y: 0, z: 9 },
+						scale: 8,
+					}
+				],
+				protectedAreas: [
+					{ x0: -2, x1: 8, y0: -8, y1: 0 }, // Hills around spawn
+					{ x0: 10, x1: 18, y0: 7, y1: 12 } // Finish area
+				],
+				assetGroups: [
+					{
+						assets: assetNames.trees,
+						spawnParameters: {
+							count: 40,
+							distanceMin: 12, // outside tiles
+							distanceMax: Math.min(18, floorRadius), // within floor edge
+							rotationDiff: 0.2,
+							scaleMin: 2.3,
+							scaleMax: 4.5,
+							posYMin: 0,
+							posYMax: 0
+						}
+					}, {
+						assets: assetNames.rocks,
+						spawnParameters: {
+							count: 20,
+							distanceMin: 9, // outside tiles
+							distanceMax: Math.min(13, floorRadius), // within floor edge
+							rotationDiff: 0.2,
+							scaleMin: 0.8,
+							scaleMax: 2.4,
+							posYMin: -1.0,
+							posYMax: -0.6
+						}
+					}, {
+						assets: assetNames.vegetation,
+						spawnParameters: {
+							count: 30,
+							distanceMin: 7, // outside tiles
+							distanceMax: Math.min(12, floorRadius), // within floor edge
+							rotationDiff: 0.1,
+							scaleMin: 0.8,
+							scaleMax: 2.4,
+							posYMin: 0,
+							posYMax: 0
+						}
+					}
+				]
+			}
 		];
 
-		for (const assetGroup of [
-			{
-				assets: assetNames.trees,
-				spawnParameters: {
-					count: 40,
-					distanceMin: 12, // outside tiles
-					distanceMax: Math.min(18, floorRadius), // within floor edge
-					rotationDiff: 0.2,
-					scaleMin: 2.3,
-					scaleMax: 4.5,
-					posYMin: 0,
-					posYMax: 0
-				}
-			}, {
-				assets: assetNames.rocks,
-				spawnParameters: {
-					count: 20,
-					distanceMin: 9, // outside tiles
-					distanceMax: Math.min(13, floorRadius), // within floor edge
-					rotationDiff: 0.2,
-					scaleMin: 0.8,
-					scaleMax: 2.4,
-					posYMin: -1.0,
-					posYMax: -0.6
-				}
-			}, {
-				assets: assetNames.vegetation,
-				spawnParameters: {
-					count: 30,
-					distanceMin: 7, // outside tiles
-					distanceMax: Math.min(12, floorRadius), // within floor edge
-					rotationDiff: 0.1,
-					scaleMin: 0.8,
-					scaleMax: 2.4,
-					posYMin: 0,
-					posYMax: 0
-				}
-			}
-		]) {
+		const chosenMap = maps[mapIndex];
+
+		// Add big floor
+		{
+			const baseFloorTemplate = GameObject.LOADED_ASSETS[chosenMap.floor].model;
+			const baseFloor = new THREE.Mesh(
+				baseFloorTemplate.geometry,
+				baseFloorTemplate.material
+			);
+
+			baseFloor.receiveShadow = true;
+			baseFloor.position.set(5, -1 + floorHeight, 5);
+			baseFloor.scale.set(floorRadius, 1, floorRadius);
+
+			this.add(baseFloor);
+		}
+
+		// Add randomly spawned floor items
+		for (const assetGroup of chosenMap.assetGroups) {
 			for (let i = 0; i < assetGroup.spawnParameters.count; i++) {
 
 				let asset: THREE.Mesh;
@@ -159,7 +207,7 @@ export class StaticMap extends THREE.Group {
 				asset.castShadow = true;
 
 				// Handle no-spawn zones
-				const legalPosition = protectedAreas.reduce((legal, area) => {
+				const legalPosition = chosenMap.protectedAreas.reduce((legal, area) => {
 					const { x0, x1, y0, y1 } = area;
 					const { x, z } = asset.position;
 					return !legal ? false : (
@@ -173,48 +221,9 @@ export class StaticMap extends THREE.Group {
 			}
 	}
 
-
-	 { // Add tunnel for spawn
-		const blocks = [
-			{
-				assetName: 'CLIFF_BLOCKCAVE_STONE',
-				rotation: 0,
-				position: { x: 1, y: floorHeight, z: -3.5 },
-				scale: 10,
-			}, {
-				assetName: 'CLIFF_BLOCKSLOPE_STONE',
-				rotation: Math.PI / 2,
-				position: { x: 6, y: floorHeight, z: -3.5 },
-				scale: 10,
-			}, {
-				assetName: 'CLIFF_TOP_STONE',
-				rotation: -Math.PI / 2,
-				position: { x: -4, y: floorHeight, z: -3.5 },
-				scale: 10,
-			}, {
-				assetName: assetNames.floors[0], // Floor directly underneath game board
-				rotation: 0,
-				position: { x: 5, y: -12, z: 5 },
-				scale: 24,
-			}, {
-				assetName: assetNames.floors[0], // Enemy entrance
-				rotation: 0,
-				position: { x: 1, y: -4, z: -3 },
-				scale: 8,
-			}, {
-				assetName: assetNames.floors[0], // Enemy finish line
-				rotation: 0,
-				position: { x: 13, y: -4, z: 9 },
-				scale: 8,
-			}, {
-				assetName: 'TENT_DETAILEDCLOSED', // Enemy finish line
-				rotation: Math.PI / 2,
-				position: { x: 13, y: 0, z: 9 },
-				scale: 8,
-			}
-		];
-
-		blocks.forEach(block => {
+		// Add tunnel for spawn
+		{
+		chosenMap.blocks.forEach(block => {
 			const { model } = GameObject.LOADED_ASSETS[block.assetName];
 			const obj3d = model.clone();
 
@@ -230,7 +239,9 @@ export class StaticMap extends THREE.Group {
 		});
 		}
 
-	 { // Sunlight
+		// TODO: Add lights to maps array
+		// Sunlight
+	 {
 	 		const dirLight = new THREE.DirectionalLight( 0xf2f2ee, 0.8 );
 			 dirLight.position.set( -20, 80, 40 );
 			 dirLight.lookAt(0, 0, 20);
@@ -242,16 +253,15 @@ export class StaticMap extends THREE.Group {
 
 			 dirLight.shadow.mapSize.width = 4096;
 			 dirLight.shadow.mapSize.height = 4096;
-			 const d = 22;
+			 const d = GAMECONFIG.rendering.cameraSize * 2 + 4;
 
 			 dirLight.shadow.camera.left = -d;
 			 dirLight.shadow.camera.right = d;
 			 dirLight.shadow.camera.top = d;
 			 dirLight.shadow.camera.bottom = -d;
-
-		  dirLight.shadow.camera.near = 0.5;
-		  dirLight.shadow.camera.far = 1000;
-		  dirLight.shadow.radius = 1;
+			 dirLight.shadow.camera.near = 0.5;
+			 dirLight.shadow.camera.far = 1000;
+			 dirLight.shadow.radius = 1;
 			 dirLight.shadow.bias = 0.00004;
 
 			 this.add( dirLight );

@@ -3022,5 +3022,59 @@ export const Assets: IAssets = {
 			offset: { x: 0, y: 0, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
+	},
+	GEM_P1: {
+		mtl: 'gems/gems_amethyst_1.mtl',
+		obj: 'gems/gems_amethyst_1.obj',
+		transform: {
+			scale: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_P2: {
+		mtl: 'gems/gems_amethyst_2.mtl',
+		obj: 'gems/gems_amethyst_2.obj',
+		transform: {
+			scale: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_P3: {
+		mtl: 'gems/gems_amethyst_3.mtl',
+		obj: 'gems/gems_amethyst_3.obj',
+		transform: {
+			scale: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_P4: {
+		mtl: 'gems/gems_amethyst_4.mtl',
+		obj: 'gems/gems_amethyst_4.obj',
+		transform: {
+			scale: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_P5: {
+		mtl: 'gems/gems_amethyst_5.mtl',
+		obj: 'gems/gems_amethyst_5.obj',
+		transform: {
+			scale: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_P6: {
+		mtl: 'gems/gems_amethyst_6.mtl',
+		obj: 'gems/gems_amethyst_6.obj',
+		transform: {
+			scale: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
 	}
 };

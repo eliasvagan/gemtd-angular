@@ -3,9 +3,9 @@
 
 	},
 	"rendering": {
-		"cameraSize": 10
+		"cameraSize": 8
 	},
 	"debug": {
-		"skipAssetLoading": true
+		"skipAssetLoading": false
 	}
 }

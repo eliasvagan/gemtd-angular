@@ -1,0 +1,8 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl custom1(Clone)
+Kd 0.384 0.384 0.384
+
+newmtl custom7(Clone)
+Kd 0.898 0.953 1
+
