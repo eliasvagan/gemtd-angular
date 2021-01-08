@@ -9,8 +9,8 @@ export class Tile extends GameObject implements ITile {
 		position: { x: number, y: number },
 		scene: Scene,
 		assetNames = {
-			normal: 'TILE_FREE',
-			hovered: 'TILE_FREE_HOVER'
+			normal: 'TILE_FREE_0',
+			hovered: 'TILE_FREE_1'
 		}
 	) {
 		super({

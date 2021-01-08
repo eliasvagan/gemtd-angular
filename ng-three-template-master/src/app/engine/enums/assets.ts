@@ -2987,7 +2987,7 @@ export const Assets: IAssets = {
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
-	TILE_FREE: {
+	TILE_FREE_OLD: {
 		mtl: 'platform_free.mtl',
 		obj: 'platform_free.obj',
 		transform: {
@@ -2996,12 +2996,30 @@ export const Assets: IAssets = {
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
-	TILE_FREE_HOVER: {
+	TILE_FREE_OLD_HOVER: {
 		mtl: 'platform_free_hover.mtl',
 		obj: 'platform_free_hover.obj',
 		transform: {
 			scale: { x: 0.5, y: 0.5, z: 0.5 },
 			offset: { x: -0.5, y: 0, z: -0.5 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	TILE_FREE_0: {
+		mtl: 'originals/tile_free_0.mtl',
+		obj: 'originals/tile_free_0.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	TILE_FREE_1: {
+		mtl: 'originals/tile_free_1.mtl',
+		obj: 'originals/tile_free_1.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
@@ -3015,10 +3033,10 @@ export const Assets: IAssets = {
 		}
 	},
 	ARENA_TEMPLE_A: {
-		mtl: 'checkpoint.mtl',
-		obj: 'checkpoint.obj',
+		mtl: 'originals/dungeon_arena.mtl',
+		obj: 'originals/dungeon_arena.obj',
 		transform: {
-			scale: { x: 0, y: 0.5, z: 0 },
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
 			offset: { x: 0, y: 0, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
@@ -3027,7 +3045,7 @@ export const Assets: IAssets = {
 		mtl: 'gems/gems_amethyst_1.mtl',
 		obj: 'gems/gems_amethyst_1.obj',
 		transform: {
-			scale: { x: 0, y: 0, z: 0 },
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
 			offset: { x: 0, y: 0, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
@@ -3036,7 +3054,7 @@ export const Assets: IAssets = {
 		mtl: 'gems/gems_amethyst_2.mtl',
 		obj: 'gems/gems_amethyst_2.obj',
 		transform: {
-			scale: { x: 0, y: 0, z: 0 },
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
 			offset: { x: 0, y: 0, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
@@ -3045,7 +3063,7 @@ export const Assets: IAssets = {
 		mtl: 'gems/gems_amethyst_3.mtl',
 		obj: 'gems/gems_amethyst_3.obj',
 		transform: {
-			scale: { x: 0, y: 0, z: 0 },
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
 			offset: { x: 0, y: 0, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
@@ -3054,7 +3072,7 @@ export const Assets: IAssets = {
 		mtl: 'gems/gems_amethyst_4.mtl',
 		obj: 'gems/gems_amethyst_4.obj',
 		transform: {
-			scale: { x: 0, y: 0, z: 0 },
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
 			offset: { x: 0, y: 0, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
@@ -3063,7 +3081,7 @@ export const Assets: IAssets = {
 		mtl: 'gems/gems_amethyst_5.mtl',
 		obj: 'gems/gems_amethyst_5.obj',
 		transform: {
-			scale: { x: 0, y: 0, z: 0 },
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
 			offset: { x: 0, y: 0, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
@@ -3072,7 +3090,385 @@ export const Assets: IAssets = {
 		mtl: 'gems/gems_amethyst_6.mtl',
 		obj: 'gems/gems_amethyst_6.obj',
 		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_Q1: {
+		mtl: 'gems/gems_aquamarine_1.mtl',
+		obj: 'gems/gems_aquamarine_1.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_Q2: {
+		mtl: 'gems/gems_aquamarine_2.mtl',
+		obj: 'gems/gems_aquamarine_2.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_Q3: {
+		mtl: 'gems/gems_aquamarine_3.mtl',
+		obj: 'gems/gems_aquamarine_3.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_Q4: {
+		mtl: 'gems/gems_aquamarine_4.mtl',
+		obj: 'gems/gems_aquamarine_4.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_Q5: {
+		mtl: 'gems/gems_aquamarine_5.mtl',
+		obj: 'gems/gems_aquamarine_5.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_Q6: {
+		mtl: 'gems/gems_aquamarine_6.mtl',
+		obj: 'gems/gems_aquamarine_6.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_D1: {
+		mtl: 'gems/gems_diamond_1.mtl',
+		obj: 'gems/gems_diamond_1.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_D2: {
+		mtl: 'gems/gems_diamond_2.mtl',
+		obj: 'gems/gems_diamond_2.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_D3: {
+		mtl: 'gems/gems_diamond_3.mtl',
+		obj: 'gems/gems_diamond_3.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_D4: {
+		mtl: 'gems/gems_diamond_4.mtl',
+		obj: 'gems/gems_diamond_4.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_D5: {
+		mtl: 'gems/gems_diamond_5.mtl',
+		obj: 'gems/gems_diamond_5.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_D6: {
+		mtl: 'gems/gems_diamond_6.mtl',
+		obj: 'gems/gems_diamond_6.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_G1: {
+		mtl: 'gems/gems_emerald_1.mtl',
+		obj: 'gems/gems_emerald_1.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_G2: {
+		mtl: 'gems/gems_emerald_2.mtl',
+		obj: 'gems/gems_emerald_2.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_G3: {
+		mtl: 'gems/gems_emerald_3.mtl',
+		obj: 'gems/gems_emerald_3.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_G4: {
+		mtl: 'gems/gems_emerald_4.mtl',
+		obj: 'gems/gems_emerald_4.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_G5: {
+		mtl: 'gems/gems_emerald_5.mtl',
+		obj: 'gems/gems_emerald_5.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_G6: {
+		mtl: 'gems/gems_emerald_6.mtl',
+		obj: 'gems/gems_emerald_6.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_E1: {
+		mtl: 'gems/gems_opal_1.mtl',
+		obj: 'gems/gems_opal_1.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_E2: {
+		mtl: 'gems/gems_opal_2.mtl',
+		obj: 'gems/gems_opal_2.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_E3: {
+		mtl: 'gems/gems_opal_3.mtl',
+		obj: 'gems/gems_opal_3.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_E4: {
+		mtl: 'gems/gems_opal_4.mtl',
+		obj: 'gems/gems_opal_4.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_E5: {
+		mtl: 'gems/gems_opal_5.mtl',
+		obj: 'gems/gems_opal_5.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_E6: {
+		mtl: 'gems/gems_opal_6.mtl',
+		obj: 'gems/gems_opal_6.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_R1: {
+		mtl: 'gems/gems_ruby_1.mtl',
+		obj: 'gems/gems_ruby_1.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_R2: {
+		mtl: 'gems/gems_ruby_2.mtl',
+		obj: 'gems/gems_ruby_2.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_R3: {
+		mtl: 'gems/gems_ruby_3.mtl',
+		obj: 'gems/gems_ruby_3.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_R4: {
+		mtl: 'gems/gems_ruby_4.mtl',
+		obj: 'gems/gems_ruby_4.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_R5: {
+		mtl: 'gems/gems_ruby_5.mtl',
+		obj: 'gems/gems_ruby_5.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_R6: {
+		mtl: 'gems/gems_ruby_6.mtl',
+		obj: 'gems/gems_ruby_6.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_B1: {
+		mtl: 'gems/gems_sapphire_1.mtl',
+		obj: 'gems/gems_sapphire_1.obj',
+		transform: {
 			scale: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_B2: {
+		mtl: 'gems/gems_sapphire_2.mtl',
+		obj: 'gems/gems_sapphire_2.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_B3: {
+		mtl: 'gems/gems_sapphire_3.mtl',
+		obj: 'gems/gems_sapphire_3.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_B4: {
+		mtl: 'gems/gems_sapphire_4.mtl',
+		obj: 'gems/gems_sapphire_4.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_B5: {
+		mtl: 'gems/gems_sapphire_5.mtl',
+		obj: 'gems/gems_sapphire_5.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_B6: {
+		mtl: 'gems/gems_sapphire_6.mtl',
+		obj: 'gems/gems_sapphire_6.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_Y1: {
+		mtl: 'gems/gems_topaz_1.mtl',
+		obj: 'gems/gems_topaz_1.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_Y2: {
+		mtl: 'gems/gems_topaz_2.mtl',
+		obj: 'gems/gems_topaz_2.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_Y3: {
+		mtl: 'gems/gems_topaz_3.mtl',
+		obj: 'gems/gems_topaz_3.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_Y4: {
+		mtl: 'gems/gems_topaz_4.mtl',
+		obj: 'gems/gems_topaz_4.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_Y5: {
+		mtl: 'gems/gems_topaz_5.mtl',
+		obj: 'gems/gems_topaz_5.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
+	GEM_Y6: {
+		mtl: 'gems/gems_topaz_6.mtl',
+		obj: 'gems/gems_topaz_6.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
 			offset: { x: 0, y: 0, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
