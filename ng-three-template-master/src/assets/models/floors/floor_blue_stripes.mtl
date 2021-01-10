@@ -1,0 +1,45 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl bricksDark(Clone)
+Kd 0.878 0.271 0.271
+
+newmtl custom12(Clone)
+Kd 0.701 0.862 0.799
+map_Kd Textures/custom12(Clone).png
+
+newmtl custom13(Clone)
+Kd 0.917 0.509 0.509
+map_Kd Textures/custom13(Clone).png
+
+newmtl custom14(Clone)
+Kd 0.772 0.649 0.288
+map_Kd Textures/custom14(Clone).png
+
+newmtl custom15(Clone)
+Kd 0.43 0.821 0.224
+map_Kd Textures/custom15(Clone).png
+
+newmtl custom16(Clone)
+Kd 0.224 0.821 0.635
+map_Kd Textures/custom16(Clone).png
+
+newmtl custom17(Clone)
+Kd 0.701 0.862 0.799
+map_Kd Textures/custom17(Clone).png
+
+newmtl custom18(Clone)
+Kd 0.917 0.509 0.509
+map_Kd Textures/custom18(Clone).png
+
+newmtl custom8(Clone)
+Kd 0.772 0.649 0.288
+map_Kd Textures/custom8(Clone).png
+
+newmtl custom9(Clone)
+Kd 0.43 0.821 0.224
+map_Kd Textures/custom9(Clone).png
+
+newmtl custom10(Clone)
+Kd 0.224 0.821 0.635
+map_Kd Textures/custom10(Clone).png
+

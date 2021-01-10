@@ -3,13 +3,45 @@ import { GameObject } from './game-object';
 import { Materials } from '../enums/materials';
 import { Meshes } from '../enums/meshes';
 import * as GAMECONFIG from '../../gameconfig.json';
+import { IHasPosition } from '../data-models/has-position';
+
+
+export class IStaticMapTemplate {
+	name: string;
+	floor: THREE.Object3D;
+	blocks: {
+		assetName: string;
+		rotation: number;
+		position: {
+			x: number, y: number, z: number
+		};
+		scale: number;
+	}[];
+	protectedAreas: {
+		x0: number; x1: number;
+		y0: number; y1: number;
+	}[];
+	assetGroups: {
+		assets: string[];
+		spawnParameters: {
+			count: number;
+			distanceMin: number;
+			distanceMax: number;
+			rotationDiff: number;
+			scaleMin: number;
+			scaleMax: number;
+			posYMin: number;
+			posYMax: number;
+		}
+	}[];
+}
 
 export class StaticMap extends THREE.Group {
 
 
 	constructor() {
 		super();
-		this.generateMap(0);
+		this.generateMap(1);
 	}
 
 	private generateMap(mapIndex: number) {
@@ -43,13 +75,13 @@ export class StaticMap extends THREE.Group {
 				'FLOWER_PURPLEA', 'FLOWER_PURPLEB', 'FLOWER_PURPLEC',
 			],
 			floors: [
-				'CLIFF_BLOCK_STONE', 'CLIFF_BLOCK_ROCK',
+				'CLIFF_BLOCK_STONE', 'CLIFF_BLOCK_ROCK', 'FLOOR_YELLOW_WAVES'
 			]
 		};
 		const floorRadius = 40;
 		const floorHeight = -0.5;
 
-		const maps = [
+		const maps: IStaticMapTemplate[] = [
 			{
 				name: 'Arena 1',
 				floor: assetNames.floors[0],
@@ -134,6 +166,20 @@ export class StaticMap extends THREE.Group {
 						}
 					}
 				]
+			},
+			{
+				name: 'Arena 2',
+				floor: assetNames.floors[2],
+				blocks: [
+					{
+						assetName: 'ARENA_TEMPLE_A',
+						rotation: Math.PI,
+						position: { x: 5.0, y: 0.2, z: 5.0 },
+						scale: 1,
+					}
+				],
+				protectedAreas: [],
+				assetGroups: [],
 			}
 		];
 
@@ -222,7 +268,6 @@ export class StaticMap extends THREE.Group {
 	}
 
 		// Add tunnel for spawn
-		{
 		chosenMap.blocks.forEach(block => {
 			const { model } = GameObject.LOADED_ASSETS[block.assetName];
 			const obj3d = model.clone();
@@ -237,7 +282,7 @@ export class StaticMap extends THREE.Group {
 
 			this.add(obj3d);
 		});
-		}
+
 
 		// TODO: Add lights to maps array
 		// Sunlight
@@ -245,16 +290,12 @@ export class StaticMap extends THREE.Group {
 	 		const dirLight = new THREE.DirectionalLight( 0xf2f2ee, 0.8 );
 			 dirLight.position.set( -20, 80, 40 );
 			 dirLight.lookAt(0, 0, 20);
-			// dirLight.position.multiplyScalar( 50 );
 			 dirLight.name = 'dirLight';
-			// dirLight.shadowCameraVisible = true;
-
 			 dirLight.castShadow = true;
-
 			 dirLight.shadow.mapSize.width = 4096;
 			 dirLight.shadow.mapSize.height = 4096;
-			 const d = GAMECONFIG.rendering.cameraSize * 2 + 4;
 
+			 const d = GAMECONFIG.rendering.cameraSize * 2 + 4;
 			 dirLight.shadow.camera.left = -d;
 			 dirLight.shadow.camera.right = d;
 			 dirLight.shadow.camera.top = d;
@@ -262,7 +303,7 @@ export class StaticMap extends THREE.Group {
 			 dirLight.shadow.camera.near = 0.5;
 			 dirLight.shadow.camera.far = 1000;
 			 dirLight.shadow.radius = 1;
-			 dirLight.shadow.bias = 0.00004;
+			 dirLight.shadow.bias = 0.000001;
 
 			 this.add( dirLight );
 

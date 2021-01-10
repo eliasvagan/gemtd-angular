@@ -4,6 +4,7 @@ import { IUpdateable } from './updatable';
 import { IGameSessionBuff } from './game-session-buff';
 import { IEnemy } from './enemy-model';
 import { GemTypeNames } from '../enums/gem-types-names';
+import { Tile } from '../entities/tile';
 
 export interface IGameSessionGemChances {
 	types: {
@@ -23,6 +24,8 @@ export interface IGameSession extends IUpdateable {
 	board: GameMap;
 	enemies: IEnemy[];
 	buffs: IGameSessionBuff[];
+
+	handleTileClick(tile: Tile): void;
 }
 
 export const GAMESESSION_DEFAULT_VALUES: IGameSession | any = {

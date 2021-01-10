@@ -1,7 +1,6 @@
 import { OBJLoader, MTLLoader, Object3D, Group, Mesh } from 'three-full';
 import { IAssets, IAssetsLoaded } from '../enums/assets';
 import * as GAMECONFIG from '../../gameconfig.json';
-import { Meshes } from '../enums/meshes';
 import { Geometries } from '../enums/geometries';
 import { Materials } from '../enums/materials';
 
@@ -32,6 +31,7 @@ export class AssetLoader {
 
 	async loadAssets(): Promise<IAssetsLoaded> {
 		async function loadAsset(asset): Promise<Object3D> {
+			const assetPath =  MODELS_PATH + asset.path;
 			const loadMTLPromise: Promise<Group> = new Promise(
 				(resolve, reject) => {
 					async function loadMTLDone(materials) {
@@ -51,7 +51,7 @@ export class AssetLoader {
 							}
 
 							const objLoader = new OBJLoader();
-							objLoader.setPath(MODELS_PATH);
+							objLoader.setPath(assetPath);
 							objLoader.setMaterials(materials);
 							return objLoader.load(asset.obj, loadOBJDone, loadOBJProgress, loadOBJFailed);
 						});
@@ -65,7 +65,8 @@ export class AssetLoader {
 						reject('Failed to load from ' + error.target.responseURL);
 					}
 					const mtlLoader = new MTLLoader();
-					mtlLoader.setPath(MODELS_PATH);
+					mtlLoader.setPath(assetPath);
+
 					return mtlLoader.load(asset.mtl, loadMTLDone, loadMTLProgress, loadMTLFailed);
 				},
 			);

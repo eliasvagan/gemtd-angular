@@ -1,10 +1,10 @@
 # Created by Kenney (www.kenney.nl)
 
+newmtl stoneDark(Clone)
+Kd 0.897 0.289 0.289
+
 newmtl stoneLight(Clone)
 Kd 0.869 0.835 0.671
-
-newmtl stoneDark(Clone)
-Kd 0.8965517 0.2893417 0.2893417
 
 newmtl bricks(Clone)
 Kd 0.531 0.208 0.208
