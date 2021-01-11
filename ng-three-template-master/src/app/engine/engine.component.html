@@ -1,3 +1,8 @@
-<div class="engine-wrapper">
-  <canvas #rendererCanvas id="renderCanvas"></canvas>
+<div *ngIf="$assets as gameAssets; else loadingBar">
+  <app-game-instance [assets]="gameAssets"></app-game-instance>
+	<app-ui></app-ui>
 </div>
+
+<ng-template #loadingBar>
+	<app-ui-loading [assetLoader]="$assetLoader"></app-ui-loading>
+</ng-template>

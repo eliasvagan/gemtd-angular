@@ -1,9 +1,9 @@
-import { TowerType } from '../enums/tower-type';
-import { GemType } from '../enums/gem-type';
+import { IHasPosition } from './has-position';
+import { ITowerType } from './tower-type-model';
+import { IEnemy } from './enemy-model';
 
-export interface ITower {
-  type: GemType | TowerType;
-  damage: number;
-  range: number;
-  buildCombination: ITower[];
+export interface ITower extends IHasPosition {
+	towerType: ITowerType;
+	currentTargets: IEnemy[];
+	cooldown: number;
 }

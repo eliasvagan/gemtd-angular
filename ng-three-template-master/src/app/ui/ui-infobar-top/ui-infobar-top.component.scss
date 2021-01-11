@@ -1,25 +1,19 @@
 section.infobar-top-wrapper {
-  background-color: #222222;
-  color: lightgray;
-  width: 100vw;
+	display: flex;
+	flex-flow: row nowrap;
+	margin: 10px;
+	width: 100vw;
+	justify-content: center;
 }
 
-nav {
-  display: flex;
-  flex-direction: row;
+.ui-widget {
+	background-color: #222222;
+	padding: 4px;
+	border-radius: 5px;
+	box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+
+	td, th  {
+		padding: 0 0.5em;
+		text-align: center;
+	}
 }
-
-nav > a {
-  padding: 0.1em 0.8em;
-
-  & > p {
-    font-size: 0.9em;
-    margin: 0;
-  }
-  &:hover {
-    background-color: #2b2b2b;
-  }
-}
-
-
-

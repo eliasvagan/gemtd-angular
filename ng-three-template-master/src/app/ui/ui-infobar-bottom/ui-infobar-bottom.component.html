@@ -1,3 +1,20 @@
-<p>
-  ui-infobar-bottom works!
-</p>
+<section class="ui-bottom-wrapper">
+	<table>
+		<thead>
+			<tr>
+				<th>Round</th>
+				<th>Score</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{gameSession.round}}</td>
+				<td>{{gameSession.score}}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<app-ui-infobar-bottom-healthbar [gameSession]="gameSession"></app-ui-infobar-bottom-healthbar>
+
+</section>
+

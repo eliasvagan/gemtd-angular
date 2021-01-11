@@ -1,0 +1,8 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl foliage(Clone)
+Kd 0.181 0.738 0.023
+
+newmtl custom1(Clone)
+Kd 0.384 0.384 0.384
+

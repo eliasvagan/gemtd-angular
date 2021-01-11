@@ -1,10 +1,7 @@
-import { ITower } from './tower-model';
+import { ITowerType } from './tower-type-model';
+import { IHasPosition } from './has-position';
 
-export interface ITile  {
-  tower?: ITower | 'stone';
-  position: {
-    x: number,
-    y: number
-  };
+export interface ITile extends IHasPosition {
+	tower?: ITowerType | 'stone';
 }
 

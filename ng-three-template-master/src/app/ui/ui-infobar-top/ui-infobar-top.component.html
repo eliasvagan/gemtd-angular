@@ -1,13 +1,44 @@
 <section class="infobar-top-wrapper">
-  <nav>
-    <a [routerLink]="['/main-menu']">
-      <p>Exit Game</p>
-    </a>
-    <a [routerLink]="['/shop']">
-      <p>Shop</p>
-    </a>
-    <a [routerLink]="['/']">
-      <p>Quit</p>
-    </a>
-  </nav>
+  <div class="ui-widget">
+		<table>
+			<thead>
+				<tr>
+					<th>Flawed</th>
+					<th>Chipped</th>
+					<th>Normal</th>
+					<th>Large</th>
+					<th>Perfect</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td *ngFor="let sizeChance of gameSession.gemChances.sizes">
+						<span>
+							{{ sizeChance | percentString }}
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+			<thead>
+				<tr>
+					<th *ngFor="let gemType of gameSession.gemChances.types | keyvalue">
+						<span>
+							{{ gemType.key | titlecase }}
+						</span>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td *ngFor="let gemType of gameSession.gemChances.types | keyvalue">
+						<span>
+							{{ gemType.value | percentString }}
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </section>

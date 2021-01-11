@@ -1,0 +1,14 @@
+<div class="hp-wrapper">
+	<p>
+		<span [style.font-size.rem]="2.5">{{gameSession.hpCurrent}}</span>
+		<span [style.font-size.rem]="1.5">/</span>
+		<span [style.font-size.rem]="1">{{gameSession.hpMax}}</span>
+	</p>
+
+	<div class="hp-rail">
+		<div class="hp-bar-main" [style.width.%]="gameSession.hpCurrent"></div>
+		<div class="hp-bar-filler"></div>
+	</div>
+
+</div>
+

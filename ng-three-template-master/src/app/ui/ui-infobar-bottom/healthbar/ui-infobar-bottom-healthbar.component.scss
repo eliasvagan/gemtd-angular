@@ -1,0 +1,48 @@
+
+
+div.hp-wrapper {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content:center;
+	align-content: center;
+	height: 100%;
+	width: 100%;
+	min-width: 12em;
+
+	& > p {
+		margin: 5px 0 0 0;
+		text-align: center;
+
+		& > span {
+			line-height: 3rem;
+		}
+	}
+}
+
+div.hp-rail {
+	width: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	background-color: #cd4444;
+	box-sizing: border-box;
+	border: solid 3px #333333;
+	border-radius: 10px;
+
+
+	& > div.hp-bar-main {
+		background-color: #40db53;
+		height: 8px;
+		box-sizing: border-box;
+		border-radius: 10px;
+	}
+
+	& > div.hp-bar-filler {
+		box-sizing: border-box;
+		height: 8px;
+		min-width: 0;
+		flex: 1;
+	}
+}
+
+
