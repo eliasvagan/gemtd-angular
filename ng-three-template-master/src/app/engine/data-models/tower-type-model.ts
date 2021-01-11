@@ -6,6 +6,6 @@ export interface ITowerType {
 	slowWeight?: number;
 	slowTime?: number;
 	splitShots: number;
-	model3d?: string;
+	assetName: string;
 	buildCombination?: ITowerType[];
 }

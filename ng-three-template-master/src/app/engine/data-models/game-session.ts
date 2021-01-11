@@ -3,8 +3,8 @@ import { GamePhase } from '../enums/game-phase';
 import { IUpdateable } from './updatable';
 import { IGameSessionBuff } from './game-session-buff';
 import { IEnemy } from './enemy-model';
-import { GemTypeNames } from '../enums/gem-types-names';
-import { Tile } from '../entities/tile';
+import { GemTypeNames } from '../enums/gem-types';
+import { GameObject } from '../entities/game-object';
 
 export interface IGameSessionGemChances {
 	types: {
@@ -24,8 +24,10 @@ export interface IGameSession extends IUpdateable {
 	board: GameMap;
 	enemies: IEnemy[];
 	buffs: IGameSessionBuff[];
+	activeObject: GameObject | null;
 
-	handleTileClick(tile: Tile): void;
+	handleClickObject(obj: GameObject): void;
+	setActiveObject(obj: GameObject): void;
 }
 
 export const GAMESESSION_DEFAULT_VALUES: IGameSession | any = {
@@ -51,4 +53,5 @@ export const GAMESESSION_DEFAULT_VALUES: IGameSession | any = {
 	board: null,
 	enemies: [],
 	buffs: [],
+	activeObject: null,
 };

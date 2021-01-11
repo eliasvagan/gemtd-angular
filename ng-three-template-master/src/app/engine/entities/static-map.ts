@@ -174,7 +174,7 @@ export class StaticMap extends THREE.Group {
 					{
 						assetName: 'ARENA_TEMPLE_A',
 						rotation: Math.PI,
-						position: { x: 5.0, y: 0.2, z: 5.0 },
+						position: { x: 5.0, y: 0.15, z: 5.0 },
 						scale: 1,
 					}
 				],
@@ -310,7 +310,7 @@ export class StaticMap extends THREE.Group {
 			 const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.5 );
 			 hemiLight.color.set(new THREE.Color('hsl(60%, 75%, 50%)'));
 			 hemiLight.groundColor.set(new THREE.Color('hsl(9.5%, 50%, 50%)'));
-			 hemiLight.position.set( 0, 500, 0 );
+			 hemiLight.position.set( 1, 500, 1 );
 
 			 this.add(hemiLight);
 		}

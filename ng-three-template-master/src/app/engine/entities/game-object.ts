@@ -5,6 +5,7 @@ import { Geometries } from '../enums/geometries';
 import { GameObjectState } from '../enums/game-object-state';
 import { MouseEventType } from '../enums/mouse-events';
 import { IAssetsLoaded } from '../enums/assets';
+import { GameManager } from './game-manager';
 
 export class GameObject implements IRenderable {
 
@@ -43,8 +44,7 @@ export class GameObject implements IRenderable {
 				break;
 			}
 			case MouseEventType.Click: {
-				console.log(this.position);
-				this.removeFromScene();
+				GameManager.ACTIVE_SESSION.handleClickObject(this);
 				break;
 			}
 			case MouseEventType.LeftButtonDown: {

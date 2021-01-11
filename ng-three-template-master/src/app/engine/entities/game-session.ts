@@ -5,10 +5,11 @@ import { GameMap } from './game-map';
 import { Enemy } from './enemy';
 import { IGameSessionBuff } from '../data-models/game-session-buff';
 import { GameSessionBuff } from './game-session-buff';
-import { Tile, TileType } from './tile';
+import { GameObject } from './game-object';
+import { Tile } from './tiles/tile';
+import { ITowerType } from '../data-models/tower-type-model';
 
 export class GameSession implements IGameSession {
-
 	public enemies: Enemy[];
 	public gemChances: IGameSessionGemChances;
 	public hpMax: number;
@@ -19,6 +20,8 @@ export class GameSession implements IGameSession {
 	public score: number;
 	public spawnRate: number;
 	public buffs: IGameSessionBuff[];
+	public activeObject: GameObject | null;
+	public activeGems: ITowerType[];
 
 	private scene: THREE.Scene;
 
@@ -92,49 +95,16 @@ export class GameSession implements IGameSession {
 			});
 	}
 
-	placeRandomTile(position: { x: number, y: number }): void {
-		const getRandomGem = (chances: IGameSessionGemChances): [string, number] => {
-			const foundType: string = (() => {
-				let sum = 0;
-				const rn = Math.random();
-				for (const [name, chance] of Object.entries(chances.types)) {
-					if ( rn > sum && rn  < sum + chance) {
-						return name;
-					}
-					sum += chance;
-				}
-			})();
-			const foundSize: number = (() => {
-				let sum = 0;
-				const rn  = Math.random();
-				for (let i = 0; i < chances.sizes.length; i++) {
-					const chance = chances.sizes[i];
-					if ( rn > sum && rn < sum + chance) {
-						return i;
-					}
-					sum += chance;
-				}
-			})();
-			return [foundType, foundSize];
-		};
-		const [ gt, gs ] = getRandomGem(this.gemChances);
-		this.board.placeGem(position, gt, gs);
+	handleClickObject(obj: GameObject): void {
+		if (obj instanceof Tile) {
+			this.board.handleTileClick(obj);
+		} else {
+			// TODO: Handle clicking of other object types
+			console.log('Clicked a non-tile object: ', obj);
+		}
 	}
 
-	handleTileClick(tile: Tile): void {
-		switch (this.phase) {
-			case GamePhase.Building: {
-				const isValidPosition = true; // TODO: Check if tile would block path
-				if (isValidPosition) {
-					this.placeRandomTile(tile.position);
-				}
-				break;
-			}
-			case GamePhase.Defending: {
-
-				break;
-			}
-
-		}
+	setActiveObject(obj: GameObject): void {
+		this.activeObject = obj;
 	}
 }

@@ -3753,7 +3753,7 @@ export const Assets: IAssets = {
 		mtl: 'gems_sapphire_1.mtl',
 		obj: 'gems_sapphire_1.obj',
 		transform: {
-			scale: { x: 0, y: 0, z: 0 },
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
 			offset: { x: 0, y: 0, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
@@ -3968,4 +3968,14 @@ export const Assets: IAssets = {
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
+	TOWER_UNKNOWN: {
+		path: 'towers/',
+		mtl: 'tower_unknown.mtl',
+		obj: 'tower_unknown.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	}
 };
