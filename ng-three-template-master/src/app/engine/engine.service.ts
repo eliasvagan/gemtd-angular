@@ -4,6 +4,7 @@ import { GameManager } from './entities/game-manager';
 import { MouseEventType } from './enums/mouse-events';
 import { IAssetsLoaded } from './enums/assets';
 import * as GAMECONFIG from '../gameconfig.json';
+import {Statics} from './entities/statics';
 
 @Injectable({providedIn: 'root'})
 export class EngineService implements OnDestroy {
@@ -27,10 +28,9 @@ export class EngineService implements OnDestroy {
 		}
 	}
 
-	public createScene(canvas: ElementRef<HTMLCanvasElement>, loadedAssets: IAssetsLoaded): void {
+	public createScene(canvas: ElementRef<HTMLCanvasElement>): void {
 		// Save loaded 3D assets
-		this.assets = loadedAssets;
-		console.log('Created scene with ', Object.keys(this.assets).length, ' loaded assets.');
+		console.log('Created scene with ', Object.keys(Statics.LOADED_ASSETS).length, ' loaded assets.');
 
 		// The first step is to get the reference of the canvas element from our HTML document
 		this.canvas = canvas.nativeElement;
@@ -48,7 +48,7 @@ export class EngineService implements OnDestroy {
 		this.scene = new THREE.Scene();
 
 		// Game Manager
-		this.gm = new GameManager(this.scene, this.assets);
+		this.gm = new GameManager(this.scene);
 
 		this.camera = new THREE.OrthographicCamera(-10, 10, 10, -20, 1, 1000);
 		this.scene.add(this.camera);

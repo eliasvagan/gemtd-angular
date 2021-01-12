@@ -3,7 +3,7 @@ import { GameObject } from './game-object';
 import { Materials } from '../enums/materials';
 import { Meshes } from '../enums/meshes';
 import * as GAMECONFIG from '../../gameconfig.json';
-import { IHasPosition } from '../data-models/has-position';
+import {Statics} from './statics';
 
 
 export class IStaticMapTemplate {
@@ -187,7 +187,7 @@ export class StaticMap extends THREE.Group {
 
 		// Add big floor
 		{
-			const baseFloorTemplate = GameObject.LOADED_ASSETS[chosenMap.floor].model;
+			const baseFloorTemplate = Statics.LOADED_ASSETS[chosenMap.floor].model;
 			const baseFloor = new THREE.Mesh(
 				baseFloorTemplate.geometry,
 				baseFloorTemplate.material
@@ -208,7 +208,7 @@ export class StaticMap extends THREE.Group {
 				const assetIndex = Math.floor(assetGroup.assets.length * Math.random());
 				const assetName = assetGroup.assets[assetIndex];
 				try {
-					const template = GameObject.LOADED_ASSETS[assetName].model;
+					const template = Statics.LOADED_ASSETS[assetName].model;
 					asset = new THREE.Mesh(template.geometry, template.material);
 				} catch (err) {
 					asset = new THREE.Mesh(
@@ -269,7 +269,7 @@ export class StaticMap extends THREE.Group {
 
 		// Add tunnel for spawn
 		chosenMap.blocks.forEach(block => {
-			const { model } = GameObject.LOADED_ASSETS[block.assetName];
+			const { model } = Statics.LOADED_ASSETS[block.assetName];
 			const obj3d = model.clone();
 
 			const { x, y, z } = block.position;

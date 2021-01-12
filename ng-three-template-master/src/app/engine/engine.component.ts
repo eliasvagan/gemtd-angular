@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AssetLoader } from './helpers/asset-loader';
 import { Assets, IAssetsLoaded } from './enums/assets';
+import { Statics } from './entities/statics';
 
 @Component({
 	selector: 'app-engine',
@@ -19,6 +20,7 @@ export class EngineComponent implements OnInit {
 
 		this.$assetLoader.loadAssets().then((assets: IAssetsLoaded) => {
 			this.$assets = assets;
+			Statics.LOADED_ASSETS = assets;
 		});
 	}
 

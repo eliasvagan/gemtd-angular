@@ -653,6 +653,20 @@ const TowersRare: { [ key: string ]: ITowerType } = {
 		splitShots: 1,
 		buildCombination: [ TowersAdvanced.GreyJade, GemsBasic.G4, GemsBasic.P2 ]
 	},
+};
+
+const TowersEpic: { [ key: string ]: ITowerType } = {
+	AntiqueBloodstone: {
+		name: 'Antique Bloodstone',
+		assetName: 'TOWER_UNKNOWN',
+		damage: 10,
+		range: 4,
+		speed: 1,
+		splitShots: 1,
+		buildCombination: [ TowersBasic.Bloodstone, TowersAdvanced.Volcano, GemsBasic.R2 ]
+	}
+};
+const TowersTop: { [ key: string ]: ITowerType } = {
 	SapphireStarOfAdam: {
 		name: 'Sapphire Star of Adam',
 		assetName: 'TOWER_UNKNOWN',
@@ -671,9 +685,6 @@ const TowersRare: { [ key: string ]: ITowerType } = {
 		splitShots: 1,
 		buildCombination: [ TowersAdvanced.RedCoral, GemsAdvanced.E6, GemsAdvanced.Q6 ]
 	},
-};
-
-const TowersEpic: { [ key: string ]: ITowerType } = {
 	KohinoorDiamond: {
 		name: 'Koh-i-noor Diamond',
 		assetName: 'TOWER_UNKNOWN',
@@ -683,17 +694,6 @@ const TowersEpic: { [ key: string ]: ITowerType } = {
 		splitShots: 1,
 		buildCombination: [ TowersRare.HugePinkDiamond, GemsAdvanced.D6, GemsAdvanced.P6 ]
 	},
-	AntiqueBloodstone: {
-		name: 'Antique Bloodstone',
-		assetName: 'TOWER_UNKNOWN',
-		damage: 10,
-		range: 4,
-		speed: 1,
-		splitShots: 1,
-		buildCombination: [ TowersBasic.Bloodstone, TowersAdvanced.Volcano, GemsBasic.R2 ]
-	},
-};
-const TowersTop: { [ key: string ]: ITowerType } = {
 	TheCrownPrince: {
 		name: 'The Crown Prince',
 		assetName: 'TOWER_UNKNOWN',

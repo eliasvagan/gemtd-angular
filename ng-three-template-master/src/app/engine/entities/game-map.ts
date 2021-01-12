@@ -12,6 +12,7 @@ import {GamePhase} from '../enums/game-phase';
 import {GameManager} from './game-manager';
 import {GemTypeLetters} from '../enums/gem-types';
 import {GemsBasic} from '../enums/towers';
+import {Statics} from './statics';
 
 export class GameMap implements IMap {
 	tiles: Tile[] = [];
@@ -78,7 +79,7 @@ export class GameMap implements IMap {
 	}
 
 	placeRandomTile(position: { x: number, y: number }): void {
-		const session = GameManager.ACTIVE_SESSION;
+		const session = Statics.CURRENT_SESSION;
 		const getRandomGem = (chances: IGameSessionGemChances): [string, number] => {
 			const foundType: string = (() => {
 				let sum = 0;
@@ -109,7 +110,7 @@ export class GameMap implements IMap {
 	}
 
 	handleTileClick(tile: Tile): void {
-		switch (GameManager.ACTIVE_SESSION.phase) {
+		switch (Statics.CURRENT_SESSION.phase) {
 			case GamePhase.Building: {
 				const isValidPosition = true; // TODO: Check if tile would block path
 				if (tile instanceof TileFree) {
@@ -123,7 +124,7 @@ export class GameMap implements IMap {
 			}
 		}
 		// Always select placed/clicked unit.
-		GameManager.ACTIVE_SESSION.setActiveObject(
+		Statics.CURRENT_SESSION.setActiveObject(
 			this.getTile(tile.position.x, tile.position.y)
 		);
 	}

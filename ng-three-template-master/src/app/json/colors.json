@@ -10,5 +10,14 @@
 			"sapphire": "#3E67FF",
 			"topaz": "#FFA92F"
 		}
+	},
+	"rarity": {
+		"gemsBasic": "#EFF3FF",
+		"gemsAdvanced": "#1B73D1",
+		"towersBasic": "59D319",
+		"towersRare": "1B73D1",
+		"towersAdvanced": "#9E0BE5",
+		"towersTop": "#FF7400",
+		"towersOnehit": "#E50B38"
 	}
 }

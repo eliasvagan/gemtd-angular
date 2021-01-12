@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IGameSession } from '../engine/data-models/game-session';
 import { GameManager } from '../engine/entities/game-manager';
+import {Statics} from '../engine/entities/statics';
 
 @Component({
 	selector: 'app-ui',
@@ -15,7 +16,7 @@ export class UiComponent implements OnInit {
 	}
 
 	public ngOnInit(): void {
-		this.$gameSession = GameManager.ACTIVE_SESSION;
+		this.$gameSession = Statics.CURRENT_SESSION;
 	}
 
 }

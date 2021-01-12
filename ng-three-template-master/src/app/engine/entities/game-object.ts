@@ -4,14 +4,12 @@ import { Materials } from '../enums/materials';
 import { Geometries } from '../enums/geometries';
 import { GameObjectState } from '../enums/game-object-state';
 import { MouseEventType } from '../enums/mouse-events';
-import { IAssetsLoaded } from '../enums/assets';
 import { GameManager } from './game-manager';
+import {Statics} from './statics';
 
 export class GameObject implements IRenderable {
 
 	public static HOVERED?: GameObject;
-	public static LOADED_ASSETS?: IAssetsLoaded;
-
 	identifier: string;
 	state: GameObjectState;
 	position: { x: number; y: number };
@@ -44,7 +42,7 @@ export class GameObject implements IRenderable {
 				break;
 			}
 			case MouseEventType.Click: {
-				GameManager.ACTIVE_SESSION.handleClickObject(this);
+				Statics.CURRENT_SESSION.handleClickObject(this);
 				break;
 			}
 			case MouseEventType.LeftButtonDown: {
@@ -75,7 +73,7 @@ export class GameObject implements IRenderable {
 		}
 
 		// Update model to appropriate asset
-		const { LOADED_ASSETS } = GameObject;
+		const { LOADED_ASSETS } = Statics;
 		const assetName = GameObject.HOVERED === this ? this.assetNames.hovered : this.assetNames.normal;
 
 		try {
