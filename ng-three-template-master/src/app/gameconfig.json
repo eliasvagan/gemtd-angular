@@ -6,6 +6,6 @@
 		"cameraSize": 8
 	},
 	"debug": {
-		"skipAssetLoading": false
+		"skipAssetLoading": true
 	}
 }

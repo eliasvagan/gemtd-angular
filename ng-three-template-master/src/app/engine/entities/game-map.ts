@@ -6,13 +6,13 @@ import { Checkpoint } from './tiles/checkpoint';
 import { TileFree } from './tiles/tile-free';
 import { Gem } from './tiles/gem';
 import { ITowerType } from '../data-models/tower-type-model';
-import {GameObject} from './game-object';
-import {IGameSessionGemChances} from '../data-models/game-session';
-import {GamePhase} from '../enums/game-phase';
-import {GameManager} from './game-manager';
-import {GemTypeLetters} from '../enums/gem-types';
-import {GemsBasic} from '../enums/towers';
-import {Statics} from './statics';
+import { GameObject } from './game-object';
+import { IGameSessionGemChances } from '../data-models/game-session';
+import { GamePhase } from '../enums/game-phase';
+import { GameManager } from './game-manager';
+import { GemTypeLetters } from '../enums/gem-types';
+import { GemsBasic } from '../enums/towers';
+import { Statics } from './statics';
 
 export class GameMap implements IMap {
 	tiles: Tile[] = [];
@@ -44,8 +44,8 @@ export class GameMap implements IMap {
 			{ x: 5 , y: 1 },
 			{ x: 5 , y: 9 },
 			{ x: 10, y: 9 }
-		].forEach(pos => {
-			const cp = new Checkpoint(pos, this.scene);
+		].forEach((pos, index) => {
+			const cp = new Checkpoint(pos, this.scene, index);
 			this.addTile(cp);
 			this.checkpoints.push(cp);
 		});
@@ -74,8 +74,13 @@ export class GameMap implements IMap {
 		return true;
 	}
 
-	getTile(x: number, y: number): GameObject {
-		return this.tiles[y * this.height + x];
+	getTile(x: number, y: number): GameObject | null {
+		try {
+			return this.tiles[y * this.height + x];
+		}
+		catch (err) {
+			return null;
+		}
 	}
 
 	placeRandomTile(position: { x: number, y: number }): void {
@@ -116,6 +121,7 @@ export class GameMap implements IMap {
 				if (tile instanceof TileFree) {
 					this.placeRandomTile(tile.position);
 				}
+
 				break;
 			}
 			case GamePhase.Defending: {

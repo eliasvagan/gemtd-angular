@@ -20,7 +20,7 @@ export class EngineComponent implements OnInit {
 
 		this.$assetLoader.loadAssets().then((assets: IAssetsLoaded) => {
 			this.$assets = assets;
-			Statics.LOADED_ASSETS = assets;
+			Statics.LOADED_ASSETS = assets; // IMPORTANT
 		});
 	}
 

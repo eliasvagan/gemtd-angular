@@ -1,5 +1,5 @@
 export enum GamePhase {
-  Building,
-  Defending,
-  GameOver
+	Building,
+	Defending,
+	GameOver
 }

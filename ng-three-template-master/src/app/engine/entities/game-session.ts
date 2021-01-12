@@ -102,6 +102,7 @@ export class GameSession implements IGameSession {
 			// TODO: Handle clicking of other object types
 			console.log('Clicked a non-tile object: ', obj);
 		}
+		this.round += 1;
 	}
 
 	setActiveObject(obj: GameObject): void {

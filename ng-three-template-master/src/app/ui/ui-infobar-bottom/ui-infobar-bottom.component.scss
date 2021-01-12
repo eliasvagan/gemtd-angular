@@ -3,21 +3,47 @@ section.ui-bottom-wrapper {
 	position: absolute;
 	display: flex;
 	flex-flow: row nowrap;
-	margin: auto auto 10px 10px;
+	margin: 0;
 	bottom: 0;
 	padding: 2px;
+	font-family: 'Fredoka One', cursive;
+	font-weight: bold;
+}
+
+.card {
 	background-color: #222222;
 	color: lightgray;
 	border-radius: 5px;
 	box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
-	min-width: 12em;
-	font-family: 'Fredoka One', cursive;
-	font-weight: bold;
+	margin: 0 0 5px 5px;
+	display: flex;
+	flex-flow: row nowrap;
+	min-width: auto;
+	width: auto;
+	padding: 4px
+}
+
+div.game-phase {
+	& > div {
+		color: lightgray;
+		border-radius: 5px;
+		margin: 0 0 5px 5px;
+		padding: 0.5rem;
+
+		& > h1 {
+			font-size: 25px;
+		}
+		& > p {
+			font-family: 'Roboto Mono', monospace;
+			font-size: 0.9rem;
+		}
+	}
 }
 
 p {
 	margin: 0;
 }
+
 td, th {
 	padding: 0.5em;
 	text-align: center;

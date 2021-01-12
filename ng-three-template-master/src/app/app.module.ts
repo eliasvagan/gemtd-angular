@@ -18,6 +18,7 @@ import { GameInstanceComponent } from './engine/game-instance/game-instance.comp
 import { UiInfobarBottomHealthbarComponent } from './ui/ui-infobar-bottom/healthbar/ui-infobar-bottom-healthbar.component';
 import { UiInfobarHeaderComponent } from './ui/ui-infobar-header/ui-infobar-header.component';
 import { PercentStringPipePipe } from './pipes/percent-string-pipe.pipe';
+import { StatusbarComponent } from './ui/ui-infobar-bottom/statusbar/statusbar.component';
 
 @NgModule({
 	declarations: [
@@ -36,7 +37,8 @@ import { PercentStringPipePipe } from './pipes/percent-string-pipe.pipe';
 		GameInstanceComponent,
 		UiInfobarBottomHealthbarComponent,
 		UiInfobarHeaderComponent,
-		PercentStringPipePipe
+		PercentStringPipePipe,
+		StatusbarComponent
 	],
 	imports: [
 		BrowserModule,

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IGameSession } from '../engine/data-models/game-session';
-import { GameManager } from '../engine/entities/game-manager';
-import {Statics} from '../engine/entities/statics';
+import { Statics } from '../engine/entities/statics';
 
 @Component({
 	selector: 'app-ui',
@@ -10,13 +9,13 @@ import {Statics} from '../engine/entities/statics';
 })
 export class UiComponent implements OnInit {
 
-	public $gameSession: IGameSession;
+	public gameSession: IGameSession;
 
 	public constructor() {
 	}
 
 	public ngOnInit(): void {
-		this.$gameSession = Statics.CURRENT_SESSION;
+		this.gameSession = Statics.CURRENT_SESSION;
 	}
 
 }

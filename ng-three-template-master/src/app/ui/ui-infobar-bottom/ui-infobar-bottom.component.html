@@ -1,20 +1,49 @@
 <section class="ui-bottom-wrapper">
-	<table>
-		<thead>
+	<div class="card">
+		<table>
+			<thead>
 			<tr>
 				<th>Round</th>
 				<th>Score</th>
 			</tr>
-		</thead>
-		<tbody>
+			</thead>
+			<tbody>
 			<tr>
 				<td>{{gameSession.round}}</td>
 				<td>{{gameSession.score}}</td>
 			</tr>
-		</tbody>
-	</table>
+			</tbody>
+		</table>
 
-	<app-ui-infobar-bottom-healthbar [gameSession]="gameSession"></app-ui-infobar-bottom-healthbar>
+		<app-ui-infobar-bottom-healthbar [gameSession]="gameSession"></app-ui-infobar-bottom-healthbar>
+	</div>
+
+	<div class="game-phase" [ngSwitch]="gameSession.phase">
+		<!-- the same view can be shown in more than one case -->
+		<div *ngSwitchCase="0" [style.background-color]="'#147b8d'">
+			<h1>Building</h1>
+			<p>Place gems and combine to towers.</p>
+		</div>
+
+		<div *ngSwitchCase="1" [style.background-color]="'#556cac'">
+			<h1>Defending</h1>
+			<p>Wait for all enemies to finish.</p>
+		</div>
+
+		<div *ngSwitchCase="2" [style.background-color]="'#9b1e69'">
+			<h1>Game Over</h1>
+			<p>Play again?</p>
+		</div>
+
+		<div *ngSwitchDefault [style.background-color]="'#9b1e1e'">
+			<h1>Unknown game phase</h1>
+			<p>Something has gone wrong.</p>
+		</div>
+	</div>
+
+	<div class="card" *ngIf="gameSession.activeObject">
+		<app-statusbar [activeObject]="gameSession.activeObject"></app-statusbar>
+	</div>
 
 </section>
 

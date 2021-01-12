@@ -17,12 +17,12 @@ export class Gem extends Tile implements ITowerType {
 		scene: Scene,
 		gemType: ITowerType
 	) {
-		const gemData = gemType;
 		const models = {
-			normal: gemData.assetName,
-			hovered: gemData.assetName
+			normal: gemType.assetName,
+			hovered: gemType.assetName
 		};
 		super(position, scene, models);
-		Object.assign(this, gemData);
+		Object.assign(this, gemType);
+		this.identifier = gemType.name;
 	}
 }
