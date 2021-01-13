@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AssetLoader } from './helpers/asset-loader';
 import { Assets, IAssetsLoaded } from './enums/assets';
-import { Statics } from './entities/statics';
+import { Statics } from './services/statics.service';
 
 @Component({
 	selector: 'app-engine',

@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { EngineService } from '../engine.service';
+import { EngineService } from './engine.service';
 import { UiManager } from '../entities/ui-manager';
-import { Statics } from '../entities/statics';
 
 @Component({
 	selector: 'app-game-instance',
@@ -22,8 +21,8 @@ export class GameInstanceComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.engServ.createScene(this.rendererCanvas);
+		this.$uiManager = this.engServ.getUiManager();
 		this.engServ.animate();
-		this.$uiManager = Statics.UI_MANAGER;
 	}
 }
 

@@ -10,7 +10,7 @@ import { ITowerType } from '../data-models/tower-type-model';
 import { GemTypeNames } from '../enums/gem-types';
 import { IUpdateable } from '../data-models/updatable';
 import { IEnemy } from '../data-models/enemy-model';
-import { Statics } from './statics';
+import { Statics } from '../services/statics.service';
 
 export interface IGameSessionGemChances {
 	types: {

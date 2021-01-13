@@ -9,7 +9,7 @@ import { GameObject } from './game-object';
 import { GamePhase } from '../enums/game-phase';
 import { GemTypeLetters } from '../enums/gem-types';
 import { GemsBasic } from '../enums/towers';
-import { Statics } from './statics';
+import { Statics } from '../services/statics.service';
 import {IGameSessionGemChances} from './game-session';
 
 export class GameMap implements IMap {

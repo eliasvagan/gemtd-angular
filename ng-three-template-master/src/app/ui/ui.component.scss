@@ -1,17 +1,19 @@
 div.ui-wrapper {
 	height: 100vh;
 	width: 100vw;
-	position: fixed;
-	top: 0;
-	left: 0;
+	position: relative;
 	margin: 0;
 	box-sizing: border-box;
 	pointer-events: none;
 
-	& > div {
-		pointer-events: auto;
+	& > app-ui-infobar-header,
+	& > app-ui-infobar-header,
+	& > app-ui-infobar-top,
+	& > app-ui-sidebar-left,
+	& > app-ui-sidebar-right,
+	& > app-ui-infobar-bottom {
+		pointer-events: all;
 	}
-
 }
 
 

@@ -2,8 +2,8 @@ import * as THREE from 'three-full';
 import { GameObject } from './game-object';
 import { Materials } from '../enums/materials';
 import { Meshes } from '../enums/meshes';
-import * as GAMECONFIG from '../../gameconfig.json';
-import {Statics} from './statics';
+import * as GAMECONFIG from '../../json/gameconfig.json';
+import {Statics} from '../services/statics.service';
 
 
 export class IStaticMapTemplate {

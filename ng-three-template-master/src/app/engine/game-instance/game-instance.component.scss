@@ -1,3 +1,18 @@
+#renderCanvas {
+	position: fixed;
+	z-index: 10;
+}
+
 .engine-wrapper {
-    position: relative;
+	position: relative;
+}
+.ui-wrapper {
+	position: relative;
+	display: block;
+	height: 100vh;
+	width: 100vw;
+	margin: 0;
+	box-sizing: border-box;
+	z-index: 100;
+	pointer-events: none;
 }

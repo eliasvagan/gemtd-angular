@@ -5,7 +5,7 @@ import { Geometries } from '../enums/geometries';
 import { GameObjectState } from '../enums/game-object-state';
 import { MouseEventType } from '../enums/mouse-events';
 import { GameManager } from './game-manager';
-import {Statics} from './statics';
+import {Statics} from '../services/statics.service';
 
 export class GameObject implements IRenderable {
 
