@@ -1,7 +1,7 @@
 <div class="ui-wrapper">
-	<app-ui-infobar-header [gameSession]="gameSession"></app-ui-infobar-header>
-	<app-ui-infobar-top [gameSession]="gameSession"></app-ui-infobar-top>
-  <app-ui-sidebar-left [gameSession]="gameSession"></app-ui-sidebar-left>
-  <app-ui-sidebar-right [gameSession]="gameSession"></app-ui-sidebar-right>
-  <app-ui-infobar-bottom [gameSession]="gameSession"></app-ui-infobar-bottom>
+	<app-ui-infobar-header [$uiManager]="$uiManager"></app-ui-infobar-header>
+	<app-ui-infobar-top [$uiManager]="$uiManager"></app-ui-infobar-top>
+  <app-ui-sidebar-left [$uiManager]="$uiManager"></app-ui-sidebar-left>
+  <app-ui-sidebar-right [$uiManager]="$uiManager"></app-ui-sidebar-right>
+  <app-ui-infobar-bottom [$uiManager]="$uiManager"></app-ui-infobar-bottom>
 </div>

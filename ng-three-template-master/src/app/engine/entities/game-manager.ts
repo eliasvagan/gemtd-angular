@@ -1,9 +1,9 @@
 import * as THREE from 'three-full';
-import { IGameSession } from '../data-models/game-session';
 import { StaticMap } from './static-map';
 import { IUpdateable } from '../data-models/updatable';
-import { GameSession } from './game-session';
+import { GameSession, IGameSession } from './game-session';
 import { Statics } from './statics';
+import { UiManager } from './ui-manager';
 
 export class GameManager implements IUpdateable {
 
@@ -16,6 +16,7 @@ export class GameManager implements IUpdateable {
 
 		this.session = new GameSession(this.scene);
 		Statics.CURRENT_SESSION = this.session;
+		Statics.UI_MANAGER = new UiManager(this.session);
 	}
 
 	update(dt: number): void {

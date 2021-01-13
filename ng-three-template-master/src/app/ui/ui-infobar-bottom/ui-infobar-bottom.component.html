@@ -9,28 +9,33 @@
 			</thead>
 			<tbody>
 			<tr>
-				<td>{{gameSession.round}}</td>
-				<td>{{gameSession.score}}</td>
+				<td>{{$uiManager.gameSession.round}}</td>
+				<td>{{$uiManager.gameSession.score}}</td>
 			</tr>
 			</tbody>
 		</table>
 
-		<app-ui-infobar-bottom-healthbar [gameSession]="gameSession"></app-ui-infobar-bottom-healthbar>
+		<app-ui-infobar-bottom-healthbar [$uiManager]="$uiManager"></app-ui-infobar-bottom-healthbar>
 	</div>
 
-	<div class="game-phase" [ngSwitch]="gameSession.phase">
+	<div class="game-phase" [ngSwitch]="$uiManager.gameSession.phase">
 		<!-- the same view can be shown in more than one case -->
-		<div *ngSwitchCase="0" [style.background-color]="'#147b8d'">
+		<div *ngSwitchCase="0" [style.background-color]="'#148d6b'">
 			<h1>Building</h1>
 			<p>Place gems and combine to towers.</p>
 		</div>
 
-		<div *ngSwitchCase="1" [style.background-color]="'#556cac'">
+		<div *ngSwitchCase="1" [style.background-color]="'#147b8d'">
+			<h1>Picking</h1>
+			<p>Pick a gem for this round.</p>
+		</div>
+
+		<div *ngSwitchCase="2" [style.background-color]="'#556cac'">
 			<h1>Defending</h1>
 			<p>Wait for all enemies to finish.</p>
 		</div>
 
-		<div *ngSwitchCase="2" [style.background-color]="'#9b1e69'">
+		<div *ngSwitchCase="3" [style.background-color]="'#9b1e69'">
 			<h1>Game Over</h1>
 			<p>Play again?</p>
 		</div>
@@ -41,8 +46,8 @@
 		</div>
 	</div>
 
-	<div class="card" *ngIf="gameSession.activeObject">
-		<app-statusbar [activeObject]="gameSession.activeObject"></app-statusbar>
+	<div class="card" *ngIf="$uiManager.gameSession.activeObject">
+		<app-statusbar [activeObject]="$uiManager.gameSession.activeObject"></app-statusbar>
 	</div>
 
 </section>

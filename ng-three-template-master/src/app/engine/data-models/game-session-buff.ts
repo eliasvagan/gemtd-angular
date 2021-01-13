@@ -1,5 +1,3 @@
-import { IGameSession } from './game-session';
-
 export interface IGameSessionBuff {
 	timeRemaining: number;
 	affectedStatName: string;

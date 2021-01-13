@@ -2,9 +2,9 @@ import * as THREE from 'three-full';
 import { ElementRef, Injectable, NgZone, OnDestroy } from '@angular/core';
 import { GameManager } from './entities/game-manager';
 import { MouseEventType } from './enums/mouse-events';
-import { IAssetsLoaded } from './enums/assets';
+import { Statics } from './entities/statics';
 import * as GAMECONFIG from '../gameconfig.json';
-import {Statics} from './entities/statics';
+import {UiManager} from './entities/ui-manager';
 
 @Injectable({providedIn: 'root'})
 export class EngineService implements OnDestroy {
@@ -12,9 +12,7 @@ export class EngineService implements OnDestroy {
 	private renderer: THREE.WebGLRenderer;
 	private camera: THREE.OrthographicCamera;
 	private scene: THREE.Scene;
-	private light: THREE.AmbientLight;
 	private gm: GameManager;
-	private assets: IAssetsLoaded;
 
 	private prevFrame: Date;
 	private frameId: number = null;
@@ -53,16 +51,6 @@ export class EngineService implements OnDestroy {
 		this.camera = new THREE.OrthographicCamera(-10, 10, 10, -20, 1, 1000);
 		this.scene.add(this.camera);
 		this.updateCamera();
-
-		/* soft white light
-		this.light = new THREE.AmbientLight(0x404040);
-		this.light.position.z = 10;
-		this.scene.add(this.light);
-
-		const light2 = new THREE.PointLight( 0xffffff, 0.4, 70 );
-		light2.position.set( -12, 20, -16 );
-		this.scene.add( light2 );
-		 */
 
 		/* GRID
     const size = 10;

@@ -1,5 +1,4 @@
 import * as THREE from 'three-full';
-import { ITile } from '../data-models/tile-model';
 import { IMap } from '../data-models/map-model';
 import { Tile } from './tiles/tile';
 import { Checkpoint } from './tiles/checkpoint';
@@ -7,12 +6,11 @@ import { TileFree } from './tiles/tile-free';
 import { Gem } from './tiles/gem';
 import { ITowerType } from '../data-models/tower-type-model';
 import { GameObject } from './game-object';
-import { IGameSessionGemChances } from '../data-models/game-session';
 import { GamePhase } from '../enums/game-phase';
-import { GameManager } from './game-manager';
 import { GemTypeLetters } from '../enums/gem-types';
 import { GemsBasic } from '../enums/towers';
 import { Statics } from './statics';
+import {IGameSessionGemChances} from './game-session';
 
 export class GameMap implements IMap {
 	tiles: Tile[] = [];

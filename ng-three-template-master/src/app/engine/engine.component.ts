@@ -19,10 +19,9 @@ export class EngineComponent implements OnInit {
 	public ngOnInit(): void {
 
 		this.$assetLoader.loadAssets().then((assets: IAssetsLoaded) => {
-			this.$assets = assets;
 			Statics.LOADED_ASSETS = assets; // IMPORTANT
+
+			this.$assets = Statics.LOADED_ASSETS;
 		});
 	}
-
-
 }

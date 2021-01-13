@@ -1,6 +1,5 @@
-<div *ngIf="$assets as gameAssets; else loadingBar">
-  <app-game-instance></app-game-instance>
-	<app-ui></app-ui>
+<div *ngIf="$assets; else loadingBar">
+	<app-game-instance></app-game-instance>
 </div>
 
 <ng-template #loadingBar>

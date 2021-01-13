@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AssetLoader } from '../../engine/helpers/asset-loader';
 
 @Component({
@@ -11,14 +11,11 @@ export class UiLoadingComponent implements OnInit {
 	@Input()
 	public assetLoader: AssetLoader;
 
-	@ViewChild('loadingBar', {static: false})
-	public loadingBar: ElementRef<HTMLDivElement>;
-
 	public constructor() {
 	}
 
 	public ngOnInit(): void {
-		console.log(this.assetLoader);
+		console.log('Loading bar initialized with asset loader: ', this.assetLoader);
 	}
 
 }

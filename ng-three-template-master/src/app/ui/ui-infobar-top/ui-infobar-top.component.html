@@ -12,7 +12,7 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td *ngFor="let sizeChance of gameSession.gemChances.sizes">
+					<td *ngFor="let sizeChance of $uiManager.gameSession.gemChances.sizes">
 						<span>
 							{{ sizeChance | percentString }}
 						</span>
@@ -23,7 +23,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th *ngFor="let gemType of gameSession.gemChances.types | keyvalue">
+					<th *ngFor="let gemType of $uiManager.gameSession.gemChances.types | keyvalue">
 						<span>
 							{{ gemType.key | titlecase }}
 						</span>
@@ -32,7 +32,7 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td *ngFor="let gemType of gameSession.gemChances.types | keyvalue">
+					<td *ngFor="let gemType of $uiManager.gameSession.gemChances.types | keyvalue">
 						<span>
 							{{ gemType.value | percentString }}
 						</span>

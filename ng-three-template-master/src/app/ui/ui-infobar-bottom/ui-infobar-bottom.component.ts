@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IGameSession } from '../../engine/data-models/game-session';
+import { UiManager } from '../../engine/entities/ui-manager';
 
 @Component({
 	selector: 'app-ui-infobar-bottom',
@@ -9,7 +9,7 @@ import { IGameSession } from '../../engine/data-models/game-session';
 export class UiInfobarBottomComponent implements OnInit {
 
 	@Input()
-	public gameSession: IGameSession;
+	public $uiManager: UiManager;
 
 	public constructor() {
 	}

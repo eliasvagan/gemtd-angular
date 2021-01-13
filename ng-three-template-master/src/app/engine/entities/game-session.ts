@@ -1,5 +1,4 @@
 import * as THREE from 'three-full';
-import { GAMESESSION_DEFAULT_VALUES, IGameSession, IGameSessionGemChances } from '../data-models/game-session';
 import { GamePhase } from '../enums/game-phase';
 import { GameMap } from './game-map';
 import { Enemy } from './enemy';
@@ -8,6 +7,60 @@ import { GameSessionBuff } from './game-session-buff';
 import { GameObject } from './game-object';
 import { Tile } from './tiles/tile';
 import { ITowerType } from '../data-models/tower-type-model';
+import { GemTypeNames } from '../enums/gem-types';
+import { IUpdateable } from '../data-models/updatable';
+import { IEnemy } from '../data-models/enemy-model';
+import { Statics } from './statics';
+
+export interface IGameSessionGemChances {
+	types: {
+		[key in GemTypeNames]: number;
+	};
+	sizes: [number, number, number, number, number];
+}
+
+export interface IGameSession extends IUpdateable {
+	hpMax: number;
+	hpCurrent: number;
+	round: number;
+	score: number;
+	spawnRate: number;
+	gemChances: IGameSessionGemChances;
+	phase: GamePhase;
+	board: GameMap;
+	enemies: IEnemy[];
+	buffs: IGameSessionBuff[];
+	activeObject: GameObject | null;
+
+	handleClickObject(obj: GameObject): void;
+	setActiveObject(obj: GameObject): void;
+}
+
+export const GAMESESSION_DEFAULT_VALUES: IGameSession | any = {
+	hpMax: 100,
+	hpCurrent: 100,
+	round: 0,
+	gemChances: {
+		types: {
+			amethyst: 0.125,
+			aquamarine: 0.125,
+			diamond: 0.125,
+			emerald: 0.125,
+			opal: 0.125,
+			ruby: 0.125,
+			sapphire: 0.125,
+			topaz: 0.125
+		},
+		sizes: [1, 0, 0, 0, 0]
+	},
+	score: 0,
+	spawnRate: 5,
+	phase: GamePhase.Building,
+	board: null,
+	enemies: [],
+	buffs: [],
+	activeObject: null,
+};
 
 export class GameSession implements IGameSession {
 	public enemies: Enemy[];
@@ -107,5 +160,8 @@ export class GameSession implements IGameSession {
 
 	setActiveObject(obj: GameObject): void {
 		this.activeObject = obj;
+		console.log(Statics);
 	}
+
+
 }
