@@ -10,7 +10,8 @@ import { GamePhase } from '../enums/game-phase';
 import { GemTypeLetters } from '../enums/gem-types';
 import { GemsBasic } from '../enums/towers';
 import { Statics } from '../services/statics.service';
-import {IGameSessionGemChances} from './game-session';
+import { IGameSessionGemChances } from './game-session';
+import { isInspectable } from '../data-models/inspectable-model';
 
 export class GameMap implements IMap {
 	tiles: Tile[] = [];
@@ -128,13 +129,13 @@ export class GameMap implements IMap {
 			}
 		}
 		// Always select placed/clicked unit.
-		Statics.CURRENT_SESSION.setActiveObject(
-			this.getTile(tile.position.x, tile.position.y)
-		);
+		const nt = this.getTile(tile.position.x, tile.position.y);
+		if (isInspectable(nt)) {
+			Statics.CURRENT_SESSION.setActiveObject(nt);
+		}
 	}
 
 	placeGem(position: { x: number; y: number }, gemType: ITowerType): void {
-		console.log('Placing a ', gemType, ' at ', position);
 		const gem = new Gem(position, this.scene, gemType);
 		this.addTile(gem);
 	}

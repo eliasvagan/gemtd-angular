@@ -3,23 +3,23 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StatusbarComponent } from './statusbar.component';
 
 describe('StatusbarComponent', () => {
-  let component: StatusbarComponent;
-  let fixture: ComponentFixture<StatusbarComponent>;
+	let component: StatusbarComponent;
+	let fixture: ComponentFixture<StatusbarComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ StatusbarComponent ]
-    })
-    .compileComponents();
-  });
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			declarations: [ StatusbarComponent ]
+		})
+		.compileComponents();
+	});
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(StatusbarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+	beforeEach(() => {
+		fixture = TestBed.createComponent(StatusbarComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });

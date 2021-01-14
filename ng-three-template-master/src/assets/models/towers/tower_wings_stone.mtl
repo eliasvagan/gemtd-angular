@@ -1,0 +1,14 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl custom73(Clone)
+Kd 0.5564263 0.9180651 0.9793103
+
+newmtl dark(Clone)
+Kd 0.224 0.235 0.275
+
+newmtl metalGreen(Clone)
+Kd 1 1 1
+
+newmtl custom10(Clone)
+Kd 0.898 0.043 0.22
+

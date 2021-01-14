@@ -1,5 +1,6 @@
 export interface ITowerType {
-	name: string;
+	nameShort: string;
+	nameLong: string;
 	damage: number;
 	range: number;
 	speed: number;
@@ -7,5 +8,6 @@ export interface ITowerType {
 	slowTime?: number;
 	splitShots: number;
 	assetName: string;
+	imgUrl: string;
 	buildCombination?: ITowerType[];
 }

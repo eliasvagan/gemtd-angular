@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GameObject } from '../../../engine/entities/game-object';
+import { Inspectable } from '../../../engine/data-models/inspectable-model';
 
 @Component({
 	selector: 'app-statusbar',
@@ -9,7 +10,7 @@ import { GameObject } from '../../../engine/entities/game-object';
 export class StatusbarComponent implements OnInit {
 
 	@Input()
-	activeObject: GameObject;
+	activeObject: GameObject & Inspectable;
 
 	constructor() { }
 

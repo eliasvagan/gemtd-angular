@@ -1,0 +1,18 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl dark(Clone)
+Kd 0.224 0.235 0.275
+
+newmtl metalGreen(Clone)
+Kd 1 1 1
+
+newmtl custom29(Clone)
+Kd 0.15 0.366 0.173
+map_Kd Textures/custom29(Clone).png
+
+newmtl custom8(Clone)
+Kd 1 0.631 0.027
+
+newmtl custom9(Clone)
+Kd 0.349 0.827 0.098
+

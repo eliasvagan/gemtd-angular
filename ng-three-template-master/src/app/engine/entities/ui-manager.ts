@@ -17,7 +17,7 @@ export class UiManager {
 	}
 
 	forceUpdateZones(): void {
-		this.rootZone.run(() => {
+		this.rootZone?.run(() => {
 			this.updateCounter += 1;
 		});
 	}

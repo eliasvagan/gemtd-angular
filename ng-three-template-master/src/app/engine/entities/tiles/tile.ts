@@ -1,9 +1,17 @@
 import { ITile } from '../../data-models/tile-model';
 import { GameObject } from '../game-object';
 import { Scene } from 'three-full/sources/scenes/Scene';
+import { Inspectable } from '../../data-models/inspectable-model';
+import { IAbility } from '../../data-models/ability-model';
 
-export class Tile extends GameObject implements ITile {
+export class Tile extends GameObject implements ITile, Inspectable {
 	position: { x: number; y: number };
+	abilities: IAbility[] = [];
+	nameShort: string;
+	nameLong: string;
+	toolTip: string;
+	imgUrl: string = null;
+	tower = null;
 
 	constructor(
 		position: { x: number, y: number },
@@ -28,5 +36,8 @@ export class Tile extends GameObject implements ITile {
 				castShadow: true,
 			}
 		});
+		this.nameShort = 'Tile';
+		this.nameLong = 'Tile';
+		this.toolTip = 'If you can see this, the appropriate tooltip is missing.';
 	}
 }

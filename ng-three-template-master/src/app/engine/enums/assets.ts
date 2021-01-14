@@ -3977,5 +3977,395 @@ export const Assets: IAssets = {
 			offset: { x: 0, y: 0, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
-	}
+	},
+	SILVER: {
+		path: 'towers/',
+		mtl: 'tower_silver.mtl',
+		obj: 'tower_silver.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	PINK_DIAMOND: {
+		path: 'towers/',
+		mtl: 'tower_pink_diamond.mtl',
+		obj: 'tower_pink_diamond.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	MALACHITE: {
+		path: 'towers/',
+		mtl: 'tower_malachite.mtl',
+		obj: 'tower_malachite.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ASTERIATED_RUBY: {
+		path: 'towers/',
+		mtl: 'tower_asteriated_ruby.mtl',
+		obj: 'tower_asteriated_ruby.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	BLOODSTONE: {
+		path: 'towers/',
+		mtl: 'tower_bloodstone.mtl',
+		obj: 'tower_bloodstone.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	QUARTZ: {
+		path: 'towers/',
+		mtl: 'tower_quartz.mtl',
+		obj: 'tower_quartz.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	Jade: {
+		path: 'towers/',
+		mtl: 'tower_jade.mtl',
+		obj: 'tower_jade.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	DARK_EMERALD: {
+		path: 'towers/',
+		mtl: 'tower_dark_emerald.mtl',
+		obj: 'tower_dark_emerald.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	Gold: {
+		path: 'towers/',
+		mtl: 'tower_gold.mtl',
+		obj: 'tower_gold.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	PARAIBA_TOURMALINE: {
+		path: 'towers/',
+		mtl: 'tower_paraiba_tourmaline.mtl',
+		obj: 'tower_paraiba_tourmaline.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	CHRYSOBERYL_CATS_EYE: {
+		path: 'towers/',
+		mtl: 'tower_chrysoberyl_cats_eye.mtl',
+		obj: 'tower_chrysoberyl_cats_eye.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	DEEPSEA_PEARL: {
+		path: 'towers/',
+		mtl: 'tower_deepsea_pearl.mtl',
+		obj: 'tower_deepsea_pearl.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	YELLOW_SAPPHIRE: {
+		path: 'towers/',
+		mtl: 'tower_yellow_sapphire.mtl',
+		obj: 'tower_yellow_sapphire.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	SILVER_KNIGHT: {
+		path: 'towers/',
+		mtl: 'tower_silver_knight.mtl',
+		obj: 'tower_silver_knight.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	VIVID_MALACHITE: {
+		path: 'towers/',
+		mtl: 'tower_vivid_malachite.mtl',
+		obj: 'tower_vivid_malachite.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	URANIUM_238: {
+		path: 'towers/',
+		mtl: 'tower_uranium_238.mtl',
+		obj: 'tower_uranium_238.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	VOLCANO: {
+		path: 'towers/',
+		mtl: 'tower_volcano.mtl',
+		obj: 'tower_volcano.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	CHARMING_LAZURITE: {
+		path: 'towers/',
+		mtl: 'tower_charming_lazurite.mtl',
+		obj: 'tower_charming_lazurite.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	LUCKY_CHINESE_JADE: {
+		path: 'towers/',
+		mtl: 'tower_lucky_chinese_jade.mtl',
+		obj: 'tower_lucky_chinese_jade.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	GREY_JADE: {
+		path: 'towers/',
+		mtl: 'tower_grey_jade.mtl',
+		obj: 'tower_grey_jade.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	EMERALD_GOLEM: {
+		path: 'towers/',
+		mtl: 'tower_emerald_golem.mtl',
+		obj: 'tower_emerald_golem.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	EGYPT_GOLD: {
+		path: 'towers/',
+		mtl: 'tower_egypt_gold.mtl',
+		obj: 'tower_egypt_gold.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	RED_CORAL: {
+		path: 'towers/',
+		mtl: 'tower_red_coral.mtl',
+		obj: 'tower_red_coral.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ELABORATELY_CARVED_TOURMALINE: {
+		path: 'towers/',
+		mtl: 'tower_elaborately_carved_tourmaline.mtl',
+		obj: 'tower_elaborately_carved_tourmaline.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	HUGE_PINK_DIAMOND: {
+		path: 'towers/',
+		mtl: 'tower_huge_pink_diamond.mtl',
+		obj: 'tower_huge_pink_diamond.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	URANIUM_235: {
+		path: 'towers/',
+		mtl: 'tower_uranium_235.mtl',
+		obj: 'tower_uranium_235.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	MONKEY_KING_JADE: {
+		path: 'towers/',
+		mtl: 'tower_monkey_king_jade.mtl',
+		obj: 'tower_monkey_king_jade.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ANTIQUE_BLOODSTONE: {
+		path: 'towers/',
+		mtl: 'tower_antique_bloodstone.mtl',
+		obj: 'tower_antique_bloodstone.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	STAR_OF_ADAM: {
+		path: 'towers/',
+		mtl: 'tower_star_of_adam.mtl',
+		obj: 'tower_star_of_adam.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	CARMEN_LUCIA: {
+		path: 'towers/',
+		mtl: 'tower_carmen_lucia.mtl',
+		obj: 'tower_carmen_lucia.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	KOHINOOR_DIAMOND: {
+		path: 'towers/',
+		mtl: 'tower_kohinoor_diamond.mtl',
+		obj: 'tower_kohinoor_diamond.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	THE_CROWN_PRINCE: {
+		path: 'towers/',
+		mtl: 'tower_the_crown_prince.mtl',
+		obj: 'tower_the_crown_prince.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	DEPLEMENTED_KYPARIUM: {
+		path: 'towers/',
+		mtl: 'tower_depleted_kyparium.mtl',
+		obj: 'tower_depleted_kyparium.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	AGATE: {
+		path: 'towers/',
+		mtl: 'tower_agate.mtl',
+		obj: 'tower_agate.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	OBSIDIAN: {
+		path: 'towers/',
+		mtl: 'tower_obsidian.mtl',
+		obj: 'tower_obsidian.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	EUDIALYTE: {
+		path: 'towers/',
+		mtl: 'tower_eudialyte.mtl',
+		obj: 'tower_eudialyte.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ZIRCON: {
+		path: 'towers/',
+		mtl: 'tower_zircon.mtl',
+		obj: 'tower_zircon.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	THE_BURNING_STONE: {
+		path: 'towers/',
+		mtl: 'tower_the_burning_stone.mtl',
+		obj: 'tower_the_burning_stone.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	WINGS_STONE: {
+		path: 'towers/',
+		mtl: 'tower_wings_stone.mtl',
+		obj: 'tower_wings_stone.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
 };

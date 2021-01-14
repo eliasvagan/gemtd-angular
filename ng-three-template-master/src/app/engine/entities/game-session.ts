@@ -11,6 +11,7 @@ import { GemTypeNames } from '../enums/gem-types';
 import { IUpdateable } from '../data-models/updatable';
 import { IEnemy } from '../data-models/enemy-model';
 import { Statics } from '../services/statics.service';
+import {Inspectable} from '../data-models/inspectable-model';
 
 export interface IGameSessionGemChances {
 	types: {
@@ -30,10 +31,10 @@ export interface IGameSession extends IUpdateable {
 	board: GameMap;
 	enemies: IEnemy[];
 	buffs: IGameSessionBuff[];
-	activeObject: GameObject | null;
+	activeObject: GameObject & Inspectable;
 
 	handleClickObject(obj: GameObject): void;
-	setActiveObject(obj: GameObject): void;
+	setActiveObject(obj: GameObject & Inspectable): void;
 }
 
 export const GAME_SESSION_DEFAULT_VALUES: IGameSession | any = {
@@ -73,7 +74,7 @@ export class GameSession implements IGameSession {
 	public score: number;
 	public spawnRate: number;
 	public buffs: IGameSessionBuff[];
-	public activeObject: GameObject | null;
+	public activeObject: GameObject & Inspectable | null;
 	public activeGems: ITowerType[];
 
 	private readonly initialValues: IGameSession;
@@ -148,7 +149,7 @@ export class GameSession implements IGameSession {
 
 	handleClickObject(obj: GameObject): void {
 		if (obj instanceof Tile) {
-			this.board.handleTileClick(obj);
+			const placed = this.board.handleTileClick(obj);
 		} else {
 			// TODO: Handle clicking of other object types
 			console.log('Clicked a non-tile object: ', obj);
@@ -156,8 +157,8 @@ export class GameSession implements IGameSession {
 		Statics.UI_MANAGER.forceUpdateZones();
 	}
 
-	setActiveObject(obj: GameObject): void {
+	setActiveObject(obj: GameObject & Inspectable): void {
 		this.activeObject = obj;
-		console.log(Statics);
+		console.log('active obj:', obj);
 	}
 }

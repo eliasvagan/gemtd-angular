@@ -1,0 +1,185 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl metalLight(Clone)
+Kd 0.698 0.686 0.867
+
+newmtl custom5(Clone)
+Kd 0.49 0.239 0.91
+
+newmtl _defaultMat(Clone)
+Kd 0.917 0.917 0.917
+
+newmtl stone(Clone)
+Kd 0.571 0.559 0.736
+
+newmtl foliage(Clone)
+Kd 0.181 0.738 0.023
+
+newmtl dark(Clone)
+Kd 0.224 0.235 0.275
+
+newmtl metalGreen(Clone)
+Kd 1 1 1
+
+newmtl custom9(Clone)
+Kd 0.349 0.827 0.098
+
+newmtl custom8(Clone)
+Kd 1 0.631 0.027
+
+newmtl custom12(Clone)
+Kd 0.62 0.043 0.898
+
+newmtl custom11(Clone)
+Kd 0.106 0.451 0.82
+
+newmtl custom10(Clone)
+Kd 0.898 0.043 0.22
+
+newmtl custom7(Clone)
+Kd 0.898 0.953 1
+
+newmtl custom1(Clone)
+Kd 0.384 0.384 0.384
+
+newmtl custom40(Clone)
+Kd 1 1 1
+
+newmtl custom2(Clone)
+Kd 0.903 0.903 0.903
+
+newmtl custom6(Clone)
+Kd 0.286 1 0.69
+
+newmtl custom18(Clone)
+Kd 0.848 0.848 0.848
+
+newmtl custom55(Clone)
+Kd 0.915 0.464 1
+
+newmtl custom17(Clone)
+Kd 0.227 1 0.6
+map_Kd Textures/custom17(Clone).png
+
+newmtl custom19(Clone)
+Kd 0.607 0 0
+
+newmtl custom31(Clone)
+Kd 0.055 0.055 0.055
+
+newmtl custom33(Clone)
+Kd 0.814 0.725 0.725
+
+newmtl custom34(Clone)
+Kd 0.112 0.724 0.046
+
+newmtl custom29(Clone)
+Kd 0.15 0.366 0.173
+map_Kd Textures/custom29(Clone).png
+
+newmtl custom38(Clone)
+Kd 1 0.703 0
+map_Kd Textures/custom38(Clone).png
+
+newmtl custom39(Clone)
+Kd 0.136 1 0.875
+map_Kd Textures/custom39(Clone).png
+
+newmtl custom41(Clone)
+Kd 0.989 1 0.673
+
+newmtl custom42(Clone)
+Kd 1 1 1
+
+newmtl custom43(Clone)
+Kd 0.994 1 0.832
+
+newmtl custom46(Clone)
+Kd 0.94 1 0.209
+
+newmtl custom50(Clone)
+Kd 0.297 0.297 0.297
+
+newmtl custom49(Clone)
+Kd 1 0.308 0.127
+
+newmtl custom54(Clone)
+Kd 0.159 0.593 0.089
+
+newmtl custom48(Clone)
+Kd 0 0 0
+
+newmtl custom51(Clone)
+Kd 0.203 0.255 0.191
+
+newmtl custom57(Clone)
+Kd 0.149 0.676 0
+
+newmtl custom58(Clone)
+Kd 0.821 0.279 0.172
+
+newmtl custom47(Clone)
+Kd 0.205 1 0.325
+
+newmtl custom61(Clone)
+Kd 0.133 0.31 0.772
+
+newmtl glass(Clone)
+Kd 1 1 1
+
+newmtl metalOrange(Clone)
+Kd 1 0.702 0
+
+newmtl custom64(Clone)
+Kd 0.924 0.029 0.288
+
+newmtl custom67(Clone)
+Kd 0.731 0.986 0.97
+
+newmtl custom66(Clone)
+Kd 0.862 0.862 0.862
+
+newmtl custom68(Clone)
+Kd 0.055 0.055 0.055
+
+newmtl custom69(Clone)
+Kd 0.205 0.457 1
+
+newmtl custom71(Clone)
+Kd 0.283 0.098 0.037
+
+newmtl custom72(Clone)
+Kd 0.917 0.914 0.913
+
+newmtl custom70(Clone)
+Kd 0.752 0.536 0.536
+
+newmtl custom78(Clone)
+Kd 0.479 0.71 0.142
+map_Kd Textures/custom78(Clone).png
+
+newmtl custom76(Clone)
+Kd 0.903 0.177 0.387
+map_Kd Textures/custom76(Clone).png
+
+newmtl custom59(Clone)
+Kd 0.516 0.986 0.918
+
+newmtl custom74(Clone)
+Kd 0.193 0.193 0.193
+
+newmtl custom60(Clone)
+Kd 0.931 0.154 0
+
+newmtl custom65(Clone)
+Kd 0.172 0.036 0.001
+
+newmtl custom73(Clone)
+Kd 0.556 0.918 0.979
+
+newmtl custom62(Clone)
+Kd 0.757 0.333 0.814
+
+newmtl custom63(Clone)
+Kd 0.333 0.814 0.346
+

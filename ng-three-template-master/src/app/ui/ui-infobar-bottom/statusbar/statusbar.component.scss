@@ -1,0 +1,48 @@
+.statusbar-wrapper {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+}
+
+.inspect-portrait {
+	display: flex;
+	flex-direction: column;
+	width: 9rem;
+}
+
+.inspect-header {
+	text-align: center;
+	text-shadow: 0 0.1em 0.2em rgba(0,0,0,0.8);
+}
+
+.abilities-wrapper {
+	border: solid 0.1em lightgray;
+	border-radius: 0.2em;
+	padding: 0.4em;
+
+	display: flex;
+	flex-direction: row;
+
+	 & > div.ability {
+		 flex: 1;
+
+		 & > button {
+			 width: 10em;
+			 height: 10em;
+			 border: solid 0.1em #6483c1;
+			 margin: 0.5em;
+
+			 background-position: center center;
+			 background-repeat: no-repeat;
+			 background-size: cover;
+		 }
+	 }
+}
+
+
+.inspect-img {
+	flex: 1;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
