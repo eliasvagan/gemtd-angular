@@ -5,7 +5,7 @@ import { MouseEventType } from '../enums/mouse-events';
 import { Statics } from '../services/statics.service';
 import * as GAMECONFIG from '../../json/gameconfig.json';
 import { GameSession } from '../entities/game-session';
-import {UiManager} from '../entities/ui-manager';
+import { UiManager } from '../entities/ui-manager';
 
 @Injectable({providedIn: 'root'})
 export class EngineService implements OnDestroy {
@@ -17,6 +17,7 @@ export class EngineService implements OnDestroy {
 
 	private prevFrame: Date;
 	private frameId: number = null;
+	private gameSession: GameSession;
 
 	public constructor(
 		private ngZone: NgZone
@@ -31,6 +32,10 @@ export class EngineService implements OnDestroy {
 
 	public getUiManager(): UiManager {
 		return Statics.UI_MANAGER;
+	}
+
+	getSession(): GameSession {
+		return this.gameSession;
 	}
 
 
@@ -52,7 +57,8 @@ export class EngineService implements OnDestroy {
 
 		// create the scene
 		this.scene = new THREE.Scene();
-		Statics.CURRENT_SESSION = new GameSession(this.scene);
+		this.gameSession = new GameSession(this.scene);
+		Statics.CURRENT_SESSION = this.gameSession;
 
 		// Game Manager
 		this.gm = new GameManager(this.scene);
@@ -60,18 +66,6 @@ export class EngineService implements OnDestroy {
 		this.camera = new THREE.OrthographicCamera(-10, 10, 10, -20, 1, 1000);
 		this.scene.add(this.camera);
 		this.updateCamera();
-
-		/* GRID
-    const size = 10;
-    const divisions = 11;
-
-    const gridHelper = new THREE.GridHelper( size, divisions );
-    gridHelper.scale.set(size, size, size);
-
-    this.grid = gridHelper;
-    this.scene.add( gridHelper );
-    */
-
 	}
 
 	public animate(): void {

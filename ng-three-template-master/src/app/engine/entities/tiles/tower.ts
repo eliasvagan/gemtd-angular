@@ -1,9 +1,9 @@
 import { ITowerType } from '../../data-models/tower-type-model';
 import { IEnemy } from '../../data-models/enemy-model';
-import { IGameSession } from '../../data-models/game-session';
 import { EuclideanDistance } from '../../helpers/trig-helpers';
 import { ITower } from '../../data-models/tower-model';
 import { IHasPosition } from '../../data-models/has-position';
+import { IGameSession } from '../game-session';
 
 export class Tower implements ITower {
 

@@ -36,7 +36,7 @@ export interface IGameSession extends IUpdateable {
 	setActiveObject(obj: GameObject): void;
 }
 
-export const GAMESESSION_DEFAULT_VALUES: IGameSession | any = {
+export const GAME_SESSION_DEFAULT_VALUES: IGameSession | any = {
 	hpMax: 100,
 	hpCurrent: 100,
 	round: 0,
@@ -76,13 +76,11 @@ export class GameSession implements IGameSession {
 	public activeObject: GameObject | null;
 	public activeGems: ITowerType[];
 
-	private scene: THREE.Scene;
-
 	private readonly initialValues: IGameSession;
 
 	constructor(scene: THREE.Scene) {
 		this.initialValues = {
-			...GAMESESSION_DEFAULT_VALUES,
+			...GAME_SESSION_DEFAULT_VALUES,
 			board: new GameMap(scene),
 			buffs: [
 				new GameSessionBuff('gemChances.types.amethyst', .02, 8000),
@@ -103,7 +101,7 @@ export class GameSession implements IGameSession {
 
 	applyBuffs() {
 		// Reset gem chances to default before calculating
-		const { gemChances, hpMax, spawnRate } = GAMESESSION_DEFAULT_VALUES; // TODO: Fix this
+		const { gemChances, hpMax, spawnRate } = GAME_SESSION_DEFAULT_VALUES; // TODO: Fix this
 		Object.assign(this, { gemChances, hpMax, spawnRate });
 
 		// Apply buffs
@@ -155,13 +153,11 @@ export class GameSession implements IGameSession {
 			// TODO: Handle clicking of other object types
 			console.log('Clicked a non-tile object: ', obj);
 		}
-		this.round += 1;
+		Statics.UI_MANAGER.forceUpdateZones();
 	}
 
 	setActiveObject(obj: GameObject): void {
 		this.activeObject = obj;
 		console.log(Statics);
 	}
-
-
 }

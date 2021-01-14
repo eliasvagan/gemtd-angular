@@ -16,11 +16,11 @@ export class GameInstanceComponent implements OnInit {
 	public rendererCanvas: ElementRef<HTMLCanvasElement>;
 
 	constructor(
-		private engServ: EngineService
+		private engServ: EngineService,
 	) { }
 
 	ngOnInit(): void {
-		this.engServ.createScene(this.rendererCanvas);
+		this.engServ.createScene(this.rendererCanvas, );
 		this.$uiManager = this.engServ.getUiManager();
 		this.engServ.animate();
 	}
