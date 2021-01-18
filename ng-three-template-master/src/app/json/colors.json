@@ -11,11 +11,20 @@
 			"topaz": "#FFA92F"
 		}
 	},
-	"rarity": {
+	"rarity": [
+		"#EFF3FF",
+		"#1B73D1",
+		"#59D319",
+		"#1B73D1",
+		"#9E0BE5",
+		"#FF7400",
+		"#E50B38"
+	],
+	"rarityOld": {
 		"gemsBasic": "#EFF3FF",
 		"gemsAdvanced": "#1B73D1",
-		"towersBasic": "59D319",
-		"towersRare": "1B73D1",
+		"towersBasic": "#59D319",
+		"towersRare": "#1B73D1",
 		"towersAdvanced": "#9E0BE5",
 		"towersTop": "#FF7400",
 		"towersOnehit": "#E50B38"

@@ -19,6 +19,8 @@ import { UiInfobarBottomHealthbarComponent } from './ui/ui-infobar-bottom/health
 import { UiInfobarHeaderComponent } from './ui/ui-infobar-header/ui-infobar-header.component';
 import { PercentStringPipePipe } from './pipes/percent-string-pipe.pipe';
 import { StatusbarComponent } from './ui/ui-infobar-bottom/statusbar/statusbar.component';
+import { ImageSrcPipePipe } from './pipes/image-src-pipe.pipe';
+import { RarityColorPipe } from './pipes/rarity-color.pipe';
 
 @NgModule({
 	declarations: [
@@ -38,7 +40,9 @@ import { StatusbarComponent } from './ui/ui-infobar-bottom/statusbar/statusbar.c
 		UiInfobarBottomHealthbarComponent,
 		UiInfobarHeaderComponent,
 		PercentStringPipePipe,
-		StatusbarComponent
+		StatusbarComponent,
+		ImageSrcPipePipe,
+		RarityColorPipe
 	],
 	imports: [
 		BrowserModule,

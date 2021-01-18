@@ -7,7 +7,7 @@ import { IAbility } from '../../data-models/ability-model';
 export class Tile extends GameObject implements ITile, Inspectable {
 	position: { x: number; y: number };
 	abilities: IAbility[] = [];
-	nameShort: string;
+	towerTypeId: string;
 	nameLong: string;
 	toolTip: string;
 	imgUrl: string = null;
@@ -36,8 +36,19 @@ export class Tile extends GameObject implements ITile, Inspectable {
 				castShadow: true,
 			}
 		});
-		this.nameShort = 'Tile';
+		this.towerTypeId = 'Tile';
 		this.nameLong = 'Tile';
 		this.toolTip = 'If you can see this, the appropriate tooltip is missing.';
+	}
+
+	removeAbility(ability: IAbility): void {
+		try {
+			const index = this.abilities.indexOf(ability);
+			if (index !== -1) {
+				this.abilities.splice(index, 1);
+			}
+		} catch (err) {
+			console.error('Failed to remove ability!', err);
+		}
 	}
 }

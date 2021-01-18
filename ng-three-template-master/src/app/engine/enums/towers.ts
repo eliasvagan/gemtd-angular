@@ -1,417 +1,498 @@
-import { ITowerType } from '../data-models/tower-type-model';
+import { ITowerType, TowerRarity } from '../data-models/tower-type-model';
 
 const GemsBasic: { [ key: string ]: ITowerType } = {
 	P1: {
-		nameShort: 'P1',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'P1',
 		nameLong: 'Chipped Amethyst',
 		assetName: 'GEM_P1',
 		imgUrl: 'sprites/gems/gems_amethyst.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [[]]
 	},
 	P2: {
-		nameShort: 'P2',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'P2',
 		nameLong: 'Flawed Amethyst',
 		assetName: 'GEM_P2',
 		imgUrl: 'sprites/gems/gems_amethyst.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['P1', 'P1']]
 	},
 	P3: {
-		nameShort: 'P3',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'P3',
 		nameLong: 'Normal Amethyst',
 		assetName: 'GEM_P3',
 		imgUrl: 'sprites/gems/gems_amethyst.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['P2', 'P2'], ['P1', 'P1', 'P1', 'P1']]
 	},
 	P4: {
-		nameShort: 'P4',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'P4',
 		nameLong: 'Polished Amethyst',
 		assetName: 'GEM_P4',
 		imgUrl: 'sprites/gems/gems_amethyst.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['P3', 'P3'], ['P2', 'P2', 'P2', 'P2']]
 	},
 	P5: {
-		nameShort: 'P5',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'P5',
 		nameLong: 'Perfect Amethyst',
 		assetName: 'GEM_P5',
 		imgUrl: 'sprites/gems/gems_amethyst.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['P4', 'P4'], ['P3', 'P3', 'P3', 'P3']]
 	},
 	Q1: {
-		nameShort: 'Q1',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'Q1',
 		nameLong: 'Chipped Aquamarine',
 		assetName: 'GEM_Q1',
 		imgUrl: 'sprites/gems/gems_aquamarine.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [[]]
 	},
 	Q2: {
-		nameShort: 'Q2',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'Q2',
 		nameLong: 'Flawed Aquamarine',
 		assetName: 'GEM_Q2',
 		imgUrl: 'sprites/gems/gems_aquamarine.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['Q1', 'Q1']]
 	},
 	Q3: {
-		nameShort: 'Q3',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'Q3',
 		nameLong: 'Normal Aquamarine',
 		assetName: 'GEM_Q3',
 		imgUrl: 'sprites/gems/gems_aquamarine.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['Q2', 'Q2'], ['Q1', 'Q1', 'Q1', 'Q1']]
 	},
 	Q4: {
-		nameShort: 'Q4',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'Q4',
 		nameLong: 'Polished Aquamarine',
 		assetName: 'GEM_Q4',
 		imgUrl: 'sprites/gems/gems_aquamarine.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['Q3', 'Q3'], ['Q2', 'Q2', 'Q2', 'Q2']]
 	},
 	Q5: {
-		nameShort: 'Q5',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'Q5',
 		nameLong: 'Perfect Aquamarine',
 		assetName: 'GEM_Q5',
 		imgUrl: 'sprites/gems/gems_aquamarine.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['Q4', 'Q4'], ['Q3', 'Q3', 'Q3', 'Q3']]
 	},
 
 	D1: {
-		nameShort: 'D1',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'D1',
 		nameLong: 'Chipped Diamond',
 		assetName: 'GEM_D1',
 		imgUrl: 'sprites/gems/gems_diamond.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [[]]
 	},
 	D2: {
-		nameShort: 'D2',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'D2',
 		nameLong: 'Flawed Diamond',
 		assetName: 'GEM_D2',
 		imgUrl: 'sprites/gems/gems_diamond.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['D1', 'D1']]
 	},
 	D3: {
-		nameShort: 'D3',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'D3',
 		nameLong: 'Normal Diamond',
 		assetName: 'GEM_D3',
 		imgUrl: 'sprites/gems/gems_diamond.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['D2', 'D2'], ['D1', 'D1', 'D1', 'D1']]
 	},
 	D4: {
-		nameShort: 'D4',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'D4',
 		nameLong: 'Polished Diamond',
 		assetName: 'GEM_D4',
 		imgUrl: 'sprites/gems/gems_diamond.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['D3', 'D3'], ['D2', 'D2', 'D2', 'D2']]
 	},
 	D5: {
-		nameShort: 'D5',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'D5',
 		nameLong: 'Perfect Diamond',
 		assetName: 'GEM_D5',
 		imgUrl: 'sprites/gems/gems_diamond.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['D4', 'D4'], ['D3', 'D3', 'D3', 'D3']]
 	},
 
 	G1: {
-		nameShort: 'G1',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'G1',
 		nameLong: 'Chipped Emerald',
 		assetName: 'GEM_G1',
 		imgUrl: 'sprites/gems/gems_emerald.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [[]]
 	},
 	G2: {
-		nameShort: 'G2',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'G2',
 		nameLong: 'Flawed Emerald',
 		assetName: 'GEM_G2',
 		imgUrl: 'sprites/gems/gems_emerald.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['G1', 'G1']]
 	},
 	G3: {
-		nameShort: 'G3',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'G3',
 		nameLong: 'Normal Emerald',
 		assetName: 'GEM_G3',
 		imgUrl: 'sprites/gems/gems_emerald.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['G2', 'G2'], ['G1', 'G1', 'G1', 'G1']]
 	},
 	G4: {
-		nameShort: 'G4',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'G4',
 		nameLong: 'Polished Emerald',
 		assetName: 'GEM_G4',
 		imgUrl: 'sprites/gems/gems_emerald.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['G3', 'G3'], ['G2', 'G2', 'G2', 'G2']]
 	},
 	G5: {
-		nameShort: 'G5',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'G5',
 		nameLong: 'Perfect Emerald',
 		assetName: 'GEM_G5',
 		imgUrl: 'sprites/gems/gems_emerald.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['G4', 'G4'], ['G3', 'G3', 'G3', 'G3']]
 	},
 
 	E1: {
-		nameShort: 'E1',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'E1',
 		nameLong: 'Chipped Opal',
 		assetName: 'GEM_E1',
 		imgUrl: 'sprites/gems/gems_opal.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [[]]
 	},
 	E2: {
-		nameShort: 'E2',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'E2',
 		nameLong: 'Flawed Opal',
 		assetName: 'GEM_E2',
 		imgUrl: 'sprites/gems/gems_opal.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['E1', 'E1']]
 	},
 	E3: {
-		nameShort: 'E3',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'E3',
 		nameLong: 'Normal Opal',
 		assetName: 'GEM_E3',
 		imgUrl: 'sprites/gems/gems_opal.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['E2', 'E2'], ['E1', 'E1', 'E1', 'E1']]
 	},
 	E4: {
-		nameShort: 'E4',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'E4',
 		nameLong: 'Polished Opal',
 		assetName: 'GEM_E4',
 		imgUrl: 'sprites/gems/gems_opal.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['E3', 'E3'], ['E2', 'E2', 'E2', 'E2']]
 	},
 	E5: {
-		nameShort: 'E5',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'E5',
 		nameLong: 'Perfect Opal',
 		assetName: 'GEM_E5',
 		imgUrl: 'sprites/gems/gems_opal.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['E4', 'E4'], ['E3', 'E3', 'E3', 'E3']]
 	},
 
 	R1: {
-		nameShort: 'R1',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'R1',
 		nameLong: 'Chipped Ruby',
 		assetName: 'GEM_R1',
 		imgUrl: 'sprites/gems/gems_ruby.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [[]]
 	},
 	R2: {
-		nameShort: 'R2',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'R2',
 		nameLong: 'Flawed Ruby',
 		assetName: 'GEM_R2',
 		imgUrl: 'sprites/gems/gems_ruby.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['R1', 'R1']]
 	},
 	R3: {
-		nameShort: 'R3',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'R3',
 		nameLong: 'Normal Ruby',
 		assetName: 'GEM_R3',
 		imgUrl: 'sprites/gems/gems_ruby.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['R2', 'R2'], ['R1', 'R1', 'R1', 'R1']]
 	},
 	R4: {
-		nameShort: 'R4',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'R4',
 		nameLong: 'Polished Ruby',
 		assetName: 'GEM_R4',
 		imgUrl: 'sprites/gems/gems_ruby.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['R3', 'R3'], ['R2', 'R2', 'R2', 'R2']]
 	},
 	R5: {
-		nameShort: 'R5',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'R5',
 		nameLong: 'Perfect Ruby',
 		assetName: 'GEM_R5',
 		imgUrl: 'sprites/gems/gems_ruby.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['R4', 'R4'], ['R3', 'R3', 'R3', 'R3']]
 	},
 
 	B1: {
-		nameShort: 'B1',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'B1',
 		nameLong: 'Chipped Sapphire',
 		assetName: 'GEM_B1',
 		imgUrl: 'sprites/gems/gems_sapphire.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [[]]
 	},
 	B2: {
-		nameShort: 'B2',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'B2',
 		nameLong: 'Flawed Sapphire',
 		assetName: 'GEM_B2',
 		imgUrl: 'sprites/gems/gems_sapphire.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['B1', 'B1']]
 	},
 	B3: {
-		nameShort: 'B3',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'B3',
 		nameLong: 'Normal Sapphire',
 		assetName: 'GEM_B3',
 		imgUrl: 'sprites/gems/gems_sapphire.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['B2', 'B2'], ['B1', 'B1', 'B1', 'B1']]
 	},
 	B4: {
-		nameShort: 'B4',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'B4',
 		nameLong: 'Polished Sapphire',
 		assetName: 'GEM_B4',
 		imgUrl: 'sprites/gems/gems_sapphire.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['B3', 'B3'], ['B2', 'B2', 'B2', 'B2']]
 	},
 	B5: {
-		nameShort: 'B5',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'B5',
 		nameLong: 'Perfect Sapphire',
 		assetName: 'GEM_B5',
 		imgUrl: 'sprites/gems/gems_sapphire.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['B4', 'B4'], ['B3', 'B3', 'B3', 'B3']]
 	},
 
 	Y1: {
-		nameShort: 'Y1',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'Y1',
 		nameLong: 'Chipped Topaz',
 		assetName: 'GEM_Y1',
 		imgUrl: 'sprites/gems/gems_topaz.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [[]]
 	},
 	Y2: {
-		nameShort: 'Y2',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'Y2',
 		nameLong: 'Flawed Topaz',
 		assetName: 'GEM_Y2',
 		imgUrl: 'sprites/gems/gems_topaz.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['Y1', 'Y1']]
 	},
 	Y3: {
-		nameShort: 'Y3',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'Y3',
 		nameLong: 'Normal Topaz',
 		assetName: 'GEM_Y3',
 		imgUrl: 'sprites/gems/gems_topaz.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['Y2', 'Y2'], ['Y1', 'Y1', 'Y1', 'Y1']]
 	},
 	Y4: {
-		nameShort: 'Y4',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'Y4',
 		nameLong: 'Polished Topaz',
 		assetName: 'GEM_Y4',
 		imgUrl: 'sprites/gems/gems_topaz.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['Y3', 'Y3'], ['Y2', 'Y2', 'Y2', 'Y2']]
 	},
 	Y5: {
-		nameShort: 'Y5',
+		rarity: TowerRarity.Common,
+		towerTypeId: 'Y5',
 		nameLong: 'Perfect Topaz',
 		assetName: 'GEM_Y5',
 		imgUrl: 'sprites/gems/gems_topaz.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
-		splitShots: 1
+		splitShots: 1,
+		buildCombinations: [['Y4', 'Y4'], ['Y3', 'Y3', 'Y3', 'Y3']]
 	},
 };
 
 const GemsAdvanced: { [key: string ]: ITowerType } = {
 	P6: {
-		nameShort: 'P6',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'P6',
 		nameLong: 'Huge Amethyst',
 		assetName: 'GEM_P6',
 		imgUrl: 'sprites/gems/gems_amethyst.png',
@@ -419,10 +500,11 @@ const GemsAdvanced: { [key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.P5, GemsBasic.P5 ]
+		buildCombinations: [[ 'P5', 'P5' ], ['P4', 'P4', 'P4', 'P4']]
 	},
 	Q6: {
-		nameShort: 'Q6',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'Q6',
 		nameLong: 'Huge Aquamarine',
 		assetName: 'GEM_Q6',
 		imgUrl: 'sprites/gems/gems_aquamarine.png',
@@ -430,10 +512,11 @@ const GemsAdvanced: { [key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.Q5, GemsBasic.Q5 ]
+		buildCombinations: [[ 'Q5', 'Q5' ], ['Q4', 'Q4', 'Q4', 'Q4']]
 	},
 	D6: {
-		nameShort: 'D6',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'D6',
 		nameLong: 'Huge Diamond',
 		assetName: 'GEM_D6',
 		imgUrl: 'sprites/gems/gems_diamond.png',
@@ -441,10 +524,11 @@ const GemsAdvanced: { [key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.D5, GemsBasic.D5 ]
+		buildCombinations: [[ 'D5', 'D5' ], ['D4', 'D4', 'D4', 'D4']]
 	},
 	G6: {
-		nameShort: 'G6',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'G6',
 		nameLong: 'Huge Emerald',
 		assetName: 'GEM_G6',
 		imgUrl: 'sprites/gems/gems_emerald.png',
@@ -452,10 +536,11 @@ const GemsAdvanced: { [key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.G5, GemsBasic.G5 ]
+		buildCombinations: [[ 'G5', 'G5' ], ['G4', 'G4', 'G4', 'G4']]
 	},
 	E6: {
-		nameShort: 'E6',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'E6',
 		nameLong: 'Huge Opal',
 		assetName: 'GEM_E6',
 		imgUrl: 'sprites/gems/gems_opal.png',
@@ -463,10 +548,11 @@ const GemsAdvanced: { [key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.E5, GemsBasic.E5 ]
+		buildCombinations: [[ 'E5', 'E5' ], ['E4', 'E4', 'E4', 'E4']]
 	},
 	R6: {
-		nameShort: 'R6',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'R6',
 		nameLong: 'Huge Ruby',
 		assetName: 'GEM_R6',
 		imgUrl: 'sprites/gems/gems_ruby.png',
@@ -474,10 +560,11 @@ const GemsAdvanced: { [key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.R5, GemsBasic.R5 ]
+		buildCombinations: [[ 'R5', 'R5' ], ['R4', 'R4', 'R4', 'R4']]
 	},
 	B6: {
-		nameShort: 'B6',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'B6',
 		nameLong: 'Huge Sapphire',
 		assetName: 'GEM_B6',
 		imgUrl: 'sprites/gems/gems_sapphire.png',
@@ -485,10 +572,11 @@ const GemsAdvanced: { [key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.B5, GemsBasic.B5 ]
+		buildCombinations: [[ 'B5', 'B5' ]]
 	},
 	Y6: {
-		nameShort: 'Y6',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'Y6',
 		nameLong: 'Huge Topaz',
 		assetName: 'GEM_Y6',
 		imgUrl: 'sprites/gems/gems_topaz.png',
@@ -496,13 +584,14 @@ const GemsAdvanced: { [key: string ]: ITowerType } = {
 		range: 10,
 		speed: 4,
 		splitShots: 3,
-		buildCombination: [ GemsBasic.Y5, GemsBasic.Y5 ]
+		buildCombinations: [[ 'Y5', 'Y5' ], ['Y4', 'Y4', 'Y4', 'Y4']]
 	},
 };
 
 const TowersBasic: { [ key: string ]: ITowerType } = {
 	Silver: {
-		nameShort: 'Silver',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'Silver',
 		nameLong: 'Silver',
 		assetName: 'SILVER',
 		imgUrl: 'sprites/towers/tower_silver.png',
@@ -510,10 +599,11 @@ const TowersBasic: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.D1, GemsBasic.B1, GemsBasic.Y1 ]
+		buildCombinations: [[ 'D1', 'B1', 'Y1' ]]
 	},
 	PinkDiamond: {
-		nameShort: 'PinkDiamond',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'PinkDiamond',
 		nameLong: 'Pink Diamond',
 		assetName: 'PINK_DIAMOND',
 		imgUrl: 'sprites/towers/tower_pink_diamond.png',
@@ -521,10 +611,11 @@ const TowersBasic: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.D3, GemsBasic.Y3, GemsBasic.D5 ]
+		buildCombinations: [[ 'D3', 'Y3', 'D5' ]]
 	},
 	Malachite: {
-		nameShort: 'Malachite',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'Malachite',
 		nameLong: 'Malachite',
 		assetName: 'MALACHITE',
 		imgUrl: 'sprites/towers/tower_malachite.png',
@@ -532,10 +623,11 @@ const TowersBasic: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.Y1, GemsBasic.G1, GemsBasic.Q1 ]
+		buildCombinations: [[ 'Y1', 'G1', 'Q1' ]]
 	},
 	AsteriatedRuby: {
-		nameShort: '	AsteriatedRuby',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'AsteriatedRuby',
 		nameLong: 'Asteriated Ruby',
 		assetName: 'ASTERIATED_RUBY',
 		imgUrl: 'sprites/towers/tower_asteriated_ruby.png',
@@ -543,10 +635,11 @@ const TowersBasic: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.R2, GemsBasic.R1, GemsBasic.P1 ]
+		buildCombinations: [[ 'R2', 'R1', 'P1' ]]
 	},
 	Bloodstone: {
-		nameShort: 'Bloodstone',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'Bloodstone',
 		nameLong: 'Bloodstone',
 		assetName: 'BLOODSTONE',
 		imgUrl: 'sprites/towers/tower_bloodstone.png',
@@ -554,10 +647,11 @@ const TowersBasic: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.R5, GemsBasic.Q4, GemsBasic.P3 ]
+		buildCombinations: [[ 'R5', 'Q4', 'P3' ]]
 	},
 	Quartz: {
-		nameShort: 'Quartz',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'Quartz',
 		nameLong: 'Quartz',
 		assetName: 'QUARTZ',
 		imgUrl: 'sprites/towers/tower_quartz.png',
@@ -565,21 +659,23 @@ const TowersBasic: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.G4, GemsBasic.R3, GemsBasic.P2 ]
+		buildCombinations: [[ 'G4', 'R3', 'P2' ]]
 	},
 	Jade: {
-		nameShort: 'Jade',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'Jade',
 		nameLong: 'Jade',
-		assetName: 'Jade',
+		assetName: 'JADE',
 		imgUrl: 'sprites/towers/tower_jade.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.G3, GemsBasic.E3, GemsBasic.B2 ]
+		buildCombinations: [[ 'G3', 'E3', 'B2' ]]
 	},
 	DarkEmerald: {
-		nameShort: 'DarkEmerald',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'DarkEmerald',
 		nameLong: 'Dark Emerald',
 		assetName: 'DARK_EMERALD',
 		imgUrl: 'sprites/towers/tower_dark_emerald.png',
@@ -587,21 +683,23 @@ const TowersBasic: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.G5, GemsBasic.B4, GemsBasic.Y2 ]
+		buildCombinations: [[ 'G5', 'B4', 'Y2' ]]
 	},
 	Gold: {
-		nameShort: 'Gold',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'Gold',
 		nameLong: 'Gold',
-		assetName: 'Gold',
+		assetName: 'GOLD',
 		imgUrl: 'sprites/towers/tower_gold.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.P5, GemsBasic.P4, GemsBasic.D2 ]
+		buildCombinations: [[ 'P5', 'P4', 'D2' ]]
 	},
 	ParaibaTourmaline: {
-		nameShort: '	ParaibaTourmaline',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'ParaibaTourmaline',
 		nameLong: 'Paraiba Tourmaline',
 		assetName: 'PARAIBA_TOURMALINE',
 		imgUrl: 'sprites/towers/tower_paraiba_tourmaline.png',
@@ -609,10 +707,11 @@ const TowersBasic: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.Q5, GemsBasic.E4, GemsBasic.G2 ]
+		buildCombinations: [[ 'Q5', 'E4', 'G2' ]]
 	},
 	ChrysoberylCatsEye: {
-		nameShort: '	ChrysoberylCatsEye',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'ChrysoberylCatsEye',
 		nameLong: `Chrysoberyl Cat's Eye`,
 		assetName: 'CHRYSOBERYL_CATS_EYE',
 		imgUrl: 'sprites/towers/tower_chrysoberyl_cats_eye.png',
@@ -620,10 +719,11 @@ const TowersBasic: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.E5, GemsBasic.D4, GemsBasic.Q3 ]
+		buildCombinations: [[ 'E5', 'D4', 'Q3' ]]
 	},
 	DeepseaPearl: {
-		nameShort:  'DeepseaPearl',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'DeepseaPearl',
 		nameLong: 'Deepsea Pearl',
 		assetName: 'DEEPSEA_PEARL',
 		imgUrl: 'sprites/towers/tower_deepsea_pearl.png',
@@ -631,24 +731,26 @@ const TowersBasic: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.Q4, GemsBasic.D4, GemsBasic.G2 ]
+		buildCombinations: [[ 'Q4', 'D4', 'G2' ]]
 	},
 	YellowSapphire: {
-		nameShort: '	YellowSapphire',
-		nameLong: 'Yellow Saphire',
+		rarity: TowerRarity.Uncommon,
+		towerTypeId: 'YellowSapphire',
+		nameLong: 'Yellow Sapphire',
 		assetName: 'YELLOW_SAPPHIRE',
 		imgUrl: 'sprites/towers/tower_yellow_sapphire.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.B5, GemsBasic.Y4, GemsBasic.R4 ]
+		buildCombinations: [[ 'B5', 'Y4', 'R4' ]]
 	},
 };
 
 const TowersAdvanced: { [ key: string ]: ITowerType } = {
 	SilverKnight: {
-		nameShort:  'SilverKnight',
+		rarity: TowerRarity.Rare,
+		towerTypeId:  'SilverKnight',
 		nameLong: 'Silver Knight',
 		assetName: 'SILVER_KNIGHT',
 		imgUrl: 'sprites/towers/tower_silver_knight.png',
@@ -656,10 +758,11 @@ const TowersAdvanced: { [ key: string ]: ITowerType } = {
 		range: 6,
 		speed: 2,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.Q2, GemsBasic.R3, TowersBasic.Silver ]
+		buildCombinations: [[ 'Q2', 'R3', 'Silver' ]]
 	},
 	VividMalachite: {
-		nameShort: '	VividMalachite',
+		rarity: TowerRarity.Rare,
+		towerTypeId: 'VividMalachite',
 		nameLong: 'Vivid Malachite',
 		assetName: 'VIVID_MALACHITE',
 		imgUrl: 'sprites/towers/tower_vivid_malachite.png',
@@ -667,10 +770,11 @@ const TowersAdvanced: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.Y3, GemsBasic.D2, TowersBasic.Malachite ]
+		buildCombinations: [[ 'Y3', 'D2', 'Malachite' ]]
 	},
 	Uranium238: {
-		nameShort: 'Uranium238',
+		rarity: TowerRarity.Rare,
+		towerTypeId: 'Uranium238',
 		nameLong: 'Uranium-238',
 		assetName: 'URANIUM_238',
 		imgUrl: 'sprites/towers/tower_uranium_238.png',
@@ -678,10 +782,11 @@ const TowersAdvanced: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.Y5, GemsBasic.B3, GemsBasic.E2 ]
+		buildCombinations: [[ 'Y5', 'B3', 'E2' ]]
 	},
 	Volcano: {
-		nameShort: 'Volcano',
+		rarity: TowerRarity.Rare,
+		towerTypeId: 'Volcano',
 		nameLong: 'Volcano',
 		assetName: 'VOLCANO',
 		imgUrl: 'sprites/towers/tower_volcano.png',
@@ -689,10 +794,11 @@ const TowersAdvanced: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersBasic.AsteriatedRuby, GemsBasic.P3, GemsBasic.R4 ]
+		buildCombinations: [[ 'AsteriatedRuby', 'P3', 'R4' ]]
 	},
 	CharmingLazurite: {
-		nameShort: '	CharmingLazurite',
+		rarity: TowerRarity.Rare,
+		towerTypeId: 'CharmingLazurite',
 		nameLong: 'Charming Lazurite',
 		assetName: 'CHARMING_LAZURITE',
 		imgUrl: 'sprites/towers/tower_charming_lazurite.png',
@@ -700,10 +806,11 @@ const TowersAdvanced: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersBasic.Quartz, GemsBasic.E3, GemsBasic.G3 ]
+		buildCombinations: [[ 'Quartz', 'E3', 'G3' ]]
 	},
 	LuckyChineseJade: {
-		nameShort: '	LuckyChineseJade',
+		rarity: TowerRarity.Rare,
+		towerTypeId: 'LuckyChineseJade',
 		nameLong: 'Lucky Chinese Jade',
 		assetName: 'LUCKY_CHINESE_JADE',
 		imgUrl: 'sprites/towers/tower_lucky_chinese_jade.png',
@@ -711,10 +818,11 @@ const TowersAdvanced: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersBasic.Jade, TowersBasic.Quartz, GemsBasic.G3 ]
+		buildCombinations: [[ 'Jade', 'Quartz', 'G3' ]]
 	},
 	GreyJade: {
-		nameShort: 'GreyJade',
+		rarity: TowerRarity.Rare,
+		towerTypeId: 'GreyJade',
 		nameLong: 'Grey Jade',
 		assetName: 'GREY_JADE',
 		imgUrl: 'sprites/towers/tower_grey_jade.png',
@@ -722,10 +830,11 @@ const TowersAdvanced: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersBasic.Jade, GemsBasic.B4, GemsBasic.Q3 ]
+		buildCombinations: [[ 'Jade', 'B4', 'Q3' ]]
 	},
 	EmeraldGolem: {
-		nameShort:  'EmeraldGolem',
+		rarity: TowerRarity.Rare,
+		towerTypeId:  'EmeraldGolem',
 		nameLong: 'Emerald Golem',
 		assetName: 'EMERALD_GOLEM',
 		imgUrl: 'sprites/towers/tower_emerald_golem.png',
@@ -733,10 +842,11 @@ const TowersAdvanced: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersBasic.DarkEmerald, TowersBasic.Gold, GemsBasic.D3 ]
+		buildCombinations: [[ 'DarkEmerald', 'Gold', 'D3' ]]
 	},
 	EgyptGold: {
-		nameShort: 'EgyptGold',
+		rarity: TowerRarity.Rare,
+		towerTypeId: 'EgyptGold',
 		nameLong: 'Egypt Gold',
 		assetName: 'EGYPT_GOLD',
 		imgUrl: 'sprites/towers/tower_egypt_gold.png',
@@ -744,10 +854,11 @@ const TowersAdvanced: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersBasic.Gold, GemsBasic.P5, GemsBasic.Q2 ]
+		buildCombinations: [[ 'Gold', 'P5', 'Q2' ]]
 	},
 	RedCoral: {
-		nameShort: 'RedCoral',
+		rarity: TowerRarity.Rare,
+		towerTypeId: 'RedCoral',
 		nameLong: 'Red Coral',
 		assetName: 'RED_CORAL',
 		imgUrl: 'sprites/towers/tower_red_coral.png',
@@ -755,10 +866,11 @@ const TowersAdvanced: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersBasic.DeepseaPearl, TowersBasic.ChrysoberylCatsEye, GemsBasic.E4 ]
+		buildCombinations: [[ 'DeepseaPearl', 'ChrysoberylCatsEye', 'E4' ]]
 	},
 	ElaboratelyCarvedTourmaline: {
-		nameShort: '	ElaboratelyCarvedTourmaline',
+		rarity: TowerRarity.Rare,
+		towerTypeId: 'ElaboratelyCarvedTourmaline',
 		nameLong: 'Elaborately Carved Tourmaline',
 		assetName: 'ELABORATELY_CARVED_TOURMALINE',
 		imgUrl: 'sprites/towers/tower_elaborately_carved_tourmaline.png',
@@ -766,12 +878,13 @@ const TowersAdvanced: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersBasic.DarkEmerald, TowersBasic.ParaibaTourmaline, GemsBasic.G2 ]
+		buildCombinations: [[ 'DarkEmerald', 'ParaibaTourmaline', 'G2' ]]
 	},
 };
 const TowersRare: { [ key: string ]: ITowerType } = {
 	HugePinkDiamond: {
-		nameShort: '	HugePinkDiamond',
+		rarity: TowerRarity.Advanced,
+		towerTypeId: 'HugePinkDiamond',
 		nameLong: 'Huge Pink Diamond',
 		assetName: 'HUGE_PINK_DIAMOND',
 		imgUrl: 'sprites/towers/tower_huge_pink_diamond.png',
@@ -779,10 +892,11 @@ const TowersRare: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersBasic.PinkDiamond, TowersBasic.Silver, TowersAdvanced.SilverKnight ]
+		buildCombinations: [[ 'PinkDiamond', 'Silver', 'SilverKnight' ]]
 	},
 	Uranium235: {
-		nameShort: 'Uranium235',
+		rarity: TowerRarity.Advanced,
+		towerTypeId: 'Uranium235',
 		nameLong: 'Uranium-235',
 		assetName: 'URANIUM_235',
 		imgUrl: 'sprites/towers/tower_uranium_235.png',
@@ -790,10 +904,11 @@ const TowersRare: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersAdvanced.Uranium238, TowersAdvanced.VividMalachite, TowersBasic.Malachite ]
+		buildCombinations: [[ 'Uranium238', 'VividMalachite', 'Malachite' ]]
 	},
 	MonkeyKingJade: {
-		nameShort: '	MonkeyKingJade',
+		rarity: TowerRarity.Advanced,
+		towerTypeId: 'MonkeyKingJade',
 		nameLong: 'Monkey King Jade',
 		assetName: 'MONKEY_KING_JADE',
 		imgUrl: 'sprites/towers/tower_monkey_king_jade.png',
@@ -801,13 +916,14 @@ const TowersRare: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersAdvanced.GreyJade, GemsBasic.G4, GemsBasic.P2 ]
+		buildCombinations: [[ 'GreyJade', 'G4', 'P2' ]]
 	},
 };
 
 const TowersEpic: { [ key: string ]: ITowerType } = {
 	AntiqueBloodstone: {
-		nameShort: '	AntiqueBloodstone',
+		rarity: TowerRarity.Legendary,
+		towerTypeId: 'AntiqueBloodstone',
 		nameLong: 'Antique Bloodstone',
 		assetName: 'ANTIQUE_BLOODSTONE',
 		imgUrl: 'sprites/towers/tower_antique_bloodstone.png',
@@ -815,12 +931,13 @@ const TowersEpic: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersBasic.Bloodstone, TowersAdvanced.Volcano, GemsBasic.R2 ]
+		buildCombinations: [[ 'Bloodstone', 'Volcano', 'R2' ]]
 	}
 };
 const TowersTop: { [ key: string ]: ITowerType } = {
 	StarOfAdam: {
-		nameShort: 'StarOfAdam',
+		rarity: TowerRarity.Legendary,
+		towerTypeId: 'StarOfAdam',
 		nameLong: 'The Star of Adam',
 		assetName: 'STAR_OF_ADAM',
 		imgUrl: 'sprites/towers/tower_star_of_adam.png',
@@ -828,10 +945,11 @@ const TowersTop: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersBasic.ElaboratelyCarvedTourmaline, GemsAdvanced.G6, GemsAdvanced.P6 ]
+		buildCombinations: [[ 'ElaboratelyCarvedTourmaline', 'G6', 'P6' ]]
 	},
 	CarmenLucia: {
-		nameShort: 'CarmenLucia',
+		rarity: TowerRarity.Legendary,
+		towerTypeId: 'CarmenLucia',
 		nameLong: 'Carmen-Lucia',
 		assetName: 'CARMEN_LUCIA',
 		imgUrl: 'sprites/towers/tower_carmen_lucia.png',
@@ -839,10 +957,11 @@ const TowersTop: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersAdvanced.RedCoral, GemsAdvanced.E6, GemsAdvanced.Q6 ]
+		buildCombinations: [[ 'RedCoral', 'E6', 'Q6' ]]
 	},
 	KohinoorDiamond: {
-		nameShort: '	KohinoorDiamond',
+		rarity: TowerRarity.Legendary,
+		towerTypeId: 'KohinoorDiamond',
 		nameLong: 'Koh-i-noor Diamond',
 		assetName: 'KOHINOOR_DIAMOND',
 		imgUrl: 'sprites/towers/tower_kohinoor_diamond.png',
@@ -850,10 +969,11 @@ const TowersTop: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersRare.HugePinkDiamond, GemsAdvanced.D6, GemsAdvanced.P6 ]
+		buildCombinations: [[ 'HugePinkDiamond', 'D6', 'P6' ]]
 	},
 	TheCrownPrince: {
-		nameShort: '	TheCrownPrince',
+		rarity: TowerRarity.Legendary,
+		towerTypeId: 'TheCrownPrince',
 		nameLong: 'The Crown Prince',
 		assetName: 'THE_CROWN_PRINCE',
 		imgUrl: 'sprites/towers/tower_the_crown_prince.png',
@@ -861,23 +981,25 @@ const TowersTop: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersEpic.AntiqueBloodstone, GemsAdvanced.R6, GemsAdvanced.G6 ]
+		buildCombinations: [[ 'AntiqueBloodstone', 'R6', 'G6' ]]
 	},
 	DepletedKyparium: {
-		nameShort: '	DepletedKyparium',
-		nameLong: 'Deplemented Kyparium',
-		assetName: 'DEPLEMENTED_KYPARIUM',
+		rarity: TowerRarity.Legendary,
+		towerTypeId: 'DepletedKyparium',
+		nameLong: 'Depleted Kyparium',
+		assetName: 'DEPLETED_KYPARIUM',
 		imgUrl: 'sprites/towers/tower_depleted_kyparium.png',
 		damage: 10,
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ TowersRare.Uranium235, GemsBasic.Y6, GemsBasic.Q6 ]
+		buildCombinations: [[ 'Uranium235', 'Y6', 'Q6' ]]
 	},
 };
 const TowersOnehit: { [ key: string ]: ITowerType } = {
 	Agate: {
-		nameShort: 'Agate',
+		rarity: TowerRarity.Secret,
+		towerTypeId: 'Agate',
 		nameLong: 'Agate',
 		assetName: 'Agate',
 		imgUrl: 'sprites/towers/tower_agate.png',
@@ -885,10 +1007,11 @@ const TowersOnehit: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.G5, GemsBasic.E5, GemsBasic.Q5 ]
+		buildCombinations: [[ 'G5', 'E5', 'Q5' ]]
 	},
 	Obsidian: {
-		nameShort: 'Obsidian',
+		rarity: TowerRarity.Secret,
+		towerTypeId: 'Obsidian',
 		nameLong: 'Obsidian',
 		assetName: 'OBSIDIAN',
 		imgUrl: 'sprites/towers/tower_obsidian.png',
@@ -896,10 +1019,11 @@ const TowersOnehit: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.D5, GemsBasic.B5, GemsBasic.Y5 ]
+		buildCombinations: [[ 'D5', 'B5', 'Y5' ]]
 	},
 	Eudialyte: {
-		nameShort: 'Eudialyte',
+		rarity: TowerRarity.Secret,
+		towerTypeId: 'Eudialyte',
 		nameLong: 'Eudialyte',
 		assetName: 'EUDIALYTE',
 		imgUrl: 'sprites/towers/tower_eudialyte.png',
@@ -907,10 +1031,11 @@ const TowersOnehit: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.G5, GemsBasic.B5, GemsBasic.R5 ]
+		buildCombinations: [[ 'G5', 'B5', 'R5' ]]
 	},
 	Zircon: {
-		nameShort: 'Zircon',
+		rarity: TowerRarity.Secret,
+		towerTypeId: 'Zircon',
 		nameLong: 'Zircon',
 		assetName: 'ZIRCON',
 		imgUrl: 'sprites/towers/tower_zircon.png',
@@ -918,10 +1043,11 @@ const TowersOnehit: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.B5, GemsBasic.G5, GemsBasic.B4, GemsBasic.G4 ]
+		buildCombinations: [[ 'B5', 'G5', 'B4', 'G4' ]]
 	},
 	TheBurningStone: {
-		nameShort: '	TheBurningStone',
+		rarity: TowerRarity.Secret,
+		towerTypeId: 'TheBurningStone',
 		nameLong: 'The Burning Stone',
 		assetName: 'THE_BURNING_STONE',
 		imgUrl: 'sprites/towers/tower_the_burning_stone.png',
@@ -929,10 +1055,11 @@ const TowersOnehit: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: [ GemsBasic.R5, GemsBasic.G5, GemsBasic.B4, GemsBasic.G4 ]
+		buildCombinations: [[ 'R5', 'G5', 'B4', 'G4' ]]
 	},
 	WingsStone: {
-		nameShort: 'WingsStone',
+		rarity: TowerRarity.Secret,
+		towerTypeId: 'WingsStone',
 		nameLong: 'Wings Stone',
 		assetName: 'WINGS_STONE',
 		imgUrl: 'sprites/towers/tower_wings_stone.png',
@@ -940,8 +1067,19 @@ const TowersOnehit: { [ key: string ]: ITowerType } = {
 		range: 4,
 		speed: 1,
 		splitShots: 1,
-		buildCombination: []
+		buildCombinations: [[]]
 	},
+};
+
+const TowersAll = {
+	... GemsBasic,
+	... GemsAdvanced,
+	... TowersBasic,
+	... TowersAdvanced,
+	... TowersRare,
+	... TowersEpic,
+	... TowersTop,
+	... TowersOnehit
 };
 
 export {
@@ -952,5 +1090,6 @@ export {
 	TowersRare,
 	TowersEpic,
 	TowersTop,
-	TowersOnehit
+	TowersOnehit,
+	TowersAll,
 };

@@ -4,6 +4,7 @@ export enum IAbilityType {
 }
 
 export interface IAbility {
+	rarity: number;
 	name: string;
 	description: string;
 	imgUrl: string;

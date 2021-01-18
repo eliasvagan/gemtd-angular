@@ -6,6 +6,7 @@ import { Statics } from '../services/statics.service';
 import * as GAMECONFIG from '../../json/gameconfig.json';
 import { GameSession } from '../entities/game-session';
 import { UiManager } from '../entities/ui-manager';
+import { GameObject } from '../entities/game-object';
 
 @Injectable({providedIn: 'root'})
 export class EngineService implements OnDestroy {
@@ -112,6 +113,9 @@ export class EngineService implements OnDestroy {
 		const hit = this.rayCastFromMouseEvent(evt);
 		if (hit !== null) {
 			hit.object.userData.handleMouseEvent(evt, type);
+		}
+		else if (type === MouseEventType.Click && !(hit instanceof GameObject)) {
+			Statics.CURRENT_SESSION.setActiveObject(null);
 		}
 	}
 

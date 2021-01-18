@@ -3,6 +3,11 @@ import * as THREE from 'three-full';
 
 export interface IRenderState {
 	model: THREE.Model3D;
+	assetTransform?: {
+		scale: { x: number; y: number; z: number };
+		offset: { x: number; y: number; z: number };
+		rotation: { x: number; y: number; z: number }
+	};
 	scene: THREE.Scene;
 	scale: { x: number, y: number, z: number };
 	offset: { x: number, y: number, z: number };

@@ -2234,7 +2234,7 @@ export const Assets: IAssets = {
 		obj: 'sign.obj',
 		transform: {
 			scale: { x: 2.5, y: 2.5, z: 2.5 },
-			offset: { x: -0.5, y: 0, z: -0.5 },
+			offset: { x: 0, y: 0, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
@@ -3368,6 +3368,16 @@ export const Assets: IAssets = {
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
+	TILE_STONE_2: {
+		path: 'tiles/',
+		mtl: 'tile_stone_2.mtl',
+		obj: 'tile_stone_2.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
 	CHECKPOINT: {
 		path: 'originals/',
 		mtl: 'checkpoint.mtl',
@@ -4038,7 +4048,7 @@ export const Assets: IAssets = {
 			rotation: { x: 0, y: 0, z: 0 },
 		}
 	},
-	Jade: {
+	JADE: {
 		path: 'towers/',
 		mtl: 'tower_jade.mtl',
 		obj: 'tower_jade.obj',
@@ -4058,7 +4068,7 @@ export const Assets: IAssets = {
 			rotation: { x: 0, y: 0, z: 0 },
 		}
 	},
-	Gold: {
+	GOLD: {
 		path: 'towers/',
 		mtl: 'tower_gold.mtl',
 		obj: 'tower_gold.obj',
@@ -4298,7 +4308,7 @@ export const Assets: IAssets = {
 			rotation: { x: 0, y: 0, z: 0 },
 		}
 	},
-	DEPLEMENTED_KYPARIUM: {
+	DEPLETED_KYPARIUM: {
 		path: 'towers/',
 		mtl: 'tower_depleted_kyparium.mtl',
 		obj: 'tower_depleted_kyparium.obj',
@@ -4368,4 +4378,34 @@ export const Assets: IAssets = {
 			rotation: { x: 0, y: 0, z: 0 },
 		}
 	},
+	HOVER_EFFECT_HEX: {
+		path: 'effects/',
+		mtl: 'hover_effect_hex.mtl',
+		obj: 'hover_effect_hex.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: -0.4, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	HOVER_EFFECT_ARROW: {
+		path: 'effects/',
+		mtl: 'arrow_down.mtl',
+		obj: 'arrow_down.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 1.3, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	HOVER_EFFECT_CYLINDER: {
+		path: 'effects/',
+		mtl: 'hover_effect_cylinder.mtl',
+		obj: 'hover_effect_cylinder.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0.3, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	}
 };

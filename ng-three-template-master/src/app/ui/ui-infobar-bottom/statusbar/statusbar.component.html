@@ -3,23 +3,31 @@
 	<div class="inspect-portrait">
 		<div class="inspect-img" [style.background-image]="'url(assets/' + activeObject.imgUrl + ')'">
 			<div class="inspect-header" [style.font-size.px]="">
+				<p>{{activeObject.towerTypeId}}</p>
+			</div>
+
+			<div class="inspect-footer">
 				<p>{{activeObject.nameLong}}</p>
 			</div>
 		</div>
 	</div>
 
 	<div>
-		<p>{{activeObject.nameShort}}</p>
+		<table>
+			<thead></thead>
+			<tbody></tbody>
+		</table>
 	</div>
 
 	<div class="abilities-wrapper" *ngIf="activeObject.abilities.length > 0">
-		<div class="ability" *ngFor="let ability of activeObject.abilities">
-			<button
-				(click)="ability.execute()"
-				[style.background-image]="'url(assets/' + ability.imgUrl + ')'"
-			>
-				{{ ability.name }}
-			</button>
+		<div class="ability" *ngFor="let ability of activeObject.abilities"
+				 (click)="ability.execute()"
+				 [style.background-image]="ability.imgUrl | imageSrcPipe"
+				 [style.border-color]="ability.rarity | rarityColor"
+				 [style.box-shadow]="'0 0 ' + (ability.rarity * 0.2) + 'em ' + (ability.rarity | rarityColor)"
+				 [style.color]="ability.rarity | rarityColor"
+		>
+			<p>{{ ability.name }}</p>
 		</div>
 	</div>
 </div>

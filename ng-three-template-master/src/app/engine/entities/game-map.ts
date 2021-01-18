@@ -5,23 +5,40 @@ import { Checkpoint } from './tiles/checkpoint';
 import { TileFree } from './tiles/tile-free';
 import { Gem } from './tiles/gem';
 import { ITowerType } from '../data-models/tower-type-model';
-import { GameObject } from './game-object';
 import { GamePhase } from '../enums/game-phase';
 import { GemTypeLetters } from '../enums/gem-types';
-import { GemsBasic } from '../enums/towers';
+import { GemsBasic, TowersAll } from '../enums/towers';
 import { Statics } from '../services/statics.service';
 import { IGameSessionGemChances } from './game-session';
 import { isInspectable } from '../data-models/inspectable-model';
+import { IEnemyCheckpoint } from '../data-models/enemy-checkpoint';
+import { ITile } from '../data-models/tile-model';
+import { AbilityPlace } from './abilities/ability-place';
+import {Stone} from './tiles/stone';
+import {AbilityUpgrade} from './abilities/ability-upgrade';
+
+const IMapDefaultValues: IMap = {
+	tiles: [],
+	checkpoints: [],
+	width: 11,
+	height: 11,
+	placingGems: [],
+	maxGemsRound: 5,
+};
 
 export class GameMap implements IMap {
-	tiles: Tile[] = [];
-	checkpoints: Tile[];
-	width = 11;
-	height = 11;
+
+	public width: number;
+	public height: number;
+	public tiles: ITile[];
+	public checkpoints: IEnemyCheckpoint[];
+	public placingGems: Gem[];
+	public maxGemsRound: number;
 
 	constructor(
 		public scene: THREE.Scene
 	) {
+		Object.assign(this, IMapDefaultValues);
 		this.initializeMap();
 	}
 
@@ -73,9 +90,9 @@ export class GameMap implements IMap {
 		return true;
 	}
 
-	getTile(x: number, y: number): GameObject | null {
+	getTile(x: number, y: number): Tile {
 		try {
-			return this.tiles[y * this.height + x];
+			return this.tiles[y * this.height + x] as Tile;
 		}
 		catch (err) {
 			return null;
@@ -113,18 +130,54 @@ export class GameMap implements IMap {
 		this.placeGem(position, GemsBasic[gemId]);
 	}
 
-	handleTileClick(tile: Tile): void {
+	updateGemAbilities(newGem: Gem): void {
+		// Update gems that satisfy build
+		for (const towerType of Object.values(TowersAll)) {
+			const validCombos = towerType.buildCombinations.filter(
+				combo => (combo.reduce((valid, next) => (
+						valid || this.placingGems.map(pg => pg.towerTypeId).includes(next)
+					), false))
+			);
+			for (const combo of validCombos) {
+				this.placingGems
+					.filter(pg => combo.includes(pg.towerTypeId))
+					.forEach(ug => {
+						// TODO: upgradeableGem.addUpgrade(towerType)
+						ug.abilities.push(new AbilityUpgrade(towerType, ug, this));
+					}
+				);
+			}
+		}
+	}
+
+	chooseGem(gem: Gem): boolean {
+		let placed = false;
+		if (this.placingGems.length >= this.maxGemsRound) {
+			this.placingGems
+				.filter(pg => pg !== gem)
+				.forEach(pg => {
+					this.addTile(
+						new Stone(pg.position, this.scene)
+					);
+				});
+			placed = this.addTile(gem);
+			this.placingGems = [];
+		}
+		return placed;
+	}
+
+	handleTileClick(tile: Tile): Gem {
+		let hasPlaced = false;
 		switch (Statics.CURRENT_SESSION.phase) {
 			case GamePhase.Building: {
 				const isValidPosition = true; // TODO: Check if tile would block path
 				if (tile instanceof TileFree) {
 					this.placeRandomTile(tile.position);
+					hasPlaced = true;
 				}
-
 				break;
 			}
 			case GamePhase.Defending: {
-
 				break;
 			}
 		}
@@ -133,10 +186,18 @@ export class GameMap implements IMap {
 		if (isInspectable(nt)) {
 			Statics.CURRENT_SESSION.setActiveObject(nt);
 		}
+		return hasPlaced && nt instanceof Gem ? nt : null;
 	}
 
 	placeGem(position: { x: number; y: number }, gemType: ITowerType): void {
-		const gem = new Gem(position, this.scene, gemType);
-		this.addTile(gem);
+		if (this.placingGems.length < this.maxGemsRound) {
+			const gem = new Gem(position, this.scene, gemType);
+			gem.abilities.push(
+				new AbilityPlace(TowersAll[gem.towerTypeId], gem, this)
+			);
+			this.addTile(gem);
+			this.placingGems.push(gem);
+			this.updateGemAbilities(gem);
+		}
 	}
 }

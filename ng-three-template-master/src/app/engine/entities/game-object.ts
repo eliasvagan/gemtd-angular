@@ -80,21 +80,7 @@ export class GameObject implements IRenderable {
 			const { model } = asset;
 			this.renderState.model.geometry = model.geometry;
 			this.renderState.model.material = model.material;
-
-			{	// Model Scale
-				const { x, y, z } = asset.transform.scale;
-				this.renderState.model.scale.set(x, y, z);
-			}
-
-			{ // Model position offset
-				const { x, y, z} = asset.transform.offset;
-				this.renderState.model.position.set(x, y, z);
-			}
-
-			{ // Model rotation
-				const { x, y, z } = asset.transform.rotation;
-				this.renderState.model.rotation.set(x, y, z);
-			}
+			this.renderState.assetTransform = asset.transform;
 
 			// Set shadow properties
 			this.renderState.model.receiveShadow = this.renderParams.receiveShadow;
@@ -133,26 +119,26 @@ export class GameObject implements IRenderable {
 	}
 
 	updateRenderPosition() {
+		const { scale: assetScale, offset: assetOffset, rotation: assetRotation } = this.renderState.assetTransform;
+		const { scale: renderScale, offset: renderOffset, rotation: renderRotation } = this.renderState;
 
-		{ // Translate position of rendered model to game object
-			this.renderState.model.position.set(
-				this.position.x,
-				0,
-				this.position.y
-			);
-		}
+		this.renderState.model.scale.set(
+			assetScale.x * renderScale.x,
+			assetScale.y * renderScale.y,
+			assetScale.z * renderScale.z
+		);
 
-		{ // Offset
-			const { x, y, z } = this.renderState.offset;
-			this.renderState.model.translateX(x);
-			this.renderState.model.translateY(y);
-			this.renderState.model.translateZ(z);
-		}
+		this.renderState.model.position.set(
+			assetOffset.x + renderOffset.x + this.position.x,
+			assetOffset.y + renderOffset.y,
+			assetOffset.z + renderOffset.z + this.position.y
+		);
 
-		{ // Scale
-			const sca = 1.0;
-			this.renderState.model.scale.multiplyScalar(sca);
-		}
+		this.renderState.model.rotation.set(
+			assetRotation.x + renderRotation.x,
+			assetRotation.y + renderRotation.y,
+			assetRotation.z + renderRotation.z
+		);
 	}
 
 

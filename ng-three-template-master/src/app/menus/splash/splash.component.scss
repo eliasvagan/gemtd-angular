@@ -1,0 +1,52 @@
+@import 'variables';
+
+@keyframes float {
+	0% {
+		transform: scale(1.0);
+	}
+	50% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1.0);
+	}
+}
+
+div.splash-wrapper {
+	font-family: 'Fredoka One', cursive;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	box-sizing: border-box;
+	background-color: $dark-jungle-green;
+	color: white;
+}
+
+.small-print {
+	font-family: 'Roboto Mono', monospace;
+	justify-self: baseline;
+}
+
+h1 {
+	font-size: 3.4em;
+	text-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.8);
+}
+
+.play-game {
+	color: #f8aff8;
+	animation: float 1.4s infinite;
+	margin: 1em;
+	font-size: 2em;
+	transition: 0.2s ease;
+	text-shadow: 0 0 0.4em rgb(180, 64, 255);
+
+
+	&:hover {
+		color: yellow;
+		animation: none;
+		transform: scale(1.1);
+		text-shadow: 0 0 0.4em rgba(255,255, 0, 0.6);
+	}
+}

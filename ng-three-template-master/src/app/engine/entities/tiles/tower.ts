@@ -1,6 +1,6 @@
 import { ITowerType } from '../../data-models/tower-type-model';
 import { IEnemy } from '../../data-models/enemy-model';
-import { EuclideanDistance } from '../../helpers/trig-helpers';
+import { euclideanDistance } from '../../helpers/math-helpers';
 import { ITower } from '../../data-models/tower-model';
 import { IHasPosition } from '../../data-models/has-position';
 import { IGameSession } from '../game-session';
@@ -23,8 +23,8 @@ export class Tower implements ITower {
 
 	updateTargets(): void {
 		this.currentTargets = this.session.enemies
-			.filter(enemy => EuclideanDistance(this, enemy) < this.towerType.range)
-			.sort(enemy => EuclideanDistance(this, enemy));
+			.filter(enemy => euclideanDistance(this, enemy) < this.towerType.range)
+			.sort(enemy => euclideanDistance(this, enemy));
 	}
 
 	handleAttack(target: IEnemy): void {

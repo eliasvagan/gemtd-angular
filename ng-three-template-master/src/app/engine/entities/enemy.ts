@@ -1,7 +1,7 @@
 import { IEnemy } from '../data-models/enemy-model';
 import { IMap } from '../data-models/map-model';
 import { IEnemyCheckpoint } from '../data-models/enemy-checkpoint';
-import { EuclideanDistance } from '../helpers/trig-helpers';
+import { euclideanDistance } from '../helpers/math-helpers';
 import { GameObject } from './game-object';
 
 export class Enemy extends GameObject implements IEnemy {
@@ -32,7 +32,7 @@ export class Enemy extends GameObject implements IEnemy {
 		}
 
 		// Check if target is reached
-		if (EuclideanDistance(this.targetTileEntity, this) < 0.1) {
+		if (euclideanDistance(this.targetTileEntity, this) < 0.1) {
 			this.targetTileIndex++;
 			this.targetTileEntity = this.gameMap.checkpoints[this.targetTileIndex];
 		}

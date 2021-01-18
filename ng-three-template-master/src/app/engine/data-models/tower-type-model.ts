@@ -1,5 +1,6 @@
 export interface ITowerType {
-	nameShort: string;
+	rarity: TowerRarity;
+	towerTypeId: string;
 	nameLong: string;
 	damage: number;
 	range: number;
@@ -9,5 +10,15 @@ export interface ITowerType {
 	splitShots: number;
 	assetName: string;
 	imgUrl: string;
-	buildCombination?: ITowerType[];
+	buildCombinations: (string[])[];
+}
+
+// TODO: Implement this
+export enum TowerRarity {
+	Common,
+	Uncommon,
+	Rare,
+	Advanced,
+	Legendary,
+	Secret,
 }

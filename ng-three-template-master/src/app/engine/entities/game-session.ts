@@ -6,12 +6,12 @@ import { IGameSessionBuff } from '../data-models/game-session-buff';
 import { GameSessionBuff } from './game-session-buff';
 import { GameObject } from './game-object';
 import { Tile } from './tiles/tile';
-import { ITowerType } from '../data-models/tower-type-model';
 import { GemTypeNames } from '../enums/gem-types';
 import { IUpdateable } from '../data-models/updatable';
 import { IEnemy } from '../data-models/enemy-model';
 import { Statics } from '../services/statics.service';
-import {Inspectable} from '../data-models/inspectable-model';
+import { Inspectable } from '../data-models/inspectable-model';
+import { HoverEffect } from './effects/hover_effect';
 
 export interface IGameSessionGemChances {
 	types: {
@@ -32,9 +32,9 @@ export interface IGameSession extends IUpdateable {
 	enemies: IEnemy[];
 	buffs: IGameSessionBuff[];
 	activeObject: GameObject & Inspectable;
-
 	handleClickObject(obj: GameObject): void;
 	setActiveObject(obj: GameObject & Inspectable): void;
+	updateHoverEffect(): void;
 }
 
 export const GAME_SESSION_DEFAULT_VALUES: IGameSession | any = {
@@ -75,9 +75,10 @@ export class GameSession implements IGameSession {
 	public spawnRate: number;
 	public buffs: IGameSessionBuff[];
 	public activeObject: GameObject & Inspectable | null;
-	public activeGems: ITowerType[];
 
 	private readonly initialValues: IGameSession;
+
+	private hoverEffect: HoverEffect;
 
 	constructor(scene: THREE.Scene) {
 		this.initialValues = {
@@ -90,11 +91,15 @@ export class GameSession implements IGameSession {
 			scene
 		};
 		Object.assign(this, this.initialValues);
+		this.hoverEffect = new HoverEffect({x: 0, y: 0}, scene);
+		this.hoverEffect.setVisibility(false);
 	}
 
 	update(dt: number): void {
 		this.enemies.forEach(enemy => enemy.update(dt));
 		this.board.update(dt);
+		this.hoverEffect.update(dt);
+
 		this.buffs.forEach(buff => buff.update(dt));
 		this.buffs = this.buffs.filter(b => b.timeRemaining > 0);
 		// this.applyBuffs();
@@ -149,7 +154,8 @@ export class GameSession implements IGameSession {
 
 	handleClickObject(obj: GameObject): void {
 		if (obj instanceof Tile) {
-			const placed = this.board.handleTileClick(obj);
+			const placedGem = this.board.handleTileClick(obj);
+
 		} else {
 			// TODO: Handle clicking of other object types
 			console.log('Clicked a non-tile object: ', obj);
@@ -157,8 +163,22 @@ export class GameSession implements IGameSession {
 		Statics.UI_MANAGER.forceUpdateZones();
 	}
 
-	setActiveObject(obj: GameObject & Inspectable): void {
-		this.activeObject = obj;
-		console.log('active obj:', obj);
+	updateHoverEffect(): void {
+		if (!!this.activeObject) {
+			this.hoverEffect.setVisibility(true);
+			this.hoverEffect.position = this.activeObject.position;
+		} else {
+			this.hoverEffect.position = { x: 0, y: 0 };
+			this.hoverEffect.setVisibility(false);
+		}
+	}
+
+	setActiveObject(obj: GameObject & Inspectable | null): void {
+		if (obj !== this.activeObject) {
+			this.activeObject = obj;
+			this.hoverEffect.setVisibility(true);
+			Statics.UI_MANAGER.forceUpdateZones();
+		}
+		this.updateHoverEffect();
 	}
 }
