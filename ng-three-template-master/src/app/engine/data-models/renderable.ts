@@ -12,6 +12,7 @@ export interface IRenderState {
 	scale: { x: number, y: number, z: number };
 	offset: { x: number, y: number, z: number };
 	rotation: { x: number, y: number, z: number };
+	isInvisible?: boolean;
 }
 
 export interface IRenderParams {
@@ -21,8 +22,8 @@ export interface IRenderParams {
 
 export interface IRenderable extends IHasPosition {
 	assetNames: {
-		normal: string,
-		hovered: string,
+		normal: string | null,
+		hovered: string | null,
 	};
 	renderState: IRenderState;
 	renderParams: IRenderParams;

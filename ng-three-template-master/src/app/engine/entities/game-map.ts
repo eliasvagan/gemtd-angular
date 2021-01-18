@@ -73,11 +73,7 @@ export class GameMap implements IMap {
 
 	addTile(tile: Tile): boolean {
 		const { x, y } = tile.position;
-		if (
-			x < 0 || x >= this.width  ||
-			y < 0 || y >= this.height
-			// this.getTile(x, y).tower !== undefined
-		) {
+		if (!this.canBuildHere(tile.position)) {
 			console.log(`Failed to place tile on (${x}, ${y})`);
 			return false;
 		}
@@ -99,7 +95,7 @@ export class GameMap implements IMap {
 		}
 	}
 
-	placeRandomTile(position: { x: number, y: number }): void {
+	placeRandomTile(position: { x: number, y: number }): Gem {
 		const session = Statics.CURRENT_SESSION;
 		const getRandomGem = (chances: IGameSessionGemChances): [string, number] => {
 			const foundType: string = (() => {
@@ -127,7 +123,7 @@ export class GameMap implements IMap {
 		};
 		const [ gt, gs ] = getRandomGem(session.gemChances);
 		const gemId = GemTypeLetters[gt] + gs;
-		this.placeGem(position, GemsBasic[gemId]);
+		return this.placeGem(position, GemsBasic[gemId]);
 	}
 
 	updateGemAbilities(newGem: Gem): void {
@@ -140,7 +136,7 @@ export class GameMap implements IMap {
 			);
 			for (const combo of validCombos) {
 				this.placingGems
-					.filter(pg => combo.includes(pg.towerTypeId))
+					.filter(pg => combo.includes(pg.towerTypeId) && this.canBuildCombo(towerType))
 					.forEach(ug => {
 						// TODO: upgradeableGem.addUpgrade(towerType)
 						ug.abilities.push(new AbilityUpgrade(towerType, ug, this));
@@ -150,9 +146,40 @@ export class GameMap implements IMap {
 		}
 	}
 
-	chooseGem(gem: Gem): boolean {
-		let placed = false;
-		if (this.placingGems.length >= this.maxGemsRound) {
+	canBuildHere(position: {x: number, y: number}): boolean {
+		// TODO: Add pathfinder check here!
+		const { x, y } = position;
+		return !(
+				 x < 0 || x >= this.width
+			|| y < 0 || y >= this.height
+		);
+	}
+
+	canBuildCombo(gemType: ITowerType): boolean {
+		// TODO: Add correct checking
+		return true;
+	}
+
+	canBuildTowerHere(position: { x: number; y: number }, gemType: ITowerType): boolean {
+		return this.canBuildCombo(gemType) && this.canBuildHere(position);
+	}
+
+	placeGem(position: { x: number; y: number }, gemType: ITowerType): Gem {
+		if (this.canBuildTowerHere(position, gemType)) {
+			const gem = new Gem(position, this.scene, gemType);
+			gem.abilities.push(
+				new AbilityPlace(TowersAll[gem.towerTypeId], gem, this)
+			);
+			this.addTile(gem);
+			this.updateGemAbilities(gem);
+			return gem;
+		}
+		return null;
+	}
+
+	chooseGem(gem: Gem): Gem {
+		let placed: Gem = null;
+		if (this.canBuildTowerHere(gem.position, gem) && this.placingGems.length >= this.maxGemsRound) {
 			this.placingGems
 				.filter(pg => pg !== gem)
 				.forEach(pg => {
@@ -160,20 +187,21 @@ export class GameMap implements IMap {
 						new Stone(pg.position, this.scene)
 					);
 				});
-			placed = this.addTile(gem);
 			this.placingGems = [];
+			placed = this.placeGem(gem.position, gem);
 		}
 		return placed;
 	}
 
-	handleTileClick(tile: Tile): Gem {
-		let hasPlaced = false;
+	handleTileClick(tile: Tile): Gem | null {
+		let response: Gem | null = null;
+
 		switch (Statics.CURRENT_SESSION.phase) {
 			case GamePhase.Building: {
-				const isValidPosition = true; // TODO: Check if tile would block path
-				if (tile instanceof TileFree) {
-					this.placeRandomTile(tile.position);
-					hasPlaced = true;
+				if (tile instanceof TileFree && this.canBuildHere(tile.position) && this.placingGems.length < this.maxGemsRound) {
+					const placed = this.placeRandomTile(tile.position);
+					this.placingGems.push(placed);
+					response = placed;
 				}
 				break;
 			}
@@ -186,18 +214,6 @@ export class GameMap implements IMap {
 		if (isInspectable(nt)) {
 			Statics.CURRENT_SESSION.setActiveObject(nt);
 		}
-		return hasPlaced && nt instanceof Gem ? nt : null;
-	}
-
-	placeGem(position: { x: number; y: number }, gemType: ITowerType): void {
-		if (this.placingGems.length < this.maxGemsRound) {
-			const gem = new Gem(position, this.scene, gemType);
-			gem.abilities.push(
-				new AbilityPlace(TowersAll[gem.towerTypeId], gem, this)
-			);
-			this.addTile(gem);
-			this.placingGems.push(gem);
-			this.updateGemAbilities(gem);
-		}
+		return response;
 	}
 }

@@ -24,7 +24,6 @@ export class GameObject implements IRenderable {
 		this.state = GameObjectState.Changed;
 
 		this.updateRenderModel();
-		this.updateRenderPosition();
 	}
 
 	handleMouseEvent(evt: MouseEvent, type: MouseEventType): void {
@@ -65,36 +64,48 @@ export class GameObject implements IRenderable {
 
 	updateRenderModel() {
 
+		// Handle unset model
+		const fallBackAssetName = 'TILE_STONE_2';
+		const assetName: string|null = (GameObject.HOVERED === this ? this.assetNames.hovered : this.assetNames.normal) ?? fallBackAssetName;
+
 		// Initialize model
 		if (!this.renderState.model) {
 			this.renderState.model = new THREE.Mesh(Geometries.Cube, Materials.WireFrameWhite);
 			this.renderState.scene.add(this.renderState.model);
+		} else {
+			// Load model by name
+			try {
+				const { LOADED_ASSETS } = Statics;
+				const asset = LOADED_ASSETS[assetName];
+				const { model } = asset;
+				this.renderState.model.geometry = model.geometry;
+				this.renderState.model.material = model.material;
+				this.renderState.assetTransform = asset.transform ?? {
+					scale: { x: 1.0, y: 1.0, z: 1.0 },
+					offset: { x: 0, y: 0, z: 0 },
+					rotation: { x: 0, y: 0, z: 0 }
+				};
+
+				// Handle invisibility
+				this.renderState.model.material.visible = !this.renderState.isInvisible ?? true;
+
+
+				// Set shadow properties
+				this.renderState.model.receiveShadow = this.renderParams.receiveShadow;
+				this.renderState.model.castShadow = this.renderParams.castShadow;
+
+				// Fix the rest of properties
+				this.updateRenderPosition();
+
+			} catch (err) {
+				console.error(`Failed to update render model to ${assetName}`, err);
+			}
+
+			// Update mouse event handler
+			Object.assign(this.renderState.model.userData, {
+				handleMouseEvent: (evt, type) => this.handleMouseEvent(evt, type)
+			});
 		}
-
-		// Update model to appropriate asset
-		const { LOADED_ASSETS } = Statics;
-		const assetName = GameObject.HOVERED === this ? this.assetNames.hovered : this.assetNames.normal;
-
-		try {
-			const asset = LOADED_ASSETS[assetName];
-			const { model } = asset;
-			this.renderState.model.geometry = model.geometry;
-			this.renderState.model.material = model.material;
-			this.renderState.assetTransform = asset.transform;
-
-			// Set shadow properties
-			this.renderState.model.receiveShadow = this.renderParams.receiveShadow;
-			this.renderState.model.castShadow = this.renderParams.castShadow;
-
-
-		} catch (err) {
-			console.error(`Failed to update render model to ${assetName}`, err);
-		}
-
-		// Update mouse event handler
-		Object.assign(this.renderState.model.userData, {
-			handleMouseEvent: (evt, type) => this.handleMouseEvent(evt, type)
-		});
 	}
 
 	update(dt) {
@@ -110,12 +121,6 @@ export class GameObject implements IRenderable {
 				break;
 			}
 		}
-
-		// this.position.x += 0.01 * (Math.random() - 0.5) * dt;
-		// this.position.y += 0.01 * (Math.random() - 0.5) * dt;
-
-		// Update rendered model to game object position
-		this.updateRenderPosition();
 	}
 
 	updateRenderPosition() {
@@ -143,6 +148,8 @@ export class GameObject implements IRenderable {
 
 
 	removeFromScene(): void {
-		this.renderState.scene.remove(this.renderState.model);
+		if (this.renderState.model) {
+			this.renderState.scene.remove(this.renderState.model);
+		}
 	}
 }

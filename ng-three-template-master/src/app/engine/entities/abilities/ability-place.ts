@@ -23,7 +23,7 @@ export class AbilityPlace implements IAbility {
 	}
 
 	execute(): void {
-		const placed: boolean = this.map.chooseGem(this.father);
+		const placed: Gem = this.map.chooseGem(this.father);
 		if (placed) {
 			this.father.removeAbility(this);
 		}
