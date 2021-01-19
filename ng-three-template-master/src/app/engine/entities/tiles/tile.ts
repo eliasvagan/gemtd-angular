@@ -30,6 +30,7 @@ export class Tile extends GameObject implements ITile, Inspectable {
 				scale: { x: 1, y: 1, z: 1 },
 				offset: { x: 0, y: 0, z: 0 },
 				rotation: { x: 0, y: 0, z: 0 },
+				opacity: 1
 			},
 			renderParams: {
 				receiveShadow: false,

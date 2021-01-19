@@ -10,7 +10,7 @@ import { GemTypeNames } from '../enums/gem-types';
 import { IUpdateable } from '../data-models/updatable';
 import { IEnemy } from '../data-models/enemy-model';
 import { Statics } from '../services/statics.service';
-import { Inspectable } from '../data-models/inspectable-model';
+import { Inspectable, isInspectable } from '../data-models/inspectable-model';
 import { HoverEffect } from './effects/hover_effect';
 
 export interface IGameSessionGemChances {
@@ -154,8 +154,10 @@ export class GameSession implements IGameSession {
 
 	handleClickObject(obj: GameObject): void {
 		if (obj instanceof Tile) {
-			const placedGem = this.board.handleTileClick(obj);
-
+			const response = this.board.handleTileClick(obj);
+			if (response instanceof GameObject && isInspectable(response)) {
+				this.setActiveObject(response);
+			}
 		} else {
 			// TODO: Handle clicking of other object types
 			console.log('Clicked a non-tile object: ', obj);
@@ -168,17 +170,15 @@ export class GameSession implements IGameSession {
 			this.hoverEffect.setVisibility(true);
 			this.hoverEffect.position = this.activeObject.position;
 		} else {
-			this.hoverEffect.position = { x: 0, y: 0 };
 			this.hoverEffect.setVisibility(false);
+			this.hoverEffect.position = { x: 0, y: 0 };
 		}
 	}
 
 	setActiveObject(obj: GameObject & Inspectable | null): void {
-		if (obj !== this.activeObject) {
-			this.activeObject = obj;
-			this.hoverEffect.setVisibility(true);
-			Statics.UI_MANAGER.forceUpdateZones();
-		}
+		this.activeObject = obj;
+		this.hoverEffect.setVisibility(!!obj);
+		Statics.UI_MANAGER.forceUpdateZones();
 		this.updateHoverEffect();
 	}
 }

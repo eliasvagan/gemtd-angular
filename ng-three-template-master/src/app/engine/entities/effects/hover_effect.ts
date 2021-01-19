@@ -1,4 +1,5 @@
 import { GameObject } from '../game-object';
+import {AnimationSpin} from '../animations/animation';
 
 export interface HoverEffectType {
 	assetName: string;
@@ -30,7 +31,6 @@ export const HoverEffectTypes: { [key: string]: HoverEffectType} = {
 
 export class HoverEffect extends GameObject {
 	hoverEffectType: HoverEffectType;
-	private visible: boolean;
 
 	constructor(
 		position: { x: number, y: number },
@@ -46,9 +46,10 @@ export class HoverEffect extends GameObject {
 			renderState: {
 				model: null,
 				scene,
-				scale: { x: 1, y: 1, z: 1 },
-				offset: { x: 0, y: 0, z: 0 },
-				rotation: { x: 0, y: 0, z: 0 },
+				scale: {x: 1, y: 1, z: 1},
+				offset: {x: 0, y: 0, z: 0},
+				rotation: {x: 0, y: 0, z: 0},
+				opacity: effectType.opacity
 			},
 			renderParams: {
 				receiveShadow: true,
@@ -56,17 +57,6 @@ export class HoverEffect extends GameObject {
 			}
 		});
 		this.hoverEffectType = effectType;
-	}
-
-	setVisibility(visible: boolean): void {
-		this.visible = visible;
-		const { model } = this.renderState;
-		model.material.transparent = true;
-		model.material.opacity = this.visible ? 0.5 : 0.0;
-	}
-
-	update(dt) {
-		this.renderState.rotation.y += 0.005 * dt;
-		super.update(dt);
+		this.animation = new AnimationSpin(0, 1, 0);
 	}
 }

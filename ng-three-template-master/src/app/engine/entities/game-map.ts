@@ -14,8 +14,9 @@ import { isInspectable } from '../data-models/inspectable-model';
 import { IEnemyCheckpoint } from '../data-models/enemy-checkpoint';
 import { ITile } from '../data-models/tile-model';
 import { AbilityPlace } from './abilities/ability-place';
-import {Stone} from './tiles/stone';
-import {AbilityUpgrade} from './abilities/ability-upgrade';
+import { Stone } from './tiles/stone';
+import { AbilityUpgrade } from './abilities/ability-upgrade';
+import { GameObject } from './game-object';
 
 const IMapDefaultValues: IMap = {
 	tiles: [],
@@ -30,7 +31,7 @@ export class GameMap implements IMap {
 
 	public width: number;
 	public height: number;
-	public tiles: ITile[];
+	public tiles: (ITile|Gem)[];
 	public checkpoints: IEnemyCheckpoint[];
 	public placingGems: Gem[];
 	public maxGemsRound: number;
@@ -86,9 +87,9 @@ export class GameMap implements IMap {
 		return true;
 	}
 
-	getTile(x: number, y: number): Tile {
+	getTile(position: {x: number, y: number}): ITile | Gem | null{
 		try {
-			return this.tiles[y * this.height + x] as Tile;
+			return this.tiles[position.y * this.height + position.x];
 		}
 		catch (err) {
 			return null;
@@ -172,25 +173,40 @@ export class GameMap implements IMap {
 			);
 			this.addTile(gem);
 			this.updateGemAbilities(gem);
+			console.log('placed at ', position);
 			return gem;
 		}
 		return null;
 	}
 
-	chooseGem(gem: Gem): Gem {
-		let placed: Gem = null;
-		if (this.canBuildTowerHere(gem.position, gem) && this.placingGems.length >= this.maxGemsRound) {
-			this.placingGems
-				.filter(pg => pg !== gem)
-				.forEach(pg => {
-					this.addTile(
-						new Stone(pg.position, this.scene)
-					);
-				});
-			this.placingGems = [];
-			placed = this.placeGem(gem.position, gem);
+	chooseGem(position: {x: number, y: number}): Gem {
+		const target = this.getTile(position);
+		if (target instanceof Gem) {
+			if (this.canBuildTowerHere(position, target) && this.placingGems.length >= this.maxGemsRound) {
+				this.placingGems
+					.filter(pg => pg.position !== target.position)
+					.forEach(pg => {
+						this.addTile(
+							new Stone(pg.position, this.scene)
+						);
+					});
+				this.placingGems = [];
+				const gem = new Gem(position, this.scene, target);
+				this.addTile(gem);
+				this.updateGemAbilities(gem);
+				const placed = this.getTile(position);
+				console.log(placed);
+				if (placed instanceof Gem) {
+					Statics.CURRENT_SESSION.setActiveObject(placed);
+					GameObject.setHovered(placed);
+					return placed;
+				} else {
+					console.error('Gems were consumed, but nothing was placed!');
+				}
+			}
 		}
-		return placed;
+		console.log('Tried to choose gem, but failed at position', position);
+		return null;
 	}
 
 	handleTileClick(tile: Tile): Gem | null {
@@ -198,7 +214,10 @@ export class GameMap implements IMap {
 
 		switch (Statics.CURRENT_SESSION.phase) {
 			case GamePhase.Building: {
-				if (tile instanceof TileFree && this.canBuildHere(tile.position) && this.placingGems.length < this.maxGemsRound) {
+				if ((tile instanceof TileFree || tile instanceof Stone)
+					&& this.canBuildHere(tile.position)
+					&& this.placingGems.length < this.maxGemsRound
+				) {
 					const placed = this.placeRandomTile(tile.position);
 					this.placingGems.push(placed);
 					response = placed;
@@ -210,7 +229,7 @@ export class GameMap implements IMap {
 			}
 		}
 		// Always select placed/clicked unit.
-		const nt = this.getTile(tile.position.x, tile.position.y);
+		const nt = this.getTile(tile.position);
 		if (isInspectable(nt)) {
 			Statics.CURRENT_SESSION.setActiveObject(nt);
 		}

@@ -5,8 +5,10 @@ import { Geometries } from '../enums/geometries';
 import { GameObjectState } from '../enums/game-object-state';
 import { MouseEventType } from '../enums/mouse-events';
 import { Statics } from '../services/statics.service';
+import { IUpdateable } from '../data-models/updatable';
+import { IAnimation } from './animations/animation';
 
-export class GameObject implements IRenderable {
+export class GameObject implements IRenderable, IUpdateable {
 
 	public static HOVERED?: GameObject;
 	identifier: string;
@@ -15,6 +17,7 @@ export class GameObject implements IRenderable {
 	assetNames: { normal: string; hovered: string; };
 	renderState: IRenderState;
 	renderParams: IRenderParams;
+	animation?: IAnimation;
 
 	constructor(
 		father: IRenderable
@@ -22,21 +25,31 @@ export class GameObject implements IRenderable {
 		Object.assign(this, father);
 		this.identifier = 'GameObject';
 		this.state = GameObjectState.Changed;
-
 		this.updateRenderModel();
+	}
+
+	static setHovered(obj: GameObject|null): void {
+		const prevHovered = GameObject.HOVERED;
+		if (prevHovered !== obj) {
+			if (prevHovered instanceof GameObject) {
+				prevHovered.state = GameObjectState.Changed;
+			}
+			GameObject.HOVERED = obj;
+			if (obj !== null) {
+				obj.state = GameObjectState.Changed;
+			}
+		}
+	}
+
+	setVisibility(visible: boolean): void {
+		this.renderState.isInvisible = !visible;
+		this.state = GameObjectState.Changed;
 	}
 
 	handleMouseEvent(evt: MouseEvent, type: MouseEventType): void {
 		switch (type) {
 			case MouseEventType.Move: {  // TODO: Fix hovering
-				const prevHovered = GameObject.HOVERED;
-				if (prevHovered !== this) {
-					if (prevHovered instanceof GameObject) {
-						prevHovered.state = GameObjectState.Changed;
-					}
-					GameObject.HOVERED = this;
-					this.state = GameObjectState.Changed;
-				}
+				GameObject.setHovered(this);
 				break;
 			}
 			case MouseEventType.Click: {
@@ -65,8 +78,11 @@ export class GameObject implements IRenderable {
 	updateRenderModel() {
 
 		// Handle unset model
-		const fallBackAssetName = 'TILE_STONE_2';
-		const assetName: string|null = (GameObject.HOVERED === this ? this.assetNames.hovered : this.assetNames.normal) ?? fallBackAssetName;
+		const isHovered = GameObject.HOVERED === this;
+		if (isHovered && !this.assetNames.hovered) {
+			return;
+		}
+		const assetName: string|null = (isHovered ? this.assetNames.hovered : this.assetNames.normal) ?? this.assetNames.normal;
 
 		// Initialize model
 		if (!this.renderState.model) {
@@ -87,8 +103,8 @@ export class GameObject implements IRenderable {
 				};
 
 				// Handle invisibility
-				this.renderState.model.material.visible = !this.renderState.isInvisible ?? true;
-
+				this.renderState.model.material.opacity = this.renderState.isInvisible ? 0.0 : this.renderState.opacity;
+				this.renderState.model.material.transparent = this.renderState.model.material.opacity < 1;
 
 				// Set shadow properties
 				this.renderState.model.receiveShadow = this.renderParams.receiveShadow;
@@ -120,6 +136,9 @@ export class GameObject implements IRenderable {
 
 				break;
 			}
+		}
+		if (this.animation) {
+			this.animation.updateObj(this, dt);
 		}
 	}
 
