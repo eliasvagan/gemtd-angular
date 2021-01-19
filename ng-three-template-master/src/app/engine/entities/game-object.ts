@@ -46,6 +46,11 @@ export class GameObject implements IRenderable, IUpdateable {
 		this.state = GameObjectState.Changed;
 	}
 
+	setOpacity(opacity: number): void {
+		this.renderState.opacity = opacity;
+		this.state = GameObjectState.Changed;
+	}
+
 	handleMouseEvent(evt: MouseEvent, type: MouseEventType): void {
 		switch (type) {
 			case MouseEventType.Move: {  // TODO: Fix hovering

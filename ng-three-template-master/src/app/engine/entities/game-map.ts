@@ -13,7 +13,7 @@ import { IGameSessionGemChances } from './game-session';
 import { isInspectable } from '../data-models/inspectable-model';
 import { IEnemyCheckpoint } from '../data-models/enemy-checkpoint';
 import { ITile } from '../data-models/tile-model';
-import { AbilityPlace } from './abilities/ability-place';
+import { AbilityChoose } from './abilities/ability-choose';
 import { Stone } from './tiles/stone';
 import { AbilityUpgrade } from './abilities/ability-upgrade';
 import { GameObject } from './game-object';
@@ -132,18 +132,30 @@ export class GameMap implements IMap {
 		for (const towerType of Object.values(TowersAll)) {
 			const validCombos = towerType.buildCombinations.filter(
 				combo => (combo.reduce((valid, next) => (
-						valid || this.placingGems.map(pg => pg.towerTypeId).includes(next)
-					), false))
+					valid || this.placingGems.map(pg => pg.towerTypeId).includes(next)
+				), false))
 			);
 			for (const combo of validCombos) {
 				this.placingGems
 					.filter(pg => combo.includes(pg.towerTypeId) && this.canBuildCombo(towerType))
 					.forEach(ug => {
-						// TODO: upgradeableGem.addUpgrade(towerType)
-						ug.abilities.push(new AbilityUpgrade(towerType, ug, this));
+							// TODO: Change isActive arg to be calculated
+						ug.abilities.push(new AbilityUpgrade(towerType, ug, this, false));
 					}
 				);
 			}
+		}
+		// Update place abilities to become active on last placed gem
+		console.log(this.placingGems.length >= this.maxGemsRound);
+		if (this.placingGems.length >= this.maxGemsRound) {
+
+			this.placingGems.forEach(placingGem => {
+				placingGem.abilities
+					.filter(ability => ability instanceof AbilityChoose)
+					.forEach(ability => {
+						ability.isActive = true;
+					});
+			});
 		}
 	}
 
@@ -169,7 +181,7 @@ export class GameMap implements IMap {
 		if (this.canBuildTowerHere(position, gemType)) {
 			const gem = new Gem(position, this.scene, gemType);
 			gem.abilities.push(
-				new AbilityPlace(TowersAll[gem.towerTypeId], gem, this)
+				new AbilityChoose(TowersAll[gem.towerTypeId], gem, this, false)
 			);
 			this.addTile(gem);
 			this.updateGemAbilities(gem);
@@ -192,12 +204,11 @@ export class GameMap implements IMap {
 				this.placingGems = [];
 				const gem = new Gem(target.position, this.scene, target.towerType);
 				this.addTile(gem);
-				this.updateGemAbilities(gem);
 				const placed = this.getTile(target.position);
-				console.log(placed);
 				if (placed instanceof Gem) {
 					Statics.CURRENT_SESSION.setActiveObject(placed);
 					GameObject.setHovered(placed);
+					this.updateGemAbilities(placed);
 					return placed;
 				} else {
 					console.error('Gems were consumed, but nothing was placed!');
@@ -219,6 +230,7 @@ export class GameMap implements IMap {
 				) {
 					const placed = this.placeRandomTile(tile.position);
 					this.placingGems.push(placed);
+					this.updateGemAbilities(placed);
 					response = placed;
 				}
 				break;

@@ -23,7 +23,7 @@ export class AnimationGrowIn extends AbstractAnimation {
 		}
 
 		// Update progress
-		this.progress = Math.min(1, this.progress + (dt / this.duration));
+		this.progress = Math.min(1, this.progress + (dt / this.duration) * 0.001);
 
 		// Update scale
 		obj.renderState.scale.x = this.progress;

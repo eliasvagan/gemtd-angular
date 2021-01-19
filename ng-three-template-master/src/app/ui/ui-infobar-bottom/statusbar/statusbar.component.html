@@ -21,13 +21,19 @@
 
 	<div class="abilities-wrapper" *ngIf="activeObject.abilities.length > 0">
 		<div class="ability" *ngFor="let ability of activeObject.abilities"
-				 (click)="ability.execute()"
+				 (click)="ability.isActive ? ability.execute() : null"
 				 [style.background-image]="ability.imgUrl | imageSrcPipe"
 				 [style.border-color]="ability.rarity | rarityColor"
 				 [style.box-shadow]="'0 0 ' + (ability.rarity * 0.2) + 'em ' + (ability.rarity | rarityColor)"
 				 [style.color]="ability.rarity | rarityColor"
+				 [style.opacity]="ability.isActive ? 1.0 : 0.5"
 		>
 			<p>{{ ability.name }}</p>
+			<div class="tool-tip"
+			 [style.border-color]="ability.rarity | rarityColor"
+			>
+				<p>{{ability.description}}</p>
+			</div>
 		</div>
 	</div>
 </div>

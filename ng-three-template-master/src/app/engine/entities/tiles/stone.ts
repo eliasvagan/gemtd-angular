@@ -16,6 +16,6 @@ export class Stone extends Tile implements Inspectable {
 		this.towerTypeId = `Stone`;
 		this.nameLong = this.identifier;
 		this.toolTip = 'This is a stone. You can still build here! When you pick a gem in the building phase, the remaining gems turn into stones.';
-		this.animation = new AnimationGrowIn(1.5);
+		this.animation = new AnimationGrowIn(0.5);
 	}
 }

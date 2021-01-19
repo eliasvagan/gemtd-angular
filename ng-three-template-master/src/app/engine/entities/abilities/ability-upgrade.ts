@@ -13,7 +13,8 @@ export class AbilityUpgrade implements IAbility {
 	constructor(
 		private gemType: ITowerType,
 		private father: Gem,
-		private map: GameMap
+		private map: GameMap,
+		public isActive: boolean
 	) {
 		this.name = gemType.rarity === 0 ? gemType.towerTypeId : gemType.nameLong;
 		this.description = `Fuse gems to ${gemType.nameLong}`;
@@ -23,11 +24,13 @@ export class AbilityUpgrade implements IAbility {
 	}
 
 	execute(): void {
-		const comboTower = new Gem(this.father.position, this.map.scene, this.gemType);
-		const placed = this.map.addTile(comboTower);
-		// Statics.CURRENT_SESSION.updateHoverEffect();
-		if (!placed) {
-			console.error('Could not combine to tower! The tower placement was rejected by GameMap');
+		if (this.isActive) {
+			const comboTower = new Gem(this.father.position, this.map.scene, this.gemType);
+			const placed = this.map.addTile(comboTower);
+			// Statics.CURRENT_SESSION.updateHoverEffect();
+			if (!placed) {
+				console.error('Could not combine to tower! The tower placement was rejected by GameMap');
+			}
 		}
 	}
 }

@@ -56,6 +56,7 @@
 		 align-content: center;
 		 justify-content: center;
 		 margin-right: 6px;
+		 position: relative;
 
 		 border-width: 3px;
 		 border-style: solid;
@@ -81,4 +82,27 @@
 			 text-shadow: 0 0.1em 0.2em black;
 		 }
 	 }
+}
+
+.ability > .tool-tip {
+	visibility: hidden;
+	opacity: 0;
+	display: block;
+	position: absolute;
+	bottom: 8.5em;
+	background-color: rgba(0,0,0,0.9);
+	font: 0.7em 'Roboto Mono', monospace;
+	font-weight: 500;
+	border-radius: 0.2em;
+	color: white;
+	padding: 0.6em;
+	box-sizing: border-box;
+	transition: 0.1s ease;
+	transform: scale(0.0);
+}
+
+.ability:hover > .tool-tip {
+	visibility: visible;
+	opacity: 1;
+	transform: scale(1.0);
 }

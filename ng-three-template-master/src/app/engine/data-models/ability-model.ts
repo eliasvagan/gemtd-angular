@@ -9,5 +9,6 @@ export interface IAbility {
 	description: string;
 	imgUrl: string;
 	type: IAbilityType;
+	isActive: boolean;
 	execute(): void;
 }
