@@ -5,7 +5,7 @@ export interface IAnimation {
 	updateObj(obj: GameObject & IUpdateable, dt: number): void;
 }
 
-abstract class AbstractAnimation implements IAnimation {
+export abstract class AbstractAnimation implements IAnimation {
 	updateObj(obj: GameObject, dt: number): void {
 		obj.updateRenderPosition();
 	}

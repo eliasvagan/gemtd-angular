@@ -1,7 +1,7 @@
 <div class="statusbar-wrapper">
 
 	<div class="inspect-portrait">
-		<div class="inspect-img" [style.background-image]="'url(assets/' + activeObject.imgUrl + ')'">
+		<div class="inspect-img" [style.background-image]="activeObject.imgUrl | imageSrcPipe">
 			<div class="inspect-header" [style.font-size.px]="">
 				<p>{{activeObject.towerTypeId}}</p>
 			</div>

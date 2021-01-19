@@ -179,10 +179,9 @@ export class GameMap implements IMap {
 		return null;
 	}
 
-	chooseGem(position: {x: number, y: number}): Gem {
-		const target = this.getTile(position);
+	chooseGem(target: Gem): Gem {
 		if (target instanceof Gem) {
-			if (this.canBuildTowerHere(position, target) && this.placingGems.length >= this.maxGemsRound) {
+			if (this.canBuildTowerHere(target.position, target.towerType) && this.placingGems.length >= this.maxGemsRound) {
 				this.placingGems
 					.filter(pg => pg.position !== target.position)
 					.forEach(pg => {
@@ -191,10 +190,10 @@ export class GameMap implements IMap {
 						);
 					});
 				this.placingGems = [];
-				const gem = new Gem(position, this.scene, target);
+				const gem = new Gem(target.position, this.scene, target.towerType);
 				this.addTile(gem);
 				this.updateGemAbilities(gem);
-				const placed = this.getTile(position);
+				const placed = this.getTile(target.position);
 				console.log(placed);
 				if (placed instanceof Gem) {
 					Statics.CURRENT_SESSION.setActiveObject(placed);
@@ -205,7 +204,7 @@ export class GameMap implements IMap {
 				}
 			}
 		}
-		console.log('Tried to choose gem, but failed at position', position);
+		console.log('Tried to choose gem, but failed at position', target.position);
 		return null;
 	}
 

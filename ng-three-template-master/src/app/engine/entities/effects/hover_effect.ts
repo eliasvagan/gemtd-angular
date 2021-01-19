@@ -1,5 +1,5 @@
 import { GameObject } from '../game-object';
-import {AnimationSpin} from '../animations/animation';
+import { AnimationSpin } from '../animations/animation';
 
 export interface HoverEffectType {
 	assetName: string;
