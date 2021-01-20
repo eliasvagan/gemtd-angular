@@ -7,6 +7,9 @@ import { IAbility } from '../../data-models/ability-model';
 import { AnimationGrowIn } from '../animations/animations-entry';
 import { Scene } from 'three-full/sources/scenes/Scene';
 import { GameMap } from '../game-map';
+import { Enemy } from '../enemy';
+import { Statics } from '../../services/statics.service';
+import { GamePhase } from '../../enums/game-phase';
 
 export class Tower extends Tile implements ITowerType, Inspectable {
 
@@ -26,6 +29,9 @@ export class Tower extends Tile implements ITowerType, Inspectable {
 	buildCombinations: string[][];
 	rarity: TowerRarity;
 	isPreview: boolean;
+
+	private targetEnemies: Enemy[]; // Updates on every hit
+	private cooldown = 0;
 
 	constructor(
 		position: { x: number, y: number },
@@ -52,7 +58,7 @@ export class Tower extends Tile implements ITowerType, Inspectable {
 	}
 
 	updateTargets(): void {
-		this.gameMap.enemies = this.session.enemies
+		this.targetEnemies = this.gameMap.enemies
 			.filter(enemy => euclideanDistance(this, enemy) < this.towerType.range)
 			.sort(enemy => euclideanDistance(this, enemy));
 	}
@@ -60,15 +66,21 @@ export class Tower extends Tile implements ITowerType, Inspectable {
 	handleAttack(target: IEnemy): void {
 		// TODO: Handle attacking properly
 		target.hp -= this.towerType.damage;
+		this.cooldown = this.speed;
 	}
 
 	update(dt: number) {
-		this.cooldown -= dt;
-		if (this.cooldown <= 0 && this.currentTargets.length > 0) {
-			for (let i = 0; i < this.towerType.splitShots && this.currentTargets.length >= i; i++) {
-				this.handleAttack(this.currentTargets[i]);
+		if (Statics.CURRENT_SESSION.phase === GamePhase.Defending) {
+			this.cooldown -= dt;
+			if (this.cooldown <= 0){
+				if (this.targetEnemies.length > 0) {
+					for (let i = 0; i < this.towerType.splitShots && this.targetEnemies.length >= i; i++) {
+						this.handleAttack(this.targetEnemies[i]);
+					}
+					this.cooldown = 1000 / this.towerType.speed;
+				}
+				this.updateTargets();
 			}
-			this.cooldown = 1000 / this.towerType.speed;
 		}
 	}
 }

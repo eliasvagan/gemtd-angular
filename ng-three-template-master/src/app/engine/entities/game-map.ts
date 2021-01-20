@@ -204,6 +204,7 @@ export class GameMap implements IMap {
 				new AbilityChoose(TowersAll[gem.towerTypeId], gem, this, false)
 			);
 			this.addTile(gem);
+			this.addFloor(gem.position);
 			this.updateGemAbilities(gem);
 			console.log('placed at ', position);
 			return gem;
@@ -217,13 +218,13 @@ export class GameMap implements IMap {
 				this.placingGems
 					.filter(pg => pg.position !== target.position)
 					.forEach(pg => {
-						this.addFloor(pg.position);
 						this.addTile(new TileFree(pg.position, this.scene));
 					});
 
 				this.placingGems = [];
 				const gem = new Gem(target.position, this.scene, target.towerType);
 				this.addTile(gem);
+				gem.handleGetPlaced();
 				this.addFloor(target.position);
 
 				const placed = this.getTile(target.position);

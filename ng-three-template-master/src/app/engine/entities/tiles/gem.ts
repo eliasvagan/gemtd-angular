@@ -43,8 +43,12 @@ export class Gem extends Tile implements ITowerType, Inspectable {
 		this.isPreview = preview;
 		if (preview) {
 			this.setOpacity(0.5);
-		} else {
-			this.animation = new AnimationGrowIn(this.rarity  * 0.5 + 0.4);
 		}
+		this.animation = new AnimationGrowIn(0.2);
+	}
+
+	handleGetPlaced(): void {
+		this.animation = new AnimationGrowIn(this.rarity  * 0.5 + 0.2);
+		this.setOpacity(1);
 	}
 }
