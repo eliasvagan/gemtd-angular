@@ -3378,6 +3378,16 @@ export const Assets: IAssets = {
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
+	TILE_STONE_3: {
+		path: 'tiles/',
+		mtl: 'tile_stone_3.mtl',
+		obj: 'tile_stone_3.obj',
+		transform: {
+			scale: { x: 1.0, y: 1.0, z: 1.0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 }
+		}
+	},
 	CHECKPOINT: {
 		path: 'originals/',
 		mtl: 'checkpoint.mtl',
@@ -3404,7 +3414,7 @@ export const Assets: IAssets = {
 		obj: 'gems_amethyst_1.obj',
 		transform: {
 			scale: { x: 1.0, y: 1.0, z: 1.0 },
-			offset: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0.2, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
@@ -3464,7 +3474,7 @@ export const Assets: IAssets = {
 		obj: 'gems_aquamarine_1.obj',
 		transform: {
 			scale: { x: 1.0, y: 1.0, z: 1.0 },
-			offset: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0.2, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
@@ -3524,7 +3534,7 @@ export const Assets: IAssets = {
 		obj: 'gems_diamond_1.obj',
 		transform: {
 			scale: { x: 1.0, y: 1.0, z: 1.0 },
-			offset: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0.2, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
@@ -3584,7 +3594,7 @@ export const Assets: IAssets = {
 		obj: 'gems_emerald_1.obj',
 		transform: {
 			scale: { x: 1.0, y: 1.0, z: 1.0 },
-			offset: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0.2, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
@@ -3644,7 +3654,7 @@ export const Assets: IAssets = {
 		obj: 'gems_opal_1.obj',
 		transform: {
 			scale: { x: 1.0, y: 1.0, z: 1.0 },
-			offset: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0.2, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
@@ -3704,7 +3714,7 @@ export const Assets: IAssets = {
 		obj: 'gems_ruby_1.obj',
 		transform: {
 			scale: { x: 1.0, y: 1.0, z: 1.0 },
-			offset: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0.2, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
@@ -3764,7 +3774,7 @@ export const Assets: IAssets = {
 		obj: 'gems_sapphire_1.obj',
 		transform: {
 			scale: { x: 1.0, y: 1.0, z: 1.0 },
-			offset: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0.2, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
@@ -3824,7 +3834,7 @@ export const Assets: IAssets = {
 		obj: 'gems_topaz_1.obj',
 		transform: {
 			scale: { x: 1.0, y: 1.0, z: 1.0 },
-			offset: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0.2, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 }
 		}
 	},
@@ -4402,6 +4412,16 @@ export const Assets: IAssets = {
 		path: 'effects/',
 		mtl: 'hover_effect_cylinder.mtl',
 		obj: 'hover_effect_cylinder.obj',
+		transform: {
+			scale: { x: 1, y: 1, z: 1 },
+			offset: { x: 0, y: 0.3, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	HOVER_EFFECT_SQUARE: {
+		path: 'effects/',
+		mtl: 'hover_effect_square.mtl',
+		obj: 'hover_effect_square.obj',
 		transform: {
 			scale: { x: 1, y: 1, z: 1 },
 			offset: { x: 0, y: 0.3, z: 0 },

@@ -17,10 +17,12 @@ import { AbilityChoose } from './abilities/ability-choose';
 import { Stone } from './tiles/stone';
 import { AbilityUpgrade } from './abilities/ability-upgrade';
 import { GameObject } from './game-object';
+import {Enemy} from './enemy';
 
 const IMapDefaultValues: IMap = {
 	tiles: [],
 	checkpoints: [],
+	floors: [],
 	width: 11,
 	height: 11,
 	placingGems: [],
@@ -32,8 +34,10 @@ export class GameMap implements IMap {
 	public width: number;
 	public height: number;
 	public tiles: (ITile|Gem)[];
+	public floors: Stone[];
 	public checkpoints: IEnemyCheckpoint[];
 	public placingGems: Gem[];
+	public enemies: Enemy[];
 	public maxGemsRound: number;
 
 	constructor(
@@ -66,10 +70,28 @@ export class GameMap implements IMap {
 			this.addTile(cp);
 			this.checkpoints.push(cp);
 		});
+
+		// Misc
+		this.placingGems = [];
+		this.enemies = [];
 	}
 
 	update(dt): void {
 		this.tiles.forEach(tile => tile.update(dt));
+		this.floors.forEach(floor => floor.update(dt));
+		this.enemies.forEach(enemy => enemy.update(dt));
+	}
+
+	addFloor(position: {x: number, y: number}): boolean  {
+		const isOccupied = this.floors.reduce(
+			(valid, stone: Stone) => valid || stone.position === position,
+			false
+		);
+		if (!isOccupied) {
+			this.floors.push(new Stone(position, this.scene));
+			console.log('Floors: ', this.floors);
+		}
+		return !isOccupied;
 	}
 
 	addTile(tile: Tile): boolean {
@@ -146,9 +168,7 @@ export class GameMap implements IMap {
 			}
 		}
 		// Update place abilities to become active on last placed gem
-		console.log(this.placingGems.length >= this.maxGemsRound);
 		if (this.placingGems.length >= this.maxGemsRound) {
-
 			this.placingGems.forEach(placingGem => {
 				placingGem.abilities
 					.filter(ability => ability instanceof AbilityChoose)
@@ -197,13 +217,15 @@ export class GameMap implements IMap {
 				this.placingGems
 					.filter(pg => pg.position !== target.position)
 					.forEach(pg => {
-						this.addTile(
-							new Stone(pg.position, this.scene)
-						);
+						this.addFloor(pg.position);
+						this.addTile(new TileFree(pg.position, this.scene));
 					});
+
 				this.placingGems = [];
 				const gem = new Gem(target.position, this.scene, target.towerType);
 				this.addTile(gem);
+				this.addFloor(target.position);
+
 				const placed = this.getTile(target.position);
 				if (placed instanceof Gem) {
 					Statics.CURRENT_SESSION.setActiveObject(placed);

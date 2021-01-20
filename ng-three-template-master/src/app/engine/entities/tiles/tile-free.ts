@@ -8,7 +8,11 @@ export class TileFree extends Tile {
 	) {
 		super(position, scene, {
 			normal: 'TILE_FREE_0',
-			hovered: 'TILE_FREE_1', //
+			hovered: 'TILE_FREE_1',
+		}, {
+			castShadow: false,
+			receiveShadow: false,
 		});
+		this.setOpacity(0.4);
 	}
 }

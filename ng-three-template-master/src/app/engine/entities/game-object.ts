@@ -18,6 +18,7 @@ export class GameObject implements IRenderable, IUpdateable {
 	renderState: IRenderState;
 	renderParams: IRenderParams;
 	animation?: IAnimation;
+	animation2?: IAnimation;
 
 	constructor(
 		father: IRenderable
@@ -142,9 +143,9 @@ export class GameObject implements IRenderable, IUpdateable {
 				break;
 			}
 		}
-		if (this.animation) {
-			this.animation.updateObj(this, dt);
-		}
+		[this.animation, this.animation2].forEach((animation): void => {
+			if (animation) { animation.updateObj(this, dt); }
+		});
 	}
 
 	updateRenderPosition() {

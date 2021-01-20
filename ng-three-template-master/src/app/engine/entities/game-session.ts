@@ -8,7 +8,6 @@ import { GameObject } from './game-object';
 import { Tile } from './tiles/tile';
 import { GemTypeNames } from '../enums/gem-types';
 import { IUpdateable } from '../data-models/updatable';
-import { IEnemy } from '../data-models/enemy-model';
 import { Statics } from '../services/statics.service';
 import { Inspectable, isInspectable } from '../data-models/inspectable-model';
 import { HoverEffect } from './effects/hover_effect';
@@ -29,7 +28,6 @@ export interface IGameSession extends IUpdateable {
 	gemChances: IGameSessionGemChances;
 	phase: GamePhase;
 	board: GameMap;
-	enemies: IEnemy[];
 	buffs: IGameSessionBuff[];
 	activeObject: GameObject & Inspectable;
 	handleClickObject(obj: GameObject): void;
@@ -64,7 +62,6 @@ export const GAME_SESSION_DEFAULT_VALUES: IGameSession | any = {
 };
 
 export class GameSession implements IGameSession {
-	public enemies: Enemy[];
 	public gemChances: IGameSessionGemChances;
 	public hpMax: number;
 	public hpCurrent: number;
@@ -96,7 +93,6 @@ export class GameSession implements IGameSession {
 	}
 
 	update(dt: number): void {
-		this.enemies.forEach(enemy => enemy.update(dt));
 		this.board.update(dt);
 		this.hoverEffect.update(dt);
 
@@ -168,10 +164,12 @@ export class GameSession implements IGameSession {
 	updateHoverEffect(): void {
 		if (!!this.activeObject) {
 			this.hoverEffect.setVisibility(true);
-			this.hoverEffect.position = this.activeObject.position;
+			// this.hoverEffect.position = this.activeObject.position;
+			this.hoverEffect.track(this.activeObject);
 		} else {
 			this.hoverEffect.setVisibility(false);
-			this.hoverEffect.position = { x: 0, y: 0 };
+			// this.hoverEffect.position = { x: 0, y: 0 };
+			this.hoverEffect.untrack();
 		}
 	}
 

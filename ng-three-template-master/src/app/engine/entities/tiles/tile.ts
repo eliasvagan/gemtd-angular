@@ -3,6 +3,7 @@ import { GameObject } from '../game-object';
 import { Scene } from 'three-full/sources/scenes/Scene';
 import { Inspectable } from '../../data-models/inspectable-model';
 import { IAbility } from '../../data-models/ability-model';
+import { IRenderParams } from '../../data-models/renderable';
 
 export class Tile extends GameObject implements ITile, Inspectable {
 	position: { x: number; y: number };
@@ -19,6 +20,10 @@ export class Tile extends GameObject implements ITile, Inspectable {
 		assetNames: {
 			normal: string,
 			hovered: string,
+		},
+		renderParams: IRenderParams = {
+			receiveShadow: false,
+			castShadow: true,
 		}
 	) {
 		super({
@@ -32,10 +37,7 @@ export class Tile extends GameObject implements ITile, Inspectable {
 				rotation: { x: 0, y: 0, z: 0 },
 				opacity: 1
 			},
-			renderParams: {
-				receiveShadow: false,
-				castShadow: true,
-			}
+			renderParams
 		});
 		this.towerTypeId = 'Tile';
 		this.nameLong = 'Tile';

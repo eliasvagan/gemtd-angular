@@ -3,7 +3,6 @@ import { Scene } from 'three-full';
 import { ITowerType, TowerRarity } from '../../data-models/tower-type-model';
 import { Inspectable } from '../../data-models/inspectable-model';
 import { IAbility } from '../../data-models/ability-model';
-import { GameObjectState } from '../../enums/game-object-state';
 import { AnimationGrowIn } from '../animations/animations-entry';
 
 export class Gem extends Tile implements ITowerType, Inspectable {
@@ -44,7 +43,6 @@ export class Gem extends Tile implements ITowerType, Inspectable {
 		this.isPreview = preview;
 		if (preview) {
 			this.setOpacity(0.5);
-			this.state = GameObjectState.Changed;
 		} else {
 			this.animation = new AnimationGrowIn(this.rarity  * 0.5 + 0.4);
 		}

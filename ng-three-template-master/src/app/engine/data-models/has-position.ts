@@ -3,4 +3,8 @@ export interface IHasPosition {
 		x: number;
 		y: number;
 	};
+	velocity?: {
+		x: number;
+		y: number;
+	};
 }

@@ -1,5 +1,6 @@
 import { GameObject } from '../game-object';
-import { AnimationSpin } from '../animations/animation';
+import {AnimationChase, AnimationSpin} from '../animations/animation';
+import {IHasPosition} from '../../data-models/has-position';
 
 export interface HoverEffectType {
 	assetName: string;
@@ -35,7 +36,7 @@ export class HoverEffect extends GameObject {
 	constructor(
 		position: { x: number, y: number },
 		scene,
-		effectType: HoverEffectType = HoverEffectTypes.ARROW
+		effectType: HoverEffectType = HoverEffectTypes.ARROW,
 	) {
 		super({
 			position,
@@ -58,5 +59,12 @@ export class HoverEffect extends GameObject {
 		});
 		this.hoverEffectType = effectType;
 		this.animation = new AnimationSpin(0, 1, 0);
+	}
+
+	track(target: IHasPosition): void {
+		this.animation2 = new AnimationChase(target, 10);
+	}
+	untrack(): void {
+		this.animation2 = null;
 	}
 }

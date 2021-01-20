@@ -9,8 +9,8 @@ export class Stone extends Tile implements Inspectable {
 		scene: Scene,
 	) {
 		super(position, scene, {
-			normal: 'TILE_STONE_2',
-			hovered: 'TILE_STONE_2'
+			normal: 'TILE_STONE_3',
+			hovered: 'TILE_STONE_3'
 		});
 		this.identifier = `Stone`;
 		this.towerTypeId = `Stone`;

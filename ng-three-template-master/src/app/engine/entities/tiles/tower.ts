@@ -1,28 +1,58 @@
-import { ITowerType } from '../../data-models/tower-type-model';
+import { ITowerType, TowerRarity } from '../../data-models/tower-type-model';
 import { IEnemy } from '../../data-models/enemy-model';
 import { euclideanDistance } from '../../helpers/math-helpers';
-import { ITower } from '../../data-models/tower-model';
-import { IHasPosition } from '../../data-models/has-position';
-import { IGameSession } from '../game-session';
+import { Tile } from './tile';
+import { Inspectable } from '../../data-models/inspectable-model';
+import { IAbility } from '../../data-models/ability-model';
+import { AnimationGrowIn } from '../animations/animations-entry';
+import { Scene } from 'three-full/sources/scenes/Scene';
+import { GameMap } from '../game-map';
 
-export class Tower implements ITower {
+export class Tower extends Tile implements ITowerType, Inspectable {
 
-	position: { x: number; y: number };
+	towerTypeId: string;
+	assetName: string;
+	damage: number;
+	nameLong: string;
+	description: string;
+	range: number;
+	speed: number;
+	splitShots: number;
+	slowTime: number;
+	slowWeight: number;
 	towerType: ITowerType;
-	session: IGameSession;
-	currentTargets: IEnemy[];
-	cooldown: number;
+	abilities: IAbility[];
+	imgUrl: string;
+	buildCombinations: string[][];
+	rarity: TowerRarity;
+	isPreview: boolean;
 
-	constructor(position: IHasPosition, towerType: ITowerType, session: IGameSession) {
-		Object.assign(this, position);
+	constructor(
+		position: { x: number, y: number },
+		scene: Scene,
+		towerType: ITowerType,
+		preview = true,
+		private gameMap: GameMap,
+	) {
+		super(position, scene, {
+			normal: towerType.assetName,
+			hovered: towerType.assetName
+		});
+		Object.assign(this, towerType);
+		this.identifier = towerType.assetName + (preview ? '(not picked)' : '');
+		this.toolTip = towerType.nameLong;
+		this.abilities = [];
 		this.towerType = towerType;
-		this.session = session;
-		this.currentTargets = [];
-		this.cooldown = 0;
+		this.isPreview = preview;
+		if (preview) {
+			this.setOpacity(0.5);
+		} else {
+			this.animation = new AnimationGrowIn(this.rarity  * 0.5 + 0.4);
+		}
 	}
 
 	updateTargets(): void {
-		this.currentTargets = this.session.enemies
+		this.gameMap.enemies = this.session.enemies
 			.filter(enemy => euclideanDistance(this, enemy) < this.towerType.range)
 			.sort(enemy => euclideanDistance(this, enemy));
 	}
