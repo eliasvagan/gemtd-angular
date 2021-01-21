@@ -11,6 +11,7 @@ import { IUpdateable } from '../data-models/updatable';
 import { Statics } from '../services/statics.service';
 import { Inspectable, isInspectable } from '../data-models/inspectable-model';
 import { HoverEffect } from './effects/hover_effect';
+import { EnemiesAll } from '../enums/enemies';
 
 export interface IGameSessionGemChances {
 	types: {
@@ -31,8 +32,11 @@ export interface IGameSession extends IUpdateable {
 	buffs: IGameSessionBuff[];
 	activeObject: GameObject & Inspectable;
 	handleClickObject(obj: GameObject): void;
+	handleNextPhase(): void;
 	setActiveObject(obj: GameObject & Inspectable): void;
 	updateHoverEffect(): void;
+
+	takeDamage(enemy: Enemy): void;
 }
 
 export const GAME_SESSION_DEFAULT_VALUES: IGameSession | any = {
@@ -77,7 +81,7 @@ export class GameSession implements IGameSession {
 
 	private hoverEffect: HoverEffect;
 
-	constructor(scene: THREE.Scene) {
+	constructor(public scene: THREE.Scene) {
 		this.initialValues = {
 			...GAME_SESSION_DEFAULT_VALUES,
 			board: new GameMap(scene),
@@ -93,12 +97,24 @@ export class GameSession implements IGameSession {
 	}
 
 	update(dt: number): void {
-		this.board.update(dt);
-		this.hoverEffect.update(dt);
-
 		this.buffs.forEach(buff => buff.update(dt));
 		this.buffs = this.buffs.filter(b => b.timeRemaining > 0);
 		// this.applyBuffs();
+
+		switch (this.phase) {
+			case GamePhase.Picking:
+				break;
+			case GamePhase.Defending:
+				break;
+			case GamePhase.GameOver:
+				// TODO: Add game over screen
+				break;
+			case GamePhase.Building: {
+				break;
+			}
+		}
+		this.board.update(dt);
+		this.hoverEffect.update(dt);
 	}
 
 	applyBuffs() {
@@ -148,6 +164,34 @@ export class GameSession implements IGameSession {
 			});
 	}
 
+	handleNextPhase(): void {
+		console.log('Switching from game-phase:', this.phase);
+		switch (this.phase) {
+			case GamePhase.Picking:
+				this.phase = GamePhase.Defending;
+				break;
+			case GamePhase.Defending:
+				if (this.hpCurrent <= 0) {
+					this.phase = GamePhase.GameOver;
+				} else {
+					this.phase = GamePhase.Building;
+				}
+				break;
+			case GamePhase.GameOver:
+				// TODO: Add game over screen
+				break;
+			case GamePhase.Building: {
+				this.phase = GamePhase.Defending;
+				// Spawn a single enemy just to test
+				const spawnPosition = { x: 3.5, y: -4 };
+				const enemy = new Enemy(EnemiesAll.Walking.TestUnit1, spawnPosition, this.scene, this.board);
+				this.board.enemies.push(enemy);
+				this.setActiveObject(enemy);
+				break;
+			}
+		}
+	}
+
 	handleClickObject(obj: GameObject): void {
 		if (obj instanceof Tile) {
 			const response = this.board.handleTileClick(obj);
@@ -178,5 +222,9 @@ export class GameSession implements IGameSession {
 		this.hoverEffect.setVisibility(!!obj);
 		Statics.UI_MANAGER.forceUpdateZones();
 		this.updateHoverEffect();
+	}
+
+	takeDamage(enemy: Enemy): void {
+		this.hpCurrent -= enemy.stats.damage;
 	}
 }

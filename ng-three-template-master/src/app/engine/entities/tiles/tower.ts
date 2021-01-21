@@ -1,5 +1,5 @@
 import { ITowerType, TowerRarity } from '../../data-models/tower-type-model';
-import { IEnemy } from '../../data-models/enemy-model';
+import { IEnemyType } from '../../data-models/enemy-model';
 import { euclideanDistance } from '../../helpers/math-helpers';
 import { Tile } from './tile';
 import { Inspectable } from '../../data-models/inspectable-model';
@@ -63,7 +63,7 @@ export class Tower extends Tile implements ITowerType, Inspectable {
 			.sort(enemy => euclideanDistance(this, enemy));
 	}
 
-	handleAttack(target: IEnemy): void {
+	handleAttack(target: IEnemyType): void {
 		// TODO: Handle attacking properly
 		target.hp -= this.towerType.damage;
 		this.cooldown = this.speed;

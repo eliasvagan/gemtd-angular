@@ -1,14 +1,18 @@
-import { IHasPosition } from './has-position';
+import { TowerRarity } from './tower-type-model';
 
-export interface IEnemy extends IHasPosition {
-  hp: number;
-  flying: boolean;
-  isDead: boolean;
-  stats: {
-    damage: number,
-    moveSpeed: number,
-    armor?: number
-    invisible?: boolean
-  };
-
+export interface IEnemyType {
+	flying: boolean;
+	enemyTypeId: string;
+	nameLong: string;
+	assetName: string;
+	imgUrl: string;
+	stats: {
+		hp: number;
+		rarity: TowerRarity;
+		damage: number;
+		moveSpeed: number;
+		armor: number;
+		invisible: boolean;
+		evasion: number;
+	};
 }

@@ -17,7 +17,7 @@ import { AbilityChoose } from './abilities/ability-choose';
 import { Stone } from './tiles/stone';
 import { AbilityUpgrade } from './abilities/ability-upgrade';
 import { GameObject } from './game-object';
-import {Enemy} from './enemy';
+import { Enemy } from './enemy';
 
 const IMapDefaultValues: IMap = {
 	tiles: [],
@@ -194,7 +194,12 @@ export class GameMap implements IMap {
 	}
 
 	canBuildTowerHere(position: { x: number; y: number }, gemType: ITowerType): boolean {
-		return this.canBuildCombo(gemType) && this.canBuildHere(position);
+		const foundTile = this.getTile(position);
+		return (
+				 this.canBuildCombo(gemType)
+			&& this.canBuildHere(position)
+			&& !(foundTile instanceof Gem && foundTile.towerType !== gemType)
+		);
 	}
 
 	placeGem(position: { x: number; y: number }, gemType: ITowerType): Gem {
@@ -232,6 +237,7 @@ export class GameMap implements IMap {
 					Statics.CURRENT_SESSION.setActiveObject(placed);
 					GameObject.setHovered(placed);
 					this.updateGemAbilities(placed);
+					Statics.CURRENT_SESSION.handleNextPhase();
 					return placed;
 				} else {
 					console.error('Gems were consumed, but nothing was placed!');
