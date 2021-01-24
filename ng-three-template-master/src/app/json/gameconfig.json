@@ -6,7 +6,8 @@
 		"cameraSize": 8
 	},
 	"debug": {
-		"skipAssetLoading": false
+		"skipAssetLoading": false,
+		"unlimitedGemPlaces": true
 	}
 }
 

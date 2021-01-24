@@ -2,13 +2,13 @@ import { IMap } from '../data-models/map-model';
 import { IEnemyCheckpoint } from '../data-models/enemy-checkpoint';
 import { euclideanDistance } from '../helpers/math-helpers';
 import { GameObject } from './game-object';
-import { TowerRarity } from '../data-models/tower-type-model';
+import { ITowerType, TowerRarity } from '../data-models/tower-type-model';
 import { IEnemyType } from '../data-models/enemy-model';
 import { Scene } from 'three-full/sources/scenes/Scene';
 import { Statics } from '../services/statics.service';
 import { Inspectable } from '../data-models/inspectable-model';
-import {IAbility} from '../data-models/ability-model';
-import {GameObjectState} from '../enums/game-object-state';
+import { IAbility } from '../data-models/ability-model';
+import { GameObjectState } from '../enums/game-object-state';
 
 export class Enemy extends GameObject implements IEnemyType, Inspectable {
 
@@ -68,10 +68,22 @@ export class Enemy extends GameObject implements IEnemyType, Inspectable {
 		this.toolTip = this.nameLong;
 	}
 
+	takeDamage(source: ITowerType): number {
+		const damage = source.damage;
+		// TODO: Add armor calculation, etc.
+		this.hpCurrent -= damage;
+		return damage;
+	}
+
+	kill(): void {
+		this.isDead = true;
+		this.removeFromScene();
+	}
+
 	update(dt: number): void {
 
 		if (this.hpCurrent <= 0) {
-			this.isDead = true;
+			this.kill();
 			return;
 		}
 

@@ -1,6 +1,7 @@
 import { IAbility } from './ability-model';
+import { IHasPosition } from './has-position';
 
-export interface Inspectable {
+export interface Inspectable extends IHasPosition {
 	towerTypeId: string;
 	nameLong: string;
 	toolTip: string;

@@ -25,7 +25,7 @@ export class AbilityChoose implements IAbility {
 
 	execute(): void {
 		if (this.isActive) {
-			const placed: Gem = this.map.chooseGem(this.father);
+			const placed: Gem = this.map.chooseGem(this.father).getGem();
 			if (placed) {
 				this.father.removeAbility(this);
 			}

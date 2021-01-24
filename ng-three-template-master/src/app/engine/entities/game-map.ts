@@ -18,11 +18,12 @@ import { Stone } from './tiles/stone';
 import { AbilityUpgrade } from './abilities/ability-upgrade';
 import { GameObject } from './game-object';
 import { Enemy } from './enemy';
+import { IPath, PathFinder } from '../helpers/path-finder';
+import * as GAMECONFIG from '../../json/gameconfig.json';
 
 const IMapDefaultValues: IMap = {
 	tiles: [],
 	checkpoints: [],
-	floors: [],
 	width: 11,
 	height: 11,
 	placingGems: [],
@@ -33,8 +34,7 @@ export class GameMap implements IMap {
 
 	public width: number;
 	public height: number;
-	public tiles: (ITile|Gem)[];
-	public floors: Stone[];
+	public tiles: ITile[];
 	public checkpoints: IEnemyCheckpoint[];
 	public placingGems: Gem[];
 	public enemies: Enemy[];
@@ -78,27 +78,19 @@ export class GameMap implements IMap {
 
 	update(dt): void {
 		this.tiles.forEach(tile => tile.update(dt));
-		this.floors.forEach(floor => floor.update(dt));
 		this.enemies.forEach(enemy => enemy.update(dt));
+		this.enemies = this.enemies.filter(enemy => !enemy.isDead);
 	}
 
-	addFloor(position: {x: number, y: number}): boolean  {
-		const isOccupied = this.floors.reduce(
-			(valid, stone: Stone) => valid || stone.position === position,
-			false
-		);
-		if (!isOccupied) {
-			this.floors.push(new Stone(position, this.scene));
-			console.log('Floors: ', this.floors);
-		}
-		return !isOccupied;
+	addFloor(position: {x: number, y: number}): Stone  {
+		return this.addTile(new Stone(position, this.scene, null)) as Stone;
 	}
 
-	addTile(tile: Tile): boolean {
+	addTile(tile: Tile): Tile {
 		const { x, y } = tile.position;
 		if (!this.canBuildHere(tile.position)) {
 			console.log(`Failed to place tile on (${x}, ${y})`);
-			return false;
+			return null;
 		}
 		const index = x + y * this.width;
 
@@ -106,10 +98,10 @@ export class GameMap implements IMap {
 		oldTile.removeFromScene();
 		this.tiles[index] = tile;
 
-		return true;
+		return tile;
 	}
 
-	getTile(position: {x: number, y: number}): ITile | Gem | null{
+	getTile(position: {x: number, y: number}): ITile | null{
 		try {
 			return this.tiles[position.y * this.height + position.x];
 		}
@@ -118,9 +110,13 @@ export class GameMap implements IMap {
 		}
 	}
 
-	placeRandomTile(position: { x: number, y: number }): Gem {
-		const session = Statics.CURRENT_SESSION;
-		const getRandomGem = (chances: IGameSessionGemChances): [string, number] => {
+	getTileCost(position): number {
+		const target: ITile = this.getTile(position);
+		return target.pathWeight;
+	}
+
+	getRandomGemType(chances: IGameSessionGemChances): ITowerType {
+		const searchGemType = (): [string, number] => {
 			const foundType: string = (() => {
 				let sum = 0;
 				const rn = Math.random();
@@ -144,9 +140,9 @@ export class GameMap implements IMap {
 			})();
 			return [foundType, foundSize];
 		};
-		const [ gt, gs ] = getRandomGem(session.gemChances);
+		const [ gt, gs ] = searchGemType();
 		const gemId = GemTypeLetters[gt] + gs;
-		return this.placeGem(position, GemsBasic[gemId]);
+		return GemsBasic[gemId];
 	}
 
 	updateGemAbilities(newGem: Gem): void {
@@ -180,12 +176,18 @@ export class GameMap implements IMap {
 	}
 
 	canBuildHere(position: {x: number, y: number}): boolean {
-		// TODO: Add pathfinder check here!
+		// Pathfinding to check if position would break path
 		const { x, y } = position;
+		const pf = new PathFinder(this);
+		pf.setBlock(x, y);
+		const path: IPath = pf.getPathConnected(this.checkpoints.map(cp => cp.position));
+		console.log((path.steps ? 'Can' : 'Cannot') + ' build at ', position, path.steps);
+
 		return !(
 				 x < 0 || x >= this.width
 			|| y < 0 || y >= this.height
-		);
+			|| !path.steps
+		) && (this.placingGems.length < this.maxGemsRound || GAMECONFIG.debug.unlimitedGemPlaces);
 	}
 
 	canBuildCombo(gemType: ITowerType): boolean {
@@ -198,69 +200,78 @@ export class GameMap implements IMap {
 		return (
 				 this.canBuildCombo(gemType)
 			&& this.canBuildHere(position)
-			&& !(foundTile instanceof Gem && foundTile.towerType !== gemType)
+		 	&& (foundTile instanceof TileFree || (foundTile instanceof Stone && foundTile.isAvailable()))
+			&& !(foundTile instanceof Stone && foundTile.getGem().towerType !== gemType)
 		);
+
 	}
 
-	placeGem(position: { x: number; y: number }, gemType: ITowerType): Gem {
+	placeGem(position: { x: number; y: number }, gemType: ITowerType): Stone {
 		if (this.canBuildTowerHere(position, gemType)) {
-			const gem = new Gem(position, this.scene, gemType);
+			const gem = new Gem(position, this.scene, gemType, true, this);
 			gem.abilities.push(
 				new AbilityChoose(TowersAll[gem.towerTypeId], gem, this, false)
 			);
-			this.addTile(gem);
-			this.addFloor(gem.position);
-			this.updateGemAbilities(gem);
-			console.log('placed at ', position);
-			return gem;
+			const stone: Stone = this.addStone(gem.position);
+			this.updateGemAbilities(stone.getGem());
+			// console.log('placed at ', position, gem);
+			return stone;
 		}
 		return null;
 	}
 
-	chooseGem(target: Gem): Gem {
+	chooseGem(target: Gem): Stone {
 		if (target instanceof Gem) {
-			if (this.canBuildTowerHere(target.position, target.towerType) && this.placingGems.length >= this.maxGemsRound) {
+			if (this.canBuildTowerHere(target.position, target.towerType)) {
+				// Remove placeholder gems
 				this.placingGems
 					.filter(pg => pg.position !== target.position)
 					.forEach(pg => {
-						this.addTile(new TileFree(pg.position, this.scene));
+						pg.removeFromScene();
 					});
 
 				this.placingGems = [];
-				const gem = new Gem(target.position, this.scene, target.towerType);
-				this.addTile(gem);
+				const gem = new Gem(target.position, this.scene, target.towerType, false, this);
 				gem.handleGetPlaced();
-				this.addFloor(target.position);
 
-				const placed = this.getTile(target.position);
-				if (placed instanceof Gem) {
-					Statics.CURRENT_SESSION.setActiveObject(placed);
-					GameObject.setHovered(placed);
-					this.updateGemAbilities(placed);
+				const placedStone: ITile&Stone = this.addStone(target.position);
+				const placedGem: Gem = placedStone.setGem(gem).getGem();
+
+				if (placedStone instanceof Stone && placedGem) {
+					Statics.CURRENT_SESSION.setActiveObject(placedGem);
+					this.updateGemAbilities(placedGem);
+
+					GameObject.setHovered(placedStone);
 					Statics.CURRENT_SESSION.handleNextPhase();
-					return placed;
+					Statics.CURRENT_SESSION.updateWalkingPath();
+					return placedStone;
 				} else {
 					console.error('Gems were consumed, but nothing was placed!');
 				}
 			}
 		}
-		console.log('Tried to choose gem, but failed at position', target.position);
+		console.error('Tried to choose gem, but failed at position', target.position);
 		return null;
 	}
 
-	handleTileClick(tile: Tile): Gem | null {
-		let response: Gem | null = null;
+	handleTileClick(tile: Tile): ITile | null {
+		let response: ITile = null;
+		const { phase, gemChances } = Statics.CURRENT_SESSION;
 
-		switch (Statics.CURRENT_SESSION.phase) {
+		switch (phase) {
 			case GamePhase.Building: {
-				if ((tile instanceof TileFree || tile instanceof Stone)
-					&& this.canBuildHere(tile.position)
-					&& this.placingGems.length < this.maxGemsRound
-				) {
-					const placed = this.placeRandomTile(tile.position);
-					this.placingGems.push(placed);
-					this.updateGemAbilities(placed);
-					response = placed;
+				if (this.canBuildHere(tile.position)) {
+					const stone: Stone = this.addStone(tile.position);
+					const gemType: ITowerType = this.getRandomGemType(gemChances);
+					const gem = new Gem(tile.position, this.scene, gemType, false, this);
+					if (stone && gem) {
+						console.log('placed', stone);
+						this.placingGems.push(
+							new Gem(tile.position, this.scene, gemType, true, this)
+						);
+						this.updateGemAbilities(gem);
+						response = stone;
+					}
 				}
 				break;
 			}
@@ -271,8 +282,21 @@ export class GameMap implements IMap {
 		// Always select placed/clicked unit.
 		const nt = this.getTile(tile.position);
 		if (isInspectable(nt)) {
-			Statics.CURRENT_SESSION.setActiveObject(nt);
+			if (nt instanceof Stone && nt.getGem()) {
+				Statics.CURRENT_SESSION.setActiveObject(nt.getGem());
+			} else {
+				Statics.CURRENT_SESSION.setActiveObject(nt);
+			}
 		}
 		return response;
+	}
+
+	private addStone(position: { x: number; y: number }): Stone {
+		const foundStone = this.getTile(position);
+		if (foundStone instanceof Stone) {
+			return foundStone;
+		}
+		const newStone = new Stone(position, this.scene, null);
+		return this.addTile(newStone) as Stone;
 	}
 }

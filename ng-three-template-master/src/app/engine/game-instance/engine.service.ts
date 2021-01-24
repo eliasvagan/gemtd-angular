@@ -112,12 +112,15 @@ export class EngineService implements OnDestroy {
 	private handleMouseEvent(evt: MouseEvent, type: MouseEventType): void {
 		const hit = this.rayCastFromMouseEvent(evt);
 		try {
-			if (hit !== null && hit.object?.userData) {
+			if (hit !== null && hit.object.userData.handleMouseEvent) {
 				hit.object.userData.handleMouseEvent(evt, type);
-			} else if (type === MouseEventType.Click) {
-				Statics.CURRENT_SESSION.setActiveObject(null);
-			} else if (type === MouseEventType.Move) {
-				GameObject.setHovered(null);
+			} else {
+				if (type === MouseEventType.Click) {
+					Statics.CURRENT_SESSION.setActiveObject(null);
+				}
+				if (type === MouseEventType.Move) {
+					GameObject.setHovered(null);
+				}
 			}
 		} catch (err) {
 			console.error('Could not handle mouse event on ', hit, err);

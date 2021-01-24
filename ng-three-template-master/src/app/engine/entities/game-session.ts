@@ -12,6 +12,7 @@ import { Statics } from '../services/statics.service';
 import { Inspectable, isInspectable } from '../data-models/inspectable-model';
 import { HoverEffect } from './effects/hover_effect';
 import { EnemiesAll } from '../enums/enemies';
+import { PathFinder, IPath } from '../helpers/path-finder';
 
 export interface IGameSessionGemChances {
 	types: {
@@ -30,13 +31,14 @@ export interface IGameSession extends IUpdateable {
 	phase: GamePhase;
 	board: GameMap;
 	buffs: IGameSessionBuff[];
-	activeObject: GameObject & Inspectable;
+	activeObject: Inspectable;
+	walkingPath: IPath;
 	handleClickObject(obj: GameObject): void;
 	handleNextPhase(): void;
-	setActiveObject(obj: GameObject & Inspectable): void;
+	setActiveObject(Inspectable): void;
 	updateHoverEffect(): void;
-
 	takeDamage(enemy: Enemy): void;
+	updateWalkingPath(): void;
 }
 
 export const GAME_SESSION_DEFAULT_VALUES: IGameSession | any = {
@@ -63,6 +65,7 @@ export const GAME_SESSION_DEFAULT_VALUES: IGameSession | any = {
 	enemies: [],
 	buffs: [],
 	activeObject: null,
+	walkingPath: null
 };
 
 export class GameSession implements IGameSession {
@@ -75,7 +78,9 @@ export class GameSession implements IGameSession {
 	public score: number;
 	public spawnRate: number;
 	public buffs: IGameSessionBuff[];
-	public activeObject: GameObject & Inspectable | null;
+	public walkingPath: IPath;
+	public activeObject: Inspectable;
+	private readonly walkingPathPreview: THREE.Group = new THREE.Group();
 
 	private readonly initialValues: IGameSession;
 
@@ -94,6 +99,8 @@ export class GameSession implements IGameSession {
 		Object.assign(this, this.initialValues);
 		this.hoverEffect = new HoverEffect({x: 0, y: 0}, scene);
 		this.hoverEffect.setVisibility(false);
+		this.updateWalkingPath();
+		this.scene.add(this.walkingPathPreview);
 	}
 
 	update(dt: number): void {
@@ -119,12 +126,12 @@ export class GameSession implements IGameSession {
 
 	applyBuffs() {
 		// Reset gem chances to default before calculating
-		const { gemChances, hpMax, spawnRate } = GAME_SESSION_DEFAULT_VALUES; // TODO: Fix this
-		Object.assign(this, { gemChances, hpMax, spawnRate });
+		const {gemChances, hpMax, spawnRate} = GAME_SESSION_DEFAULT_VALUES; // TODO: Fix this
+		Object.assign(this, {gemChances, hpMax, spawnRate});
 
 		// Apply buffs
 		this.buffs.forEach(buff => {
-			const { valueDifference, affectedStatName } = buff;
+			const {valueDifference, affectedStatName} = buff;
 			try {
 				const path = affectedStatName.split('.');
 				let targetObj: IGameSession | object;
@@ -164,24 +171,33 @@ export class GameSession implements IGameSession {
 			});
 	}
 
-	handleNextPhase(): void {
-		console.log('Switching from game-phase:', this.phase);
-		switch (this.phase) {
+	updateWalkingPath(): void {
+		const pf = new PathFinder(this.board);
+
+		const path = pf.getPathConnected(this.board.checkpoints.map(cp => cp.position));
+
+		// Draw Line along path
+		this.walkingPathPreview.children = [];
+		if (path.steps) {
+			this.walkingPathPreview.children.push(new THREE.Line(
+				new THREE.BufferGeometry().setFromPoints(
+					path.steps.map(({ x, y }) => (new THREE.Vector3(x, 0.3, y))
+					)),
+				new THREE.LineBasicMaterial({ color: 0x2244ff, linewidth: 6, linecap: 'round' })
+			));
+		}
+	}
+
+	setPhase(phase: GamePhase): void {
+		this.phase = phase;
+		switch (phase) {
 			case GamePhase.Picking:
-				this.phase = GamePhase.Defending;
 				break;
 			case GamePhase.Defending:
-				if (this.hpCurrent <= 0) {
-					this.phase = GamePhase.GameOver;
-				} else {
-					this.phase = GamePhase.Building;
-				}
 				break;
 			case GamePhase.GameOver:
-				// TODO: Add game over screen
 				break;
 			case GamePhase.Building: {
-				this.phase = GamePhase.Defending;
 				// Spawn a single enemy just to test
 				const spawnPosition = { x: 3.5, y: -4 };
 				const enemy = new Enemy(EnemiesAll.Walking.TestUnit1, spawnPosition, this.scene, this.board);
@@ -192,16 +208,43 @@ export class GameSession implements IGameSession {
 		}
 	}
 
+	handleNextPhase(): void {
+		console.log('Switching from game-phase:', this.phase);
+		switch (this.phase) {
+			case GamePhase.Picking:
+				this.setPhase(GamePhase.Defending);
+				break;
+			case GamePhase.Defending:
+				if (this.hpCurrent <= 0) {
+					this.setPhase(GamePhase.GameOver);
+				} else {
+					this.setPhase(GamePhase.Building);
+				}
+				break;
+			case GamePhase.GameOver:
+				// TODO: Add game over screen
+				break;
+			case GamePhase.Building: {
+				this.setPhase(GamePhase.Defending);
+				break;
+			}
+		}
+	}
+
 	handleClickObject(obj: GameObject): void {
 		if (obj instanceof Tile) {
 			const response = this.board.handleTileClick(obj);
 			if (response instanceof GameObject && isInspectable(response)) {
 				this.setActiveObject(response);
+				this.updateWalkingPath();
 			}
+		} else if (obj instanceof Enemy) {
+			this.setActiveObject(obj);
 		} else {
 			// TODO: Handle clicking of other object types
-			console.log('Clicked a non-tile object: ', obj);
+			console.log('Clicked a non-tile / non-enemy object: ', obj);
 		}
+
 		Statics.UI_MANAGER.forceUpdateZones();
 	}
 
@@ -217,7 +260,7 @@ export class GameSession implements IGameSession {
 		}
 	}
 
-	setActiveObject(obj: GameObject & Inspectable | null): void {
+	setActiveObject(obj: Inspectable): void {
 		this.activeObject = obj;
 		this.hoverEffect.setVisibility(!!obj);
 		Statics.UI_MANAGER.forceUpdateZones();

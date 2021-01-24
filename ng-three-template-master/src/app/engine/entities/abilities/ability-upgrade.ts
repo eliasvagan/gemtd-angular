@@ -25,8 +25,8 @@ export class AbilityUpgrade implements IAbility {
 
 	execute(): void {
 		if (this.isActive) {
-			const comboTower = new Gem(this.father.position, this.map.scene, this.gemType);
-			const placed = this.map.addTile(comboTower);
+			const comboTower = new Gem(this.father.position, this.map.scene, this.gemType, false, this.map);
+			const placed = false; // this.map.addTile(comboTower);
 			// Statics.CURRENT_SESSION.updateHoverEffect();
 			if (!placed) {
 				console.error('Could not combine to tower! The tower placement was rejected by GameMap');

@@ -3,8 +3,7 @@ import { IHasPosition } from './has-position';
 import { IUpdateable } from './updatable';
 
 export interface ITile extends IHasPosition, IUpdateable {
-	tower?: ITowerType | 'stone';
-
+	pathWeight: number;
 	removeFromScene(): void;
 }
 

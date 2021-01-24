@@ -1,6 +1,6 @@
 import { GameObject } from '../game-object';
-import {AnimationChase, AnimationSpin} from '../animations/animation';
-import {IHasPosition} from '../../data-models/has-position';
+import { AnimationChase, AnimationSpin } from '../animations/animation';
+import { IHasPosition } from '../../data-models/has-position';
 
 export interface HoverEffectType {
 	assetName: string;

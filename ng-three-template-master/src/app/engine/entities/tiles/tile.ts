@@ -12,7 +12,8 @@ export class Tile extends GameObject implements ITile, Inspectable {
 	nameLong: string;
 	toolTip: string;
 	imgUrl: string = null;
-	tower = null;
+
+	pathWeight = 1.0;
 
 	constructor(
 		position: { x: number, y: number },
