@@ -10,6 +10,7 @@ import { GamePhase } from '../../enums/game-phase';
 import { GameMap } from '../game-map';
 import { GameObject } from '../game-object';
 import { IRenderParams } from '../../data-models/renderable';
+import { AbilityChoose } from '../abilities/ability-choose';
 
 export class Gem extends GameObject implements ITowerType, Inspectable {
 
@@ -67,7 +68,10 @@ export class Gem extends GameObject implements ITowerType, Inspectable {
 		this.towerType = gemType;
 		this.isPreview = preview;
 		if (preview) {
-			// this.setOpacity(0.5);
+			this.setOpacity(0.5);
+			this.abilities.push(
+				new AbilityChoose(gemType, this, this.gameMap, false)
+			);
 		}
 		this.animation = new AnimationGrowIn(0.2);
 	}
@@ -107,5 +111,13 @@ export class Gem extends GameObject implements ITowerType, Inspectable {
 
 
 	removeAbility(ability: IAbility): void {
+		try {
+			const index = this.abilities.indexOf(ability);
+			if (index !== -1) {
+				this.abilities.splice(index, 1);
+			}
+		} catch (err) {
+			console.error('Failed to remove ability!', err);
+		}
 	}
 }

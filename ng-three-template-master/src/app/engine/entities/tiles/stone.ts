@@ -22,6 +22,13 @@ export class Stone extends Tile implements Inspectable {
 		this.pathWeight = -1;
 	}
 
+	update(dt) {
+		if (this.gem instanceof Gem) {
+			this.gem.update(dt);
+		}
+		super.update(dt);
+	}
+
 	setGem(gem: Gem): Stone {
 		if (this.gem instanceof Gem && this.gem !== gem) {
 			this.gem.removeFromScene();

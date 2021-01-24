@@ -1,24 +1,24 @@
 import * as THREE from 'three-full';
-import { IMap } from '../data-models/map-model';
-import { Tile } from './tiles/tile';
-import { Checkpoint } from './tiles/checkpoint';
-import { TileFree } from './tiles/tile-free';
-import { Gem } from './tiles/gem';
-import { ITowerType } from '../data-models/tower-type-model';
-import { GamePhase } from '../enums/game-phase';
-import { GemTypeLetters } from '../enums/gem-types';
-import { GemsBasic, TowersAll } from '../enums/towers';
-import { Statics } from '../services/statics.service';
-import { IGameSessionGemChances } from './game-session';
-import { isInspectable } from '../data-models/inspectable-model';
-import { IEnemyCheckpoint } from '../data-models/enemy-checkpoint';
-import { ITile } from '../data-models/tile-model';
-import { AbilityChoose } from './abilities/ability-choose';
-import { Stone } from './tiles/stone';
-import { AbilityUpgrade } from './abilities/ability-upgrade';
-import { GameObject } from './game-object';
-import { Enemy } from './enemy';
-import { IPath, PathFinder } from '../helpers/path-finder';
+import {IMap} from '../data-models/map-model';
+import {Tile} from './tiles/tile';
+import {Checkpoint} from './tiles/checkpoint';
+import {TileFree} from './tiles/tile-free';
+import {Gem} from './tiles/gem';
+import {ITowerType} from '../data-models/tower-type-model';
+import {GamePhase} from '../enums/game-phase';
+import {GemTypeLetters} from '../enums/gem-types';
+import {GemsBasic, TowersAll} from '../enums/towers';
+import {Statics} from '../services/statics.service';
+import {IGameSessionGemChances} from './game-session';
+import {Inspectable, isInspectable} from '../data-models/inspectable-model';
+import {IEnemyCheckpoint} from '../data-models/enemy-checkpoint';
+import {ITile} from '../data-models/tile-model';
+import {AbilityChoose} from './abilities/ability-choose';
+import {Stone} from './tiles/stone';
+import {AbilityUpgrade} from './abilities/ability-upgrade';
+import {GameObject} from './game-object';
+import {Enemy} from './enemy';
+import {IPath, PathFinder} from '../helpers/path-finder';
 import * as GAMECONFIG from '../../json/gameconfig.json';
 
 const IMapDefaultValues: IMap = {
@@ -145,7 +145,7 @@ export class GameMap implements IMap {
 		return GemsBasic[gemId];
 	}
 
-	updateGemAbilities(newGem: Gem): void {
+	updateGemAbilities(): void {
 		// Update gems that satisfy build
 		for (const towerType of Object.values(TowersAll)) {
 			const validCombos = towerType.buildCombinations.filter(
@@ -209,49 +209,54 @@ export class GameMap implements IMap {
 	placeGem(position: { x: number; y: number }, gemType: ITowerType): Stone {
 		if (this.canBuildTowerHere(position, gemType)) {
 			const gem = new Gem(position, this.scene, gemType, true, this);
-			gem.abilities.push(
-				new AbilityChoose(TowersAll[gem.towerTypeId], gem, this, false)
-			);
 			const stone: Stone = this.addStone(gem.position);
-			this.updateGemAbilities(stone.getGem());
+			this.updateGemAbilities();
 			// console.log('placed at ', position, gem);
 			return stone;
 		}
 		return null;
 	}
 
-	chooseGem(target: Gem): Stone {
-		if (target instanceof Gem) {
-			if (this.canBuildTowerHere(target.position, target.towerType)) {
-				// Remove placeholder gems
-				this.placingGems
-					.filter(pg => pg.position !== target.position)
-					.forEach(pg => {
-						pg.removeFromScene();
-					});
+	chooseGem(position: {x: number, y: number}): Stone {
+		const targetStone = this.getTile(position);
+		if (targetStone instanceof Stone) {
+			const targetGem = this.placingGems.find(gem => gem.position === position);
+			if (targetGem instanceof Gem) {
+				if (this.canBuildTowerHere(position, targetGem.towerType)) {
+					// Remove placeholder gems
+					this.placingGems
+						// .filter(pg => pg.position !== position)
+						.forEach(pg => {
+							pg.removeFromScene();
+						});
 
-				this.placingGems = [];
-				const gem = new Gem(target.position, this.scene, target.towerType, false, this);
-				gem.handleGetPlaced();
+					this.placingGems = [];
+					const newGem = new Gem(position, this.scene, targetGem.towerType, false, this);
+					newGem.handleGetPlaced();
 
-				const placedStone: ITile&Stone = this.addStone(target.position);
-				const placedGem: Gem = placedStone.setGem(gem).getGem();
+					const placedStone: ITile & Stone = this.addStone(position);
+					const placedGem: Gem = placedStone.setGem(newGem).getGem();
 
-				if (placedStone instanceof Stone && placedGem) {
-					Statics.CURRENT_SESSION.setActiveObject(placedGem);
-					this.updateGemAbilities(placedGem);
+					if (placedStone instanceof Stone && placedGem) {
+						Statics.CURRENT_SESSION.setActiveObject(this.getInspectable(position));
+						this.updateGemAbilities();
 
-					GameObject.setHovered(placedStone);
-					Statics.CURRENT_SESSION.handleNextPhase();
-					Statics.CURRENT_SESSION.updateWalkingPath();
-					return placedStone;
-				} else {
-					console.error('Gems were consumed, but nothing was placed!');
+						GameObject.setHovered(placedStone);
+						Statics.CURRENT_SESSION.handleNextPhase();
+						Statics.CURRENT_SESSION.updateWalkingPath();
+						return placedStone;
+					} else {
+						console.error('Gems were consumed, but nothing was placed!');
+					}
 				}
+			} else {
+				console.error('Tried to choose gem, but found no valid gem in', this.placingGems);
+				return null;
 			}
+		} else {
+			console.error('Tried to choose gem, but found no stone at position', position, targetStone);
+			return null;
 		}
-		console.error('Tried to choose gem, but failed at position', target.position);
-		return null;
 	}
 
 	handleTileClick(tile: Tile): ITile | null {
@@ -269,7 +274,7 @@ export class GameMap implements IMap {
 						this.placingGems.push(
 							new Gem(tile.position, this.scene, gemType, true, this)
 						);
-						this.updateGemAbilities(gem);
+						this.updateGemAbilities();
 						response = stone;
 					}
 				}
@@ -280,15 +285,25 @@ export class GameMap implements IMap {
 			}
 		}
 		// Always select placed/clicked unit.
-		const nt = this.getTile(tile.position);
-		if (isInspectable(nt)) {
-			if (nt instanceof Stone && nt.getGem()) {
-				Statics.CURRENT_SESSION.setActiveObject(nt.getGem());
-			} else {
-				Statics.CURRENT_SESSION.setActiveObject(nt);
-			}
-		}
+		Statics.CURRENT_SESSION.setActiveObject(this.getInspectable(tile.position));
 		return response;
+	}
+
+	getInspectable(position: { x: number, y: number}): Inspectable {
+		const ft = this.getTile(position);
+		if (ft instanceof Stone) {
+			const placingGem = this.placingGems.find(gem => ft.position === gem.position);
+			if (placingGem) {
+				return placingGem;
+			} else if (ft.getGem()) {
+				return ft.getGem();
+			}
+			return placingGem ? placingGem : ft;
+		}
+		if (isInspectable(ft)) {
+			return ft;
+		}
+		return null;
 	}
 
 	private addStone(position: { x: number; y: number }): Stone {

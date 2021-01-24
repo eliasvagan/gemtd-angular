@@ -234,8 +234,7 @@ export class GameSession implements IGameSession {
 	handleClickObject(obj: GameObject): void {
 		if (obj instanceof Tile) {
 			const response = this.board.handleTileClick(obj);
-			if (response instanceof GameObject && isInspectable(response)) {
-				this.setActiveObject(response);
+			if (response instanceof GameObject) {
 				this.updateWalkingPath();
 			}
 		} else if (obj instanceof Enemy) {
