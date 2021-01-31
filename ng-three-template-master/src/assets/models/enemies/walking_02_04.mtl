@@ -1,0 +1,17 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl custom8(Clone)
+Kd 0.29 0.586 0.494
+
+newmtl shield(Clone)
+Kd 0.18 0.196 0.259
+
+newmtl _defaultMat(Clone)
+Kd 0.917 0.917 0.917
+
+newmtl custom25(Clone)
+Kd 0.255 0 0
+
+newmtl custom24(Clone)
+Kd 0.855 0.229 0.229
+

@@ -1,5 +1,5 @@
 
-import { IAssetsLoaded } from '../enums/assets';
+import { IAssetsLoaded } from '../data/assets';
 import { UiManager } from '../entities/ui-manager';
 import { IGameSession } from '../entities/game-session';
 import { Injectable } from '@angular/core';

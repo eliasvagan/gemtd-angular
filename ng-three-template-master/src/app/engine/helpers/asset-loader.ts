@@ -1,5 +1,5 @@
 import { OBJLoader, MTLLoader, Object3D, Group, Mesh } from 'three-full';
-import { IAssets, IAssetsLoaded } from '../enums/assets';
+import { IAssets, IAssetsLoaded } from '../data/assets';
 import * as GAMECONFIG from '../../json/gameconfig.json';
 import { Geometries } from '../enums/geometries';
 import { Materials } from '../enums/materials';

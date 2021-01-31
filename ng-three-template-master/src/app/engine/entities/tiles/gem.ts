@@ -49,7 +49,7 @@ export class Gem extends GameObject implements ITowerType, Inspectable {
 			position,
 			assetNames: {
 				normal: gemType.assetName,
-					hovered: gemType.assetName
+				hovered: gemType.assetName
 			},
 			renderState: {
 				model: null,

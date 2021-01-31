@@ -6,12 +6,12 @@ import { IGameSessionBuff } from '../data-models/game-session-buff';
 import { GameSessionBuff } from './game-session-buff';
 import { GameObject } from './game-object';
 import { Tile } from './tiles/tile';
-import { GemTypeNames } from '../enums/gem-types';
+import { GemTypeNames } from '../data/gem-types';
 import { IUpdateable } from '../data-models/updatable';
 import { Statics } from '../services/statics.service';
 import { Inspectable, isInspectable } from '../data-models/inspectable-model';
 import { HoverEffect } from './effects/hover_effect';
-import { EnemiesAll } from '../enums/enemies';
+import { EnemiesAll } from '../data/enemies';
 import { PathFinder, IPath } from '../helpers/path-finder';
 
 export interface IGameSessionGemChances {

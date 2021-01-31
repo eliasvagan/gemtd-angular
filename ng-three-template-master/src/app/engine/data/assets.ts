@@ -4457,5 +4457,424 @@ export const Assets: IAssets = {
 			offset: { x: 0, y: 0.3, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 },
 		}
-	}
+	},
+	ENEMY_WALKING_00_00: {
+		path: 'enemies/',
+		mtl: 'walking_00_00.mtl',
+		obj: 'walking_00_00.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_00_01: {
+		path: 'enemies/',
+		mtl: 'walking_00_01.mtl',
+		obj: 'walking_00_01.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+ rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_00_02: {
+		path: 'enemies/',
+		mtl: 'walking_00_02.mtl',
+		obj: 'walking_00_02.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+}
+	},
+	ENEMY_WALKING_00_03: {
+		path: 'enemies/',
+		mtl: 'walking_00_03.mtl',
+		obj: 'walking_00_03.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+ rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_00_04: {
+		path: 'enemies/',
+		mtl: 'walking_00_04.mtl',
+		obj: 'walking_00_04.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_00_05: {
+		path: 'enemies/',
+		mtl: 'walking_00_05.mtl',
+		obj: 'walking_00_05.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+ rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_01_00: {
+		path: 'enemies/',
+		mtl: 'walking_01_00.mtl',
+		obj: 'walking_01_00.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_00_01: {
+		path: 'enemies/',
+		mtl: 'walking_00_01.mtl',
+		obj: 'walking_00_01.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_01_02: {
+		path: 'enemies/',
+		mtl: 'walking_01_02.mtl',
+		obj: 'walking_01_02.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_01_03: {
+		path: 'enemies/',
+		mtl: 'walking_01_03.mtl',
+		obj: 'walking_01_03.obj',
+		transform: {
+			scale: {x: 1, y: 1, z: 1},
+			offset: {x: 0, y: 0, z: 0},
+			rotation: {x: 0, y: 0, z: 0},
+		},
+	},
+	ENEMY_WALKING_01_04: {
+		path: 'enemies/',
+		mtl: 'walking_01_04.mtl',
+		obj: 'walking_01_04.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_01_05: {
+		path: 'enemies/',
+		mtl: 'walking_01_05.mtl',
+		obj: 'walking_01_05.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_02_00: {
+		path: 'enemies/',
+		mtl: 'walking_02_00.mtl',
+		obj: 'walking_02_00.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_02_01: {
+		path: 'enemies/',
+		mtl: 'walking_02_01.mtl',
+		obj: 'walking_02_01.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_02_02: {
+		path: 'enemies/',
+		mtl: 'walking_02_02.mtl',
+		obj: 'walking_02_02.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_02_03: {
+		path: 'enemies/',
+		mtl: 'walking_02_03.mtl',
+		obj: 'walking_02_03.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+ rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_02_04: {
+		path: 'enemies/',
+		mtl: 'walking_02_04.mtl',
+		obj: 'walking_02_04.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+ rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_02_05: {
+		path: 'enemies/',
+		mtl: 'walking_02_05.mtl',
+		obj: 'walking_02_05.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+ offset: { x: 0, y: 0, z: 0 },
+ rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_03_00: {
+		path: 'enemies/',
+		mtl: 'walking_03_00.mtl',
+		obj: 'walking_03_00.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+		offset: { x: 0, y: 0, z: 0 },
+rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_03_01: {
+		path: 'enemies/',
+		mtl: 'walking_03_01.mtl',
+		obj: 'walking_03_01.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+	offset: { x: 0, y: 0, z: 0 },
+	rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_03_02: {
+		path: 'enemies/',
+		mtl: 'walking_03_02.mtl',
+		obj: 'walking_03_02.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_03_03: {
+		path: 'enemies/',
+		mtl: 'walking_03_03.mtl',
+		obj: 'walking_03_03.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_03_04: {
+		path: 'enemies/',
+		mtl: 'walking_03_04.mtl',
+		obj: 'walking_03_04.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_WALKING_03_05: {
+		path: 'enemies/',
+		mtl: 'walking_03_05.mtl',
+		obj: 'walking_03_05.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_00_00: {
+		path: 'enemies/',
+		mtl: 'flying_00_00.mtl',
+		obj: 'flying_00_00.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+offset: { x: 0, y: 0, z: 0 },
+	rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_00_01: {
+		path: 'enemies/',
+		mtl: 'flying_00_01.mtl',
+		obj: 'flying_00_01.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_00_02: {
+		path: 'enemies/',
+		mtl: 'flying_00_02.mtl',
+		obj: 'flying_00_02.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+ offset: { x: 0, y: 0, z: 0 },
+ rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_00_03: {
+		path: 'enemies/',
+		mtl: 'flying_00_03.mtl',
+		obj: 'flying_00_03.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+	rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_00_04: {
+		path: 'enemies/',
+		mtl: 'flying_00_04.mtl',
+		obj: 'flying_00_04.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+ offset: { x: 0, y: 0, z: 0 },
+ rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_00_05: {
+		path: 'enemies/',
+		mtl: 'flying_00_05.mtl',
+		obj: 'flying_00_05.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_01_00: {
+		path: 'enemies/',
+		mtl: 'flying_01_00.mtl',
+		obj: 'flying_01_00.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_00_01: {
+		path: 'enemies/',
+		mtl: 'flying_00_01.mtl',
+		obj: 'flying_00_01.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+		rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_01_02: {
+		path: 'enemies/',
+		mtl: 'flying_01_02.mtl',
+		obj: 'flying_01_02.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_01_03: {
+		path: 'enemies/',
+		mtl: 'flying_01_03.mtl',
+		obj: 'flying_01_03.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_01_04: {
+		path: 'enemies/',
+		mtl: 'flying_01_04.mtl',
+		obj: 'flying_01_04.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+ offset: { x: 0, y: 0, z: 0 },
+rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_01_05: {
+		path: 'enemies/',
+		mtl: 'flying_01_05.mtl',
+		obj: 'flying_01_05.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_02_00: {
+		path: 'enemies/',
+		mtl: 'flying_02_00.mtl',
+		obj: 'flying_02_00.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },			}
+	},
+	ENEMY_FLYING_02_01: {
+		path: 'enemies/',
+		mtl: 'flying_02_01.mtl',
+		obj: 'flying_02_01.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z:		 },
+		}
+	},
+	ENEMY_FLYING_02_02: {
+		path: 'enemies/',
+		mtl: 'flying_02_02.mtl',
+		obj: 'flying_02_02.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_02_03: {
+		path: 'enemies/',
+		mtl: 'flying_02_03.mtl',
+		obj: 'flying_02_03.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+ offset: { x: 0, y: 0, z: 0 },
+ rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
+	ENEMY_FLYING_02_04: {
+		path: 'enemies/',
+		mtl: 'flying_02_04.mtl',
+		obj: 'flying_02_04.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+			}
+	},
+	ENEMY_FLYING_02_05: {
+		path: 'enemies/',
+		mtl: 'flying_02_05.mtl',
+		obj: 'flying_02_05.obj',
+		transform: {
+			scale: { x: 1, y: 1 , z: 1 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
+		}
+	},
 };

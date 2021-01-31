@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AssetLoader } from './helpers/asset-loader';
-import { Assets, IAssetsLoaded } from './enums/assets';
+import { Assets, IAssetsLoaded } from './data/assets';
 import { Statics } from './services/statics.service';
 
 @Component({
