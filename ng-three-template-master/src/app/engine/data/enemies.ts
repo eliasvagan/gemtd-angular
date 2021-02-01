@@ -185,7 +185,7 @@ const EnemiesAll: IEnemiesAll = {
 				flying: false,
 				enemyTypeId:  								'walking_00_01',
 				nameLong: 										'Crawler Mk.1',
-				assetName: 							'ENEMY_WALKING_00_01',
+				assetName: 							'ENEMY_WALKING_01_01',
 				imgUrl: 'sprites/enemies/enemy_walking_00_01.png',
 				stats: {
 					hp: 100,
@@ -577,10 +577,10 @@ const EnemiesAll: IEnemiesAll = {
 			},
 			slow: {
 				flying: false,
-				enemyTypeId:  								'flying_00_01',
+				enemyTypeId:  								'flying_01_01',
 				nameLong: 										'Crawler Mk.1',
-				assetName: 							'ENEMY_FLYING_00_01',
-				imgUrl: 'sprites/enemies/enemy_flying_00_01.png',
+				assetName: 							'ENEMY_FLYING_01_01',
+				imgUrl: 'sprites/enemies/enemy_flying_01_01.png',
 				stats: {
 					hp: 100,
 					rarity: TowerRarity.Uncommon,
@@ -740,7 +740,7 @@ const EnemiesAll: IEnemiesAll = {
 			boss: {
 				flying: false,
 				enemyTypeId:  								'flying_02_05',
-				nameLong: 										'Crawler Mk.1',
+				nameLong: 										'Emperor Mk.3',
 				assetName: 							'ENEMY_FLYING_02_05',
 				imgUrl: 'sprites/enemies/enemy_flying_02_05.png',
 				stats: {

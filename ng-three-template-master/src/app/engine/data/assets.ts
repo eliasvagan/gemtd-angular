@@ -23,7 +23,7 @@ export interface IAssetsLoaded extends IAssets {
 			offset: { x: number, y: number, z: number },
 			rotation: { x: number, y: number, z: number },
 		},
-		model: THREE.Model3D
+		model: THREE.Model3D;
 	};
 }
 
@@ -4528,13 +4528,13 @@ offset: { x: 0, y: 0, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 },
 		}
 	},
-	ENEMY_WALKING_00_01: {
+	ENEMY_WALKING_01_01: {
 		path: 'enemies/',
-		mtl: 'walking_00_01.mtl',
-		obj: 'walking_00_01.obj',
+		mtl: 'walking_01_01.mtl',
+		obj: 'walking_01_01.obj',
 		transform: {
 			scale: { x: 1, y: 1 , z: 1 },
-offset: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0, z: 0 },
 			rotation: { x: 0, y: 0, z: 0 },
 		}
 	},
@@ -4704,8 +4704,8 @@ rotation: { x: 0, y: 0, z: 0 },
 		obj: 'flying_00_00.obj',
 		transform: {
 			scale: { x: 1, y: 1 , z: 1 },
-offset: { x: 0, y: 0, z: 0 },
-	rotation: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
 		}
 	},
 	ENEMY_FLYING_00_01: {
@@ -4724,8 +4724,8 @@ offset: { x: 0, y: 0, z: 0 },
 		obj: 'flying_00_02.obj',
 		transform: {
 			scale: { x: 1, y: 1 , z: 1 },
- offset: { x: 0, y: 0, z: 0 },
- rotation: { x: 0, y: 0, z: 0 },
+ 			offset: { x: 0, y: 0, z: 0 },
+ 			rotation: { x: 0, y: 0, z: 0 },
 		}
 	},
 	ENEMY_FLYING_00_03: {
@@ -4744,8 +4744,8 @@ offset: { x: 0, y: 0, z: 0 },
 		obj: 'flying_00_04.obj',
 		transform: {
 			scale: { x: 1, y: 1 , z: 1 },
- offset: { x: 0, y: 0, z: 0 },
- rotation: { x: 0, y: 0, z: 0 },
+			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
 		}
 	},
 	ENEMY_FLYING_00_05: {
@@ -4765,17 +4765,17 @@ rotation: { x: 0, y: 0, z: 0 },
 		transform: {
 			scale: { x: 1, y: 1 , z: 1 },
 			offset: { x: 0, y: 0, z: 0 },
-rotation: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
 		}
 	},
-	ENEMY_FLYING_00_01: {
+	ENEMY_FLYING_01_01: {
 		path: 'enemies/',
-		mtl: 'flying_00_01.mtl',
-		obj: 'flying_00_01.obj',
+		mtl: 'flying_01_01.mtl',
+		obj: 'flying_01_01.obj',
 		transform: {
 			scale: { x: 1, y: 1 , z: 1 },
 			offset: { x: 0, y: 0, z: 0 },
-		rotation: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
 		}
 	},
 	ENEMY_FLYING_01_02: {
@@ -4804,8 +4804,8 @@ rotation: { x: 0, y: 0, z: 0 },
 		obj: 'flying_01_04.obj',
 		transform: {
 			scale: { x: 1, y: 1 , z: 1 },
- offset: { x: 0, y: 0, z: 0 },
-rotation: { x: 0, y: 0, z: 0 },
+ 			offset: { x: 0, y: 0, z: 0 },
+			rotation: { x: 0, y: 0, z: 0 },
 		}
 	},
 	ENEMY_FLYING_01_05: {
@@ -4825,7 +4825,8 @@ rotation: { x: 0, y: 0, z: 0 },
 		transform: {
 			scale: { x: 1, y: 1 , z: 1 },
 			offset: { x: 0, y: 0, z: 0 },
-			rotation: { x: 0, y: 0, z: 0 },			}
+			rotation: { x: 0, y: 0, z: 0 },
+		}
 	},
 	ENEMY_FLYING_02_01: {
 		path: 'enemies/',
@@ -4834,7 +4835,7 @@ rotation: { x: 0, y: 0, z: 0 },
 		transform: {
 			scale: { x: 1, y: 1 , z: 1 },
 			offset: { x: 0, y: 0, z: 0 },
-			rotation: { x: 0, y: 0, z:		 },
+			rotation: { x: 0, y: 0, z: 0 },
 		}
 	},
 	ENEMY_FLYING_02_02: {
