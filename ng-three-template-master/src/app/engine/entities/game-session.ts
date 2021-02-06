@@ -5,14 +5,14 @@ import { Enemy } from './enemy';
 import { IGameSessionBuff } from '../data-models/game-session-buff';
 import { GameSessionBuff } from './game-session-buff';
 import { GameObject } from './game-object';
-import { Tile } from './tiles/tile';
 import { GemTypeNames } from '../data/gem-types';
 import { IUpdateable } from '../data-models/updatable';
 import { Statics } from '../services/statics.service';
-import { Inspectable, isInspectable } from '../data-models/inspectable-model';
+import { Inspectable } from '../data-models/inspectable-model';
 import { HoverEffect } from './effects/hover_effect';
 import { EnemiesAll } from '../data/enemies';
 import { PathFinder, IPath } from '../helpers/path-finder';
+import { TileFree } from './tiles/tile-free';
 
 export interface IGameSessionGemChances {
 	types: {
@@ -174,7 +174,11 @@ export class GameSession implements IGameSession {
 	updateWalkingPath(): void {
 		const pf = new PathFinder(this.board);
 
-		const path = pf.getPathConnected(this.board.checkpoints.map(cp => cp.position));
+		const path = pf.getPathConnected(
+			this.board.tiles
+				.filter(tile => !!tile.checkpoint)
+				.map(tile => tile.checkpoint.position)
+		);
 
 		// Draw Line along path
 		this.walkingPathPreview.children = [];
@@ -200,7 +204,7 @@ export class GameSession implements IGameSession {
 			case GamePhase.Building: {
 				// Spawn a single enemy just to test
 				const spawnPosition = { x: 3.5, y: -4 };
-				const enemy = new Enemy(EnemiesAll.Walking.TestUnit1, spawnPosition, this.scene, this.board);
+				const enemy = new Enemy(EnemiesAll.Walking.tier0.basic, spawnPosition, this.scene, this.board);
 				this.board.enemies.push(enemy);
 				this.setActiveObject(enemy);
 				break;
@@ -232,16 +236,20 @@ export class GameSession implements IGameSession {
 	}
 
 	handleClickObject(obj: GameObject): void {
-		if (obj instanceof Tile) {
-			const response = this.board.handleTileClick(obj);
-			if (response instanceof GameObject) {
-				this.updateWalkingPath();
-			}
-		} else if (obj instanceof Enemy) {
-			this.setActiveObject(obj);
+		if (obj instanceof TileFree) {
+			this.board.handleTileClick(
+				this.board.getTile(obj.position)
+			);
+			this.setActiveObject(
+				this.board.getInspectable(obj.position)
+			);
 		} else {
-			// TODO: Handle clicking of other object types
-			console.log('Clicked a non-tile / non-enemy object: ', obj);
+			if (obj instanceof Enemy) {
+				this.setActiveObject(obj);
+			} else {
+				// TODO: Handle clicking of other object types
+				console.log('Clicked a non-tile / non-enemy object: ', obj);
+			}
 		}
 
 		Statics.UI_MANAGER.forceUpdateZones();

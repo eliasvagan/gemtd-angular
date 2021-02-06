@@ -1,6 +1,5 @@
 import * as THREE from 'three-full';
-import { IMap } from '../data-models/map-model';
-import { Tile } from './tiles/tile';
+import { IMap, IMapTile } from '../data-models/map-model';
 import { Checkpoint } from './tiles/checkpoint';
 import { TileFree } from './tiles/tile-free';
 import { Gem } from './tiles/gem';
@@ -10,20 +9,16 @@ import { GemTypeLetters } from '../data/gem-types';
 import { GemsBasic, TowersAll } from '../data/towers';
 import { Statics } from '../services/statics.service';
 import { IGameSessionGemChances } from './game-session';
-import { Inspectable, isInspectable } from '../data-models/inspectable-model';
-import { IEnemyCheckpoint } from '../data-models/enemy-checkpoint';
-import { ITile } from '../data-models/tile-model';
+import { Inspectable } from '../data-models/inspectable-model';
 import { AbilityChoose } from './abilities/ability-choose';
-import { Stone } from './tiles/stone';
 import { AbilityUpgrade } from './abilities/ability-upgrade';
-import { GameObject } from './game-object';
 import { Enemy } from './enemy';
 import { IPath, PathFinder } from '../helpers/path-finder';
 import * as GAMECONFIG from '../../json/gameconfig.json';
+import {Stone} from './tiles/stone';
 
 const IMapDefaultValues: IMap = {
 	tiles: [],
-	checkpoints: [],
 	width: 11,
 	height: 11,
 	placingGems: [],
@@ -34,11 +29,10 @@ export class GameMap implements IMap {
 
 	public width: number;
 	public height: number;
-	public tiles: ITile[];
-	public checkpoints: IEnemyCheckpoint[];
 	public placingGems: Gem[];
 	public enemies: Enemy[];
 	public maxGemsRound: number;
+	public tiles: IMapTile[];
 
 	constructor(
 		public scene: THREE.Scene
@@ -51,12 +45,17 @@ export class GameMap implements IMap {
 		this.tiles = [];
 		for (let y = 0; y < this.height; y++) {
 			for (let x = 0; x < this.width; x++) {
-				this.tiles.push(new TileFree({ x, y }, this.scene));
+				this.tiles.push({
+					tower: null,
+					ground: null,
+					checker: new TileFree({ x, y }, this.scene),
+					checkpoint: null,
+					locked: false
+				});
 			}
 		}
 
 		// Place checkpoints
-		this.checkpoints = [];
 		[
 			{ x: 1 , y: 0 },
 			{ x: 1 , y: 5 },
@@ -66,9 +65,10 @@ export class GameMap implements IMap {
 			{ x: 5 , y: 9 },
 			{ x: 10, y: 9 }
 		].forEach((pos, index) => {
-			const cp = new Checkpoint(pos, this.scene, index);
-			this.addTile(cp);
-			this.checkpoints.push(cp);
+			this.updateTileProps(pos, {
+				checkpoint: new Checkpoint(pos, this.scene, index),
+				locked: true
+			});
 		});
 
 		// Misc
@@ -77,31 +77,24 @@ export class GameMap implements IMap {
 	}
 
 	update(dt): void {
-		this.tiles.forEach(tile => tile.update(dt));
+		this.tiles.forEach(tile => {
+			const { tower, ground, checker, checkpoint } = tile;
+			if (tower) { tower.update(dt); }
+			if (ground) { ground.update(dt); }
+			if (checker) { checker.update(dt); }
+			if (checkpoint) { checkpoint.update(dt); }
+		});
 		this.enemies.forEach(enemy => enemy.update(dt));
+
+		// Filter dead enemies
 		this.enemies = this.enemies.filter(enemy => !enemy.isDead);
 	}
 
-	addFloor(position: {x: number, y: number}): Stone  {
-		return this.addTile(new Stone(position, this.scene, null)) as Stone;
+	updateTileProps(position: { x: number, y: number }, diffObj: IMapTile) {
+		Object.assign(this.tiles[position.y * this.height + position.x], diffObj);
 	}
 
-	addTile(tile: Tile): Tile {
-		const { x, y } = tile.position;
-		if (!this.canBuildHere(tile.position)) {
-			console.log(`Failed to place tile on (${x}, ${y})`);
-			return null;
-		}
-		const index = x + y * this.width;
-
-		const oldTile = this.tiles[index];
-		oldTile.removeFromScene();
-		this.tiles[index] = tile;
-
-		return tile;
-	}
-
-	getTile(position: {x: number, y: number}): ITile | null{
+	getTile(position: {x: number, y: number}): IMapTile {
 		try {
 			return this.tiles[position.y * this.height + position.x];
 		}
@@ -111,7 +104,7 @@ export class GameMap implements IMap {
 	}
 
 	getTileCost(position): number {
-		const target: ITile = this.getTile(position);
+		const target: IMapTile = this.getTile(position);
 		return target.pathWeight;
 	}
 
@@ -178,16 +171,29 @@ export class GameMap implements IMap {
 	canBuildHere(position: {x: number, y: number}): boolean {
 		// Pathfinding to check if position would break path
 		const { x, y } = position;
-		const pf = new PathFinder(this);
-		pf.setBlock(x, y);
-		const path: IPath = pf.getPathConnected(this.checkpoints.map(cp => cp.position));
-		console.log((path.steps ? 'Can' : 'Cannot') + ' build at ', position, path.steps);
+		const { ground, tower } = this.getTile(position);
+		let validPath = !!ground;
+		if (!ground) {
+			const pf = new PathFinder(this);
+			pf.setBlock(x, y);
+			const path: IPath = pf.getPathConnected(
+				this.tiles
+					.filter(tile => !!tile.checkpoint)
+					.map(cp => cp.checkpoint.position)
+			);
+			console.log((path.steps ? 'Can' : 'Cannot') + ' build at ', position, path.steps);
+			validPath = path.steps?.length > 0;
+		}
 
 		return !(
 				 x < 0 || x >= this.width
 			|| y < 0 || y >= this.height
-			|| !path.steps
-		) && (this.placingGems.length < this.maxGemsRound || GAMECONFIG.debug.unlimitedGemPlaces);
+			|| !validPath
+			|| tower !== null
+		);
+	}
+	canPlaceNow(): boolean {
+		return this.placingGems.length < this.maxGemsRound || GAMECONFIG.debug.unlimitedGemPlaces;
 	}
 
 	canBuildCombo(gemType: ITowerType): boolean {
@@ -196,29 +202,41 @@ export class GameMap implements IMap {
 	}
 
 	canBuildTowerHere(position: { x: number; y: number }, gemType: ITowerType): boolean {
-		const foundTile = this.getTile(position);
 		return (
 				 this.canBuildCombo(gemType)
 			&& this.canBuildHere(position)
-		 	&& (foundTile instanceof TileFree || (foundTile instanceof Stone && foundTile.isAvailable()))
-			&& !(foundTile instanceof Stone && foundTile.getGem().towerType !== gemType)
 		);
 
 	}
 
-	placeGem(position: { x: number; y: number }, gemType: ITowerType): Stone {
-		if (this.canBuildTowerHere(position, gemType)) {
-			const gem = new Gem(position, this.scene, gemType, true, this);
-			const stone: Stone = this.addStone(gem.position);
-			this.updateGemAbilities();
-			// console.log('placed at ', position, gem);
-			return stone;
+	placeGem(position: { x: number; y: number }, gemType: ITowerType, preview: boolean): boolean {
+		if (GAMECONFIG.debug.logBasic) {
+			console.log('Trying to place at ', this.canPlaceNow(), this.canBuildTowerHere(position, gemType));
 		}
-		return null;
+
+		if (
+			this.canPlaceNow() &&
+			this.canBuildTowerHere(position, gemType)
+		) {
+			const gem = new Gem(position, this.scene, gemType, preview, this);
+			const stone = new Stone(position, this.scene);
+			this.updateTileProps(position, {
+				tower: gem,
+				ground: stone,
+				locked: false,
+			});
+			this.updateGemAbilities();
+			this.placingGems.push(gem);
+			return true;
+		}
+
+		return false;
 	}
 
-	chooseGem(position: {x: number, y: number}): Stone {
-		const targetStone = this.getTile(position);
+	chooseGem(position: {x: number, y: number}): IMapTile {
+		console.log('TODO: Tried to place gem! Fix this. ');
+		return this.getTile(position);
+		/* const targetStone = this.getTile(position);
 		if (targetStone instanceof Stone) {
 			const targetGem = this.placingGems.find(gem => gem.position === position);
 			if (targetGem instanceof Gem) {
@@ -234,7 +252,14 @@ export class GameMap implements IMap {
 					const newGem = new Gem(position, this.scene, targetGem.towerType, false, this);
 					newGem.handleGetPlaced();
 
-					const placedStone: ITile & Stone = this.addStone(position);
+					const oldStone: Stone = this.getTile(position).ground;
+					if (!oldStone) {
+						this.updateTileProps(position, {
+							ground: new Stone(position, this.scene, null),
+							locked: false,
+						});
+					}
+					const placedStone: Stone = this.getTile(position).ground;
 					const placedGem: Gem = placedStone.setGem(newGem).getGem();
 
 					if (placedStone instanceof Stone && placedGem) {
@@ -257,26 +282,25 @@ export class GameMap implements IMap {
 			console.error('Tried to choose gem, but found no stone at position', position, targetStone);
 			return null;
 		}
+
+		 */
 	}
 
-	handleTileClick(tile: Tile): ITile | null {
-		let response: ITile = null;
+	handleTileClick(tile: IMapTile): IMapTile {
+		const { position } = tile.checker;
 		const { phase, gemChances } = Statics.CURRENT_SESSION;
 
 		switch (phase) {
 			case GamePhase.Building: {
-				if (this.canBuildHere(tile.position)) {
-					const stone: Stone = this.addStone(tile.position);
-					const gemType: ITowerType = this.getRandomGemType(gemChances);
-					const gem = new Gem(tile.position, this.scene, gemType, false, this);
-					if (stone && gem) {
-						console.log('placed', stone);
-						this.placingGems.push(
-							new Gem(tile.position, this.scene, gemType, true, this)
-						);
-						this.updateGemAbilities();
-						response = stone;
+				if (!tile.tower) {
+					let placed = false;
+					if (this.canBuildHere(position)) {
+						const gemType: ITowerType = this.getRandomGemType(gemChances);
+						placed = this.placeGem(position, gemType, true);
 					}
+					console.log(`${placed ? 'Placed' : 'Failed to place'} random gem at ${position}`);
+				} else {
+
 				}
 				break;
 			}
@@ -284,34 +308,11 @@ export class GameMap implements IMap {
 				break;
 			}
 		}
-		// Always select placed/clicked unit.
-		Statics.CURRENT_SESSION.setActiveObject(this.getInspectable(tile.position));
-		return response;
+		return tile;
 	}
 
 	getInspectable(position: { x: number, y: number}): Inspectable {
-		const ft = this.getTile(position);
-		if (ft instanceof Stone) {
-			const placingGem = this.placingGems.find(gem => ft.position === gem.position);
-			if (placingGem) {
-				return placingGem;
-			} else if (ft.getGem()) {
-				return ft.getGem();
-			}
-			return placingGem ? placingGem : ft;
-		}
-		if (isInspectable(ft)) {
-			return ft;
-		}
-		return null;
-	}
-
-	private addStone(position: { x: number; y: number }): Stone {
-		const foundStone = this.getTile(position);
-		if (foundStone instanceof Stone) {
-			return foundStone;
-		}
-		const newStone = new Stone(position, this.scene, null);
-		return this.addTile(newStone) as Stone;
+		const { checkpoint, tower, ground, checker } = this.getTile(position);
+		return checkpoint ?? tower ?? ground ?? checker;
 	}
 }

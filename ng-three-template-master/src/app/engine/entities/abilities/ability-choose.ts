@@ -2,7 +2,7 @@ import { IAbility, IAbilityType } from '../../data-models/ability-model';
 import { ITowerType } from '../../data-models/tower-type-model';
 import { Gem } from '../tiles/gem';
 import { GameMap } from '../game-map';
-import { Stone } from '../tiles/stone';
+import { IMapTile } from '../../data-models/map-model';
 
 export class AbilityChoose implements IAbility {
 	rarity: number;
@@ -26,8 +26,8 @@ export class AbilityChoose implements IAbility {
 
 	execute(): void {
 		if (this.isActive) {
-			const placed: Stone = this.map.chooseGem(this.father.position);
-			if (placed instanceof Stone && placed.getGem()) {
+			const placed: IMapTile = this.map.chooseGem(this.father.position);
+			if (placed) {
 				this.father.removeAbility(this);
 			}
 		}

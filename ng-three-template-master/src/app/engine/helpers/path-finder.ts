@@ -30,11 +30,14 @@ export class PathFinder implements IPathFinder {
 	}
 
 	updateData() {
-		this.data = this.gameMap.tiles.map(tile => ({
-			x: tile.position.x,
-			y: tile.position.y,
-			cost: this.gameMap.getTileCost(tile.position)
-		}));
+		this.data = this.gameMap.tiles.map(tile => {
+			const { position } = tile.checker;
+			return {
+				x: position.x,
+				y: position.y,
+				cost: this.gameMap.getTileCost(position)
+			};
+		});
 	}
 
 	getCell(x, y): ATile {

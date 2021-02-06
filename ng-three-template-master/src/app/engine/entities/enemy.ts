@@ -1,5 +1,4 @@
 import { IMap } from '../data-models/map-model';
-import { IEnemyCheckpoint } from '../data-models/enemy-checkpoint';
 import { euclideanDistance } from '../helpers/math-helpers';
 import { GameObject } from './game-object';
 import { ITowerType, TowerRarity } from '../data-models/tower-type-model';
@@ -9,6 +8,7 @@ import { Statics } from '../services/statics.service';
 import { Inspectable } from '../data-models/inspectable-model';
 import { IAbility } from '../data-models/ability-model';
 import { GameObjectState } from '../enums/game-object-state';
+import { IPath } from '../helpers/path-finder';
 
 export class Enemy extends GameObject implements IEnemyType, Inspectable {
 
@@ -35,8 +35,8 @@ export class Enemy extends GameObject implements IEnemyType, Inspectable {
 	towerTypeId: string;
 
 	private gameMap: IMap;
-	private targetTileIndex: number;
-	private targetTileEntity: IEnemyCheckpoint;
+	private path: IPath;
+	private pathIndex: number;
 	private hpCurrent: number;
 
 	constructor(enemyType: IEnemyType, spawnPosition: {x: number, y: number}, scene: Scene, gameMap: IMap) {
@@ -60,8 +60,8 @@ export class Enemy extends GameObject implements IEnemyType, Inspectable {
 		});
 		Object.assign(this, enemyType);
 		this.gameMap = gameMap;
-		this.targetTileIndex = 0;
-		this.targetTileEntity = this.gameMap.checkpoints[0];
+		this.path = Statics.CURRENT_SESSION.walkingPath;
+		this.pathIndex = 0;
 		this.isDead = false;
 		this.hpCurrent = this.stats.hp;
 		this.abilities = [];
@@ -80,6 +80,11 @@ export class Enemy extends GameObject implements IEnemyType, Inspectable {
 		this.removeFromScene();
 	}
 
+	finishPath(): void {
+		this.kill();
+		Statics.CURRENT_SESSION.takeDamage(this);
+	}
+
 	update(dt: number): void {
 
 		if (this.hpCurrent <= 0) {
@@ -88,24 +93,29 @@ export class Enemy extends GameObject implements IEnemyType, Inspectable {
 		}
 
 		// Check if target is reached
-		if (euclideanDistance(this.targetTileEntity, this) < 0.1) {
-			if (this.gameMap.checkpoints.length > this.targetTileIndex + 1) {
-				this.targetTileIndex++;
-				this.targetTileEntity = this.gameMap.checkpoints[this.targetTileIndex];
-			} else {
-				this.hpCurrent -= this.stats.hp * 0.01 * dt;
-				Statics.CURRENT_SESSION.takeDamage(this);
-			}
+		if (this.path.steps.length > this.pathIndex + 1) {
+			this.finishPath();
+			super.update(dt);
+			return;
 		}
+
+		// Set target
+		const pathTarget = this.path.steps[this.pathIndex];
 
 		// Handle movement
 		const speedConstant = 0.001;
-		const dx = this.position.x - this.targetTileEntity.position.x < 0 ? 1 : -1;
-		const dy = this.position.y - this.targetTileEntity.position.y < 0 ? 1 : -1;
+		const dx = this.position.x - pathTarget.x < 0 ? 1 : -1;
+		const dy = this.position.y - pathTarget.y < 0 ? 1 : -1;
 
 		this.position.x += dx * this.stats.moveSpeed * dt * speedConstant;
 		this.position.y += dy * this.stats.moveSpeed * dt * speedConstant;
 
+		// Check if target was reached
+		if (euclideanDistance(pathTarget, this) < 0.1) {
+			this.pathIndex++;
+		}
+
+		// TODO: Why?
 		if (this.state !== GameObjectState.Changed) {
 			this.updateRenderPosition();
 		}
