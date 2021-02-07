@@ -6,16 +6,16 @@ import { Gem } from './tiles/gem';
 import { ITowerType } from '../data-models/tower-type-model';
 import { GamePhase } from '../enums/game-phase';
 import { GemTypeLetters } from '../data/gem-types';
-import { GemsBasic, TowersAll } from '../data/towers';
+import { GemsBasic } from '../data/towers';
 import { Statics } from '../services/statics.service';
 import { IGameSessionGemChances } from './game-session';
 import { Inspectable } from '../data-models/inspectable-model';
 import { AbilityChoose } from './abilities/ability-choose';
-import { AbilityUpgrade } from './abilities/ability-upgrade';
 import { Enemy } from './enemy';
 import { IPath, PathFinder } from '../helpers/path-finder';
 import * as GAMECONFIG from '../../json/gameconfig.json';
-import {Stone} from './tiles/stone';
+import { Stone } from './tiles/stone';
+import {IAbility} from '../data-models/ability-model';
 
 const IMapDefaultValues: IMap = {
 	tiles: [],
@@ -46,7 +46,7 @@ export class GameMap implements IMap {
 		for (let y = 0; y < this.height; y++) {
 			for (let x = 0; x < this.width; x++) {
 				this.tiles.push({
-					tower: null,
+					gem: null,
 					ground: null,
 					checker: new TileFree({ x, y }, this.scene),
 					checkpoint: null,
@@ -78,8 +78,8 @@ export class GameMap implements IMap {
 
 	update(dt): void {
 		this.tiles.forEach(tile => {
-			const { tower, ground, checker, checkpoint } = tile;
-			if (tower) { tower.update(dt); }
+			const { gem, ground, checker, checkpoint } = tile;
+			if (gem) { gem.update(dt); }
 			if (ground) { ground.update(dt); }
 			if (checker) { checker.update(dt); }
 			if (checkpoint) { checkpoint.update(dt); }
@@ -138,42 +138,38 @@ export class GameMap implements IMap {
 		return GemsBasic[gemId];
 	}
 
-	updateGemAbilities(): void {
-		// Update gems that satisfy build
-		for (const towerType of Object.values(TowersAll)) {
-			const validCombos = towerType.buildCombinations.filter(
-				combo => (combo.reduce((valid, next) => (
-					valid || this.placingGems.map(pg => pg.towerTypeId).includes(next)
-				), false))
-			);
-			for (const combo of validCombos) {
-				this.placingGems
-					.filter(pg => combo.includes(pg.towerTypeId) && this.canBuildCombo(towerType))
-					.forEach(ug => {
-							// TODO: Change isActive arg to be calculated
-						ug.abilities.push(new AbilityUpgrade(towerType, ug, this, false));
-					}
-				);
-			}
-		}
-		// Update place abilities to become active on last placed gem
-		if (this.placingGems.length >= this.maxGemsRound) {
-			this.placingGems.forEach(placingGem => {
-				placingGem.abilities
-					.filter(ability => ability instanceof AbilityChoose)
-					.forEach(ability => {
-						ability.isActive = true;
-					});
+	updateGemAbilities(gem: Gem): void {
+		// Update preview gems
+		const timeToChoose = this.placingGems.length >= this.maxGemsRound;
+		gem.abilities
+			.filter((ability: IAbility ) => ability instanceof AbilityChoose)
+			.forEach((ability: IAbility) => {
+				ability.isActive = timeToChoose;
 			});
-		}
 	}
 
-	canBuildHere(position: {x: number, y: number}): boolean {
-		// Pathfinding to check if position would break path
+	canBuildHere(position: {x: number, y: number}, usePathfinding: boolean = false): boolean {
 		const { x, y } = position;
-		const { ground, tower } = this.getTile(position);
+
+		// Check if withing bounds
+		if (x < 0 || x >= this.width
+		 || y < 0 || y >= this.height
+		) {
+			if (GAMECONFIG.debug.logBasic) {
+				console.log(`Tried to place outside of bounds at x: ${x}, y: ${y}`);
+			}
+			return false;
+		}
+
+		// If ground is placed, ditch pathfinding.
+		const { ground, gem, checkpoint } = this.getTile(position);
+		if (!!ground || !!checkpoint) {
+			return !gem && !checkpoint;
+		}
+
+		// Pathfinding to check if position would break path
 		let validPath = !!ground;
-		if (!ground) {
+		if (!ground && usePathfinding) {
 			const pf = new PathFinder(this);
 			pf.setBlock(x, y);
 			const path: IPath = pf.getPathConnected(
@@ -181,109 +177,69 @@ export class GameMap implements IMap {
 					.filter(tile => !!tile.checkpoint)
 					.map(cp => cp.checkpoint.position)
 			);
-			console.log((path.steps ? 'Can' : 'Cannot') + ' build at ', position, path.steps);
+			if (GAMECONFIG.debug.logBasic) {
+				console.log((path.steps ? 'Found legal path' : 'Found no legal path') + ' to build at ', position, path.steps);
+			}
+
 			validPath = path.steps?.length > 0;
 		}
+		return validPath;
 
-		return !(
-				 x < 0 || x >= this.width
-			|| y < 0 || y >= this.height
-			|| !validPath
-			|| tower !== null
-		);
 	}
 	canPlaceNow(): boolean {
 		return this.placingGems.length < this.maxGemsRound || GAMECONFIG.debug.unlimitedGemPlaces;
 	}
 
-	canBuildCombo(gemType: ITowerType): boolean {
-		// TODO: Add correct checking
+	canBuildCombo(gemType: ITowerType, position: { x: number, y: number }): boolean {
+		// TODO: Add correct combo scan
+
 		return true;
 	}
 
-	canBuildTowerHere(position: { x: number; y: number }, gemType: ITowerType): boolean {
-		return (
-				 this.canBuildCombo(gemType)
-			&& this.canBuildHere(position)
-		);
-
+	placeGem(position: { x: number; y: number }, gemType: ITowerType, preview: boolean): void {
+		const gem = new Gem(position, this.scene, gemType, preview, this);
+		const stone = new Stone(position, this.scene);
+		this.updateTileProps(position, {
+			gem,
+			ground: stone,
+			locked: false,
+		});
+		this.placingGems.push(gem);
+		this.placingGems.forEach(pg => this.updateGemAbilities(pg));
 	}
 
-	placeGem(position: { x: number; y: number }, gemType: ITowerType, preview: boolean): boolean {
-		if (GAMECONFIG.debug.logBasic) {
-			console.log('Trying to place at ', this.canPlaceNow(), this.canBuildTowerHere(position, gemType));
-		}
-
-		if (
-			this.canPlaceNow() &&
-			this.canBuildTowerHere(position, gemType)
-		) {
-			const gem = new Gem(position, this.scene, gemType, preview, this);
-			const stone = new Stone(position, this.scene);
-			this.updateTileProps(position, {
-				tower: gem,
-				ground: stone,
-				locked: false,
-			});
-			this.updateGemAbilities();
-			this.placingGems.push(gem);
-			return true;
-		}
-
-		return false;
-	}
-
-	chooseGem(position: {x: number, y: number}): IMapTile {
-		console.log('TODO: Tried to place gem! Fix this. ');
-		return this.getTile(position);
-		/* const targetStone = this.getTile(position);
-		if (targetStone instanceof Stone) {
-			const targetGem = this.placingGems.find(gem => gem.position === position);
-			if (targetGem instanceof Gem) {
-				if (this.canBuildTowerHere(position, targetGem.towerType)) {
-					// Remove placeholder gems
-					this.placingGems
-						// .filter(pg => pg.position !== position)
-						.forEach(pg => {
-							pg.removeFromScene();
-						});
-
-					this.placingGems = [];
-					const newGem = new Gem(position, this.scene, targetGem.towerType, false, this);
-					newGem.handleGetPlaced();
-
-					const oldStone: Stone = this.getTile(position).ground;
-					if (!oldStone) {
-						this.updateTileProps(position, {
-							ground: new Stone(position, this.scene, null),
-							locked: false,
-						});
-					}
-					const placedStone: Stone = this.getTile(position).ground;
-					const placedGem: Gem = placedStone.setGem(newGem).getGem();
-
-					if (placedStone instanceof Stone && placedGem) {
-						Statics.CURRENT_SESSION.setActiveObject(this.getInspectable(position));
-						this.updateGemAbilities();
-
-						GameObject.setHovered(placedStone);
-						Statics.CURRENT_SESSION.handleNextPhase();
-						Statics.CURRENT_SESSION.updateWalkingPath();
-						return placedStone;
-					} else {
-						console.error('Gems were consumed, but nothing was placed!');
-					}
-				}
-			} else {
-				console.error('Tried to choose gem, but found no valid gem in', this.placingGems);
-				return null;
+	chooseGem(position: {x: number, y: number}): void {
+		try {
+			const { gem } = this.getTile(position);
+			const { CURRENT_SESSION: session } = Statics;
+			if (session.phase !== GamePhase.Building) {
+				throw new Error('Tried to choose gem outside of building phase!');
 			}
-		} else {
-			console.error('Tried to choose gem, but found no stone at position', position, targetStone);
-			return null;
-		}
 
-		 */
+			gem.handleGetPlaced();
+
+			// Remove temporary gems
+			this.placingGems
+				.filter((pGem: Gem) => gem.isPreview)
+				.forEach((pGem: Gem) => {
+				const pTile = this.getTile(pGem.position);
+
+				// Handle illegal operation
+				if (pTile.gem !== pGem) {
+					console.error('Tried to remove preview tiles, but target tile did not contain expected Gem instance!');
+				}
+				pGem.removeFromScene();
+				this.updateTileProps(pGem.position, { gem: null, locked: false });
+			});
+			this.placingGems = [];
+
+			// Handle session changes
+			session.setActiveObject(this.getInspectable(position));
+			session.handleNextPhase();
+			session.updateWalkingPath();
+		} catch (err) {
+			console.error('TODO: Failed to choose gem!', err);
+		}
 	}
 
 	handleTileClick(tile: IMapTile): IMapTile {
@@ -292,15 +248,21 @@ export class GameMap implements IMap {
 
 		switch (phase) {
 			case GamePhase.Building: {
-				if (!tile.tower) {
-					let placed = false;
-					if (this.canBuildHere(position)) {
+				let placed = false;
+				if (!tile.gem) {
+					if (
+						this.canPlaceNow() &&
+						this.canBuildHere(position, true)
+					) {
 						const gemType: ITowerType = this.getRandomGemType(gemChances);
-						placed = this.placeGem(position, gemType, true);
+						this.placeGem(position, gemType, true);
+						placed = true;
 					}
-					console.log(`${placed ? 'Placed' : 'Failed to place'} random gem at ${position}`);
 				} else {
 
+				}
+				if (GAMECONFIG.debug.logBasic) {
+					console.log(`${placed ? 'Placed' : 'Did not place'} random gem at ${position}`);
 				}
 				break;
 			}
@@ -312,7 +274,7 @@ export class GameMap implements IMap {
 	}
 
 	getInspectable(position: { x: number, y: number}): Inspectable {
-		const { checkpoint, tower, ground, checker } = this.getTile(position);
-		return checkpoint ?? tower ?? ground ?? checker;
+		const { checkpoint, gem, ground, checker } = this.getTile(position);
+		return checkpoint ?? gem ?? ground ?? checker;
 	}
 }

@@ -1,9 +1,6 @@
 import { IAbility, IAbilityType } from '../../data-models/ability-model';
-import { ITowerType } from '../../data-models/tower-type-model';
 import { Gem } from '../tiles/gem';
 import { GameMap } from '../game-map';
-import { IMapTile } from '../../data-models/map-model';
-
 export class AbilityChoose implements IAbility {
 	rarity: number;
 	name: string;
@@ -12,24 +9,20 @@ export class AbilityChoose implements IAbility {
 	type: IAbilityType;
 
 	constructor(
-		gemType: ITowerType,
 		private father: Gem,
 		private map: GameMap,
 		public isActive: boolean,
 	) {
-		this.name = gemType.towerTypeId;
-		this.description = `Place a ${gemType.nameLong} (${gemType.towerTypeId}) here.`;
-		this.imgUrl = gemType.imgUrl;
+		this.name = father.towerTypeId;
+		this.description = `Place a ${father.nameLong} (${father.towerTypeId}) here.`;
+		this.imgUrl = father.imgUrl;
 		this.type = IAbilityType.Active;
-		this.rarity = gemType.rarity;
+		this.rarity = father.rarity;
 	}
 
 	execute(): void {
 		if (this.isActive) {
-			const placed: IMapTile = this.map.chooseGem(this.father.position);
-			if (placed) {
-				this.father.removeAbility(this);
-			}
+			this.map.chooseGem(this.father.position);
 		}
 	}
 

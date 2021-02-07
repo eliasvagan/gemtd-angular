@@ -14,6 +14,8 @@ import { EnemiesAll } from '../data/enemies';
 import { PathFinder, IPath } from '../helpers/path-finder';
 import { TileFree } from './tiles/tile-free';
 
+import * as GAMECONFIG from '../../json/gameconfig.json';
+
 export interface IGameSessionGemChances {
 	types: {
 		[key in GemTypeNames]: number;
@@ -187,8 +189,11 @@ export class GameSession implements IGameSession {
 				new THREE.BufferGeometry().setFromPoints(
 					path.steps.map(({ x, y }) => (new THREE.Vector3(x, 0.3, y))
 					)),
-				new THREE.LineBasicMaterial({ color: 0x2244ff, linewidth: 6, linecap: 'round' })
+				new THREE.LineBasicMaterial({ color: 0xff4422, linecap: 'round' })
 			));
+		}
+		if (GAMECONFIG.debug.logBasic) {
+			console.log(`GameSession generated new path of length ${path.steps.length}`);
 		}
 	}
 
@@ -215,13 +220,12 @@ export class GameSession implements IGameSession {
 	handleNextPhase(): void {
 		console.log('Switching from game-phase:', this.phase);
 		switch (this.phase) {
-			case GamePhase.Picking:
-				this.setPhase(GamePhase.Defending);
-				break;
 			case GamePhase.Defending:
 				if (this.hpCurrent <= 0) {
 					this.setPhase(GamePhase.GameOver);
 				} else {
+					this.round++;
+					this.score += 10;
 					this.setPhase(GamePhase.Building);
 				}
 				break;

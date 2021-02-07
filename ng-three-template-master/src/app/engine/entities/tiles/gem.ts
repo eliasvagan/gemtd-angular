@@ -12,6 +12,8 @@ import { GameObject } from '../game-object';
 import { IRenderParams } from '../../data-models/renderable';
 import { AbilityChoose } from '../abilities/ability-choose';
 
+import * as GAMECONFIG from '../../../json/gameconfig.json';
+
 export class Gem extends GameObject implements ITowerType, Inspectable {
 
 	towerTypeId: string;
@@ -69,17 +71,29 @@ export class Gem extends GameObject implements ITowerType, Inspectable {
 		this.isPreview = preview;
 		if (preview) {
 			this.setOpacity(0.5);
-			this.abilities.push(
-				new AbilityChoose(gemType, this, this.gameMap, false)
-			);
 		}
-		this.animation = new AnimationGrowIn(0.2);
+		// Animation speed proportional to rarity
+		this.animation = new AnimationGrowIn((this.rarity + 1) * 0.3);
+		if (GAMECONFIG.debug.logBasic) {
+			console.log('Spawned gem ', this);
+		}
+		this.recalculateAbilities();
 	}
 
 
 	handleGetPlaced(): void {
-		this.animation = new AnimationGrowIn(this.rarity  * 0.5 + 0.2);
+		this.animation = new AnimationGrowIn((this.rarity + 1) * 0.5);
 		this.setOpacity(1);
+		this.isPreview = false;
+		this.recalculateAbilities();
+	}
+
+	recalculateAbilities(): void {
+		this.abilities = [];
+		if (this.isPreview) {
+			this.abilities.push(new AbilityChoose(this, this.gameMap, false));
+		}
+		// TODO: add ability to combinations
 	}
 
 	updateTargets(): void {
@@ -107,6 +121,7 @@ export class Gem extends GameObject implements ITowerType, Inspectable {
 				this.updateTargets();
 			}
 		}
+		super.update(dt);
 	}
 
 

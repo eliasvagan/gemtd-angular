@@ -4,7 +4,7 @@ import { Checkpoint } from '../entities/tiles/checkpoint';
 import { Stone } from '../entities/tiles/stone';
 
 export interface IMapTile {
-	tower?: Gem;
+	gem?: Gem;
 	ground?: Stone;
 	checker?: TileFree;
 	checkpoint?: Checkpoint;
